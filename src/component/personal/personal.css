@@ -1,0 +1,116 @@
+.main_info{
+    display : flex;
+}
+.middle{
+    display : flex;
+}
+.main_selection{
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.top_class{
+    background-color: rgb(2, 2, 34);
+}
+.team_logos{
+    width: 100px;
+    height: 100px;
+}
+.main_row{
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#awaya{
+    text-align: right;
+    color: gold;
+}
+.short_nav{
+
+  
+    display: flex;
+    overflow-x: auto;
+}
+.ref_box{
+    border: solid;
+    border-color: rgb(2, 2, 34);
+}
+.info_div{
+   height: 350px;
+    overflow-y: auto;
+    text-align: center;
+
+}
+
+#main{
+       
+            
+    display: flex;
+    justify-content: right;
+ 
+}
+
+#main-left{
+ 
+    display: flex;  
+
+}
+#pen{
+    color : red
+}
+.team{
+    width: 100%;
+
+    background-color: green;
+    border-bottom: solid blue;
+    
+}
+.teamx{
+    width: 100%;
+
+    background-color: green;
+    border-bottom: solid blue;
+    transform: rotateZ(180deg);
+    
+}
+
+.teamx #row{
+        transform: rotateZ(180deg);
+}
+
+#row{
+    display: flex;
+    justify-content: space-evenly;
+    
+ }
+#beneath_holder{
+    display: flex;
+}
+#player_number{
+
+transform: translateY(50%);
+
+}
+#player_number_holder{
+        width: 50px;
+    background-color: white;
+    height:  50px;
+    border-radius: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+
+
+
+#player_name {
+    font-size: 0.7em;
+    text-decoration: bold;
+    color: white;
+}
+
+#beneath_holder{
+    transform: translateY(-130%);
+}

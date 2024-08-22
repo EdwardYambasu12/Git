@@ -1,0 +1,54 @@
+.team{
+	width: 100%;
+
+	background-color: green;
+	border-bottom: solid blue;
+	
+}
+.teamx{
+	width: 100%;
+
+	background-color: green;
+	border-bottom: solid blue;
+	transform: rotateZ(180deg);
+	
+}
+
+.teamx #row{
+		transform: rotateZ(180deg);
+}
+
+#row{
+    display: flex;
+    justify-content: space-evenly;
+    
+ }
+#beneath_holder{
+	display: flex;
+}
+#player_number{
+
+transform: translateY(50%);
+
+}
+#player_number_holder{
+		width: 50px;
+    background-color: white;
+    height:  50px;
+    border-radius: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+
+
+
+#player_name {
+	font-size: 0.7em;
+	text-decoration: bold;
+	color: white;
+}
+
+#beneath_holder{
+	transform: translateY(-130%);
+}
