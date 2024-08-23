@@ -84,7 +84,7 @@ useEffect(() => {
 
 
 			
-	if (main_data.match_live === "1"){
+	if (parser.match_live === "1"){
 		setLive("🔴live")
 	}
 
@@ -92,8 +92,8 @@ useEffect(() => {
 			setHeader(
 				<div style = {{width : "100%", display : "flex",  alighnItems : "center"}}>
 				
-				<img src = {main_data.league_logo === "" ? require("../images/no-img.png") : main_data.league_logo } style = {{width : "30px", height : "30px"}}></img>
-				<h6  style = {{textOverflow : "ellipsis", whiteSpace : "nowrap", overFlow : "hidden"}} className = "text-dark" >{main_data.league_name}</h6>
+				<img src = {parser.league_logo === "" ? require("../images/no-img.png") : parser.league_logo } style = {{width : "30px", height : "30px"}}></img>
+				<h6  style = {{textOverflow : "ellipsis", whiteSpace : "nowrap", overFlow : "hidden"}} className = "text-dark" >{parser.league_name}</h6>
 				
 				</div>
 			)
