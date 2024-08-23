@@ -272,10 +272,10 @@ useEffect(()=>{
 				<nav className = " fixed-top " style = {{ background : "white"}}>
 				
 					<div className="top_nav">
-					<div className = "brand">
-						
-						<h2>Sportsup News</h2>
-					</div>
+					 <div className = "brand">
+            <img className = "brand_image" src = {require("./components/images/sportsup.png")}></img>
+            <h2>News</h2>
+          </div>
 
 			<div className = "icons">
 					
@@ -344,7 +344,7 @@ function Home_(){
               const make =  res.data[length]
 
 
-              setTrending(
+              setTrending( 
                 <div style = {{background : "white", borderRadius : "10px", }}>
              
                   <Link to = {"/news/"+make._id} style = {{textDecoration : "none",  color : "black", background : "white"}}>

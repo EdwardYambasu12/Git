@@ -3,6 +3,7 @@ import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios"
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Line from "./line.js"
 export default function  Inner_News() {
 	
 	let {id} = useParams();
@@ -12,7 +13,7 @@ export default function  Inner_News() {
 	var counter = 0
 
 	useEffect(()=>{
-			axios.get("http://localhost:5000/sportsup_news")
+			axios.get(Line+"/sportsup_news")
 			.then((res)=>{
 				const finder = res.data.find((item)=> item._id == id)
 

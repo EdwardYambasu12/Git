@@ -154,7 +154,7 @@ const navigate = useNavigate()
 const [statement, setStatement] = useState()
 
 const [players, setPlayers] = useState(<Skeleton variant="rectangular" style = {{width : "100%", height : "150px",  borderRadius : "15%"}} />)
-const [team, setTeam] = useState(<Skeleton variant="rectangular" style = {{width : "100%", height : "150px"}}/>)
+const [team, setTeam] = useState(<Skeleton variant="rectangular" style = {{width : "100%", height : "150px", borderRadius : "15%"}}/>)
       const [follow, setFollow] = useState();
 
 
