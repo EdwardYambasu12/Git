@@ -28,6 +28,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { styled } from '@mui/material/styles';
 import {Link, useNavigate} from "react-router-dom"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Slide from '@mui/material/Slide';
 
@@ -66,7 +67,9 @@ const [value, setValue] = useState(0);
   };
 
     var more
-    const [ret, setRet] = useState()
+    const [ret, setRet] = useState(<Box style={{ display: 'flex', width : "100%", justifyContent : "center",  }}>
+      <CircularProgress sx= {{backgroundColor : "white", borderRadius : "50%"}} />
+    </Box>)
     const navigate = useNavigate()
 useEffect(()=>{
    async function fetcher(){
