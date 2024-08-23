@@ -153,6 +153,9 @@ window.location.reload();
 
         const multi = await axios.get(Line+"/users")
 
+
+        if(parser != null){
+
          const auth = multi.data.filter((item)=> item.email == parser.email_reader )
 
 
@@ -262,6 +265,7 @@ window.location.reload();
 
 
    }
+}
    fetcher()
 
 }, [value, playerRating, injuryList])

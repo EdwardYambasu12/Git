@@ -246,6 +246,8 @@ if (data != null){
         const liner = await localStorage.getItem("data")
     const parser =  await JSON.parse(liner)
         const multi = await axios.get(Line+"/users")
+
+        if (parser != null){
         
        const auth = multi.data.filter((item)=> item.email == parser.email_reader )
 
@@ -257,6 +259,8 @@ if (data != null){
                     important.push(polay)
 
                   })
+
+
 
                   console.log(important)
                   setTop(
@@ -327,7 +331,7 @@ setAll(
 
     }
   }
-
+}
     tolerate()
 
 }, [])

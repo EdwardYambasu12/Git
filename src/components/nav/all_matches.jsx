@@ -195,16 +195,18 @@ useEffect(()=>{
 
 			axios.get("https://apiv3.apifootball.com/?action=get_events&withPlayerStats=1&from="+today_date+"&to="+today_date+"&timezone="+getTimeZone()+"&APIkey="+api_key)
 			.then(res=>{
+				var data = res.data
+				var important = []
 								
 								  if (parser != null){
     
 			   const auth = multi.data.filter((item)=> item.email == parser.email_reader )
        //(auth, "auth")
-						var important = []
+						
 						var followup_team = []
 						var followup_league = []
-						var data = res.data
-
+						
+if(auth.length > 0){
 						auth[0].favorite_league.forEach((element)=>{
 			 				var filter = data.filter((item)=> item.league_id ===  element.league_id)
 
@@ -222,12 +224,12 @@ useEffect(()=>{
 			 			})
 
 
-			 			const mergedArray = [...followup_team, ...followup_league].filter((item, index, arr) => arr.indexOf(item) === index);
+			 			
+}
+
+const mergedArray = [...followup_team, ...followup_league].filter((item, index, arr) => arr.indexOf(item) === index);
 						//(mergedArray, "merging"); 
 			 		
-
-
-
 
 
 

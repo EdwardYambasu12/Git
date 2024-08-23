@@ -94,6 +94,9 @@ function PositionedMenu() {
 
 useEffect(()=>{
 
+
+
+
 		async function reload(){
 				const fetcher = await sessionStorage.getItem("league_data")
 					const parser = await JSON.parse(fetcher)
@@ -449,7 +452,21 @@ const [side_news, setSidenews] = useState()
 		////////////////LEAGUE SETUP FOR LARGER DEVICES/////////////
 
 	useEffect(()=>{
-			
+
+		async function job(){
+
+			     const liner = await localStorage.getItem("data")
+
+       const parserd =  await JSON.parse(liner)
+
+        if(parserd === null){
+
+        		navigate("/register")
+
+        }
+        
+			}
+			job()
 				setListd(
 			dated.map((item)=>{
 				return(

@@ -165,7 +165,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Info props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
     if (id === 2){
      
@@ -173,7 +173,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Match_info props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
 
     if (id === 3){
@@ -182,7 +182,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Stats props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
 
     if (id === 4){
@@ -191,7 +191,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Trial props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
 
 
@@ -201,7 +201,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Head_to_Head props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
 
     
@@ -211,7 +211,7 @@ const [useful, setUseful]= useState()
         setTabstate(id) 
     
             setBelow(<Table props  = {item} />)
-            console.log(return1)
+            //(return1)
         }
 
     } 
@@ -223,7 +223,7 @@ const [useful, setUseful]= useState()
 
 
 const today_date = d.toISOString().split('T')[0]
-console.log(today_date)
+//(today_date)
 
 const tomorrow_setup = new Date(d)
 tomorrow_setup.setDate(d.getDate()+1)
@@ -330,8 +330,8 @@ useEffect (()=>{
 
           axios.get("https://apiv3.apifootball.com/?action=get_events&match_id="+id+"&withPlayerStats=1&APIkey="+api_key)
             .then(async(res)=>{
-                console.log(res)
-                console.log(res.data[0])
+                //(res)
+                //(res.data[0])
 
                             
                           
@@ -371,124 +371,9 @@ useEffect (()=>{
 
                 const item = res.data[0]
                 var it = item
-      console.log(item.match_status, "match status")
+      //(item.match_status, "match status")
               
-                                  if (item.match_status === "Finished"){
-                                        console.log(item.match_status, "match status")
-                                        status = "FT"
-                                    }
-                                    else if(item.match_status === "After ET"){
-                                        status = "AEt"
-                                    }
-                                    else if(item.match_status == "Half Time"){
-                                        status = "HT"
-                                    }
-                                    else if (item.match_status == "Extra Time"){
-                                        status  = "ET"
-                                    }
-                                    else if (item.match_status == "Postponed"){
-                                        status = "Post."
-                                    }
-                                    else if(item.match_status == "Penalty"){
-                                        status = "Pen."
-                                    }
-
-                                    else if(item.match_status === ""){
-                                        
-
-                                          
-
-
-
-
-                                    }
-                                    else{ 
-                                            status = <div style = {{display : "flex", textAlign : "center", width : "100%", justifyContent : 'center'}}><p>{item.match_status}</p><p className = "live">'</p></div>
-                                    }
-
-
-
-        setI(item)
-
-                setD(
-                  <>
-                  <div  id = "background" >
-                     
-                  </div>
-                  <div style = {{width : "100%", position : "absolute", top : "0%"}}>
-                  <div style = {{width : "100%", display : "flex", justifyContent : "space-between", marginTop : "1.5%"}}><Link to = {"/"}><img src = {require("../images/R.png")} style = {{width : "30px", height : "30px", marginLeft : "3%"}}></img> </Link>
-                  <img src = {require("../images/bk.png")} style = {{width : "30px", height : "30px", marginRight : "3%"}}></img>
-                  </div>
-        <div className="main_row" >
-            <div style={{width : "40%"}} onClick = {()=>{sessionStorage.setItem("team", item.match_hometeam.id);  navigate("team")}} >
-                <img src = {item.team_home_badge} className="team_logos"></img>
-                <br></br>
-                <br></br>
-                <h6
-                        
-                                    
-                                    
-                       className="text-dark " id = "break-down">{item.match_hometeam_name}</h6
-                        
-                                    
-                                    
-                     >
-            </div>
-            <div>
-
-            <div style={{display : "flex", justifyContent : "space-between", width : "100%"}}>
-                <h1 className="text-dark">{item.match_hometeam_score}</h1>
-                <h1 className="text-dark" style={{marginLeft : "2%", marginRight : "2%"}}>:</h1>
-                <h1 className="text-dark text-center">{item.match_awayteam_score}</h1>
-            </div>
-             <h6 className="text-center text-danger">{status}</h6>
-           </div>
-          
-
-            <div id = "awaya" style={{width : "40%"}} onClick = {()=>{sessionStorage.setItem("team", item.match_hometeam.id);  navigate("team")}}>
-                <img src = {item.team_away_badge} className="team_logos"></img>
-                <br></br>
-                <br></br>
-               
-                <h6
-                        
-                                    
-                                    
-                   className= " text-dark " id ="break-down">{item.match_awayteam_name}</h6
-                        
-                                    
-                                    
-                     >
-            </div>
-
-
-              
-
-            </div>
-             
-
-
-         
-
-                <br></br>
-            </div>
-
- 
-
-
-               <div>
-           
-                </div>
-
-
-               
-              </>
-                
-
-                    )
-
-
-
+     
  
 
 
@@ -1323,12 +1208,12 @@ function Head_to_Headd(props){
 
              const response2 = await axios.get("https://apiv3.apifootball.com/?action=get_standings&league_id="+parser.league_id+"&APIkey="+api)
             const stringer = response2.data
-                console.log(stringer, "stringer")
+                //(stringer, "stringer")
             
 
 
             const stage_key = parser.stage_name
-            console.log(stage_key, "stringer")
+            //(stage_key, "stringer")
 
            
 
@@ -1343,7 +1228,7 @@ function Head_to_Headd(props){
              if (stage_key === "Group Stage" || stage_key === "Current" || stage_key === "Regular Season"){
 
                 const filter_array = stringer.filter((item)=> item.team_id === homeID || item.team_id === awayID)
-                console.log(stringer)
+                //(stringer)
                 
             setTable(filter_array.map((item)=>{
 
@@ -1365,7 +1250,7 @@ function Head_to_Headd(props){
             })
             )
 }
-                console.log(main, "Woomi")
+                //(main, "Woomi")
 
 
 
@@ -1376,43 +1261,43 @@ function Head_to_Headd(props){
 
                 setMap_return( slice_bread.map((element)=>{
                     var status
-                        console.log(element)   
-                        console.log(Number(element.match_awayteam_score) + Number(element.match_hometeam_score))
+                        //(element)   
+                        //(Number(element.match_awayteam_score) + Number(element.match_hometeam_score))
 
                 if(element.match_awayteam_id == homeID){
               
                     if(Number(element.match_awayteam_score) > Number(element.match_hometeam_score)){
                         status = "win"
-                        console.log("while severing as awayteam they won this match")
+                        //("while severing as awayteam they won this match")
 
                     }
 
                     else if(Number(element.match_awayteam_score) < Number(element.match_hometeam_score)){
                         status = "lost"
-                        console.log("while severing as awayteam they lost this match")
+                        //("while severing as awayteam they lost this match")
                     }
 
                     else if(Number(element.match_awayteam_score) == Number(element.match_hometeam_score)){
                         status = "draw"
-                        console.log("While playing away the drew this match")
+                        //("While playing away the drew this match")
                     }
 
                 }
                 else if(element.match_hometeam_id == homeID){
                     if(Number(element.match_hometeam_score) > Number(element.match_awayteam_score)){
                         status = "win"
-                        console.log("while severing as hometeam they won this match")
+                        //("while severing as hometeam they won this match")
 
                     }
 
                     else if(Number(element.match_hometeam_score) < Number(element.match_awayteam_score)){
                         status = "lost"
-                        console.log("while severing as hometeam they lost this match")
+                        //("while severing as hometeam they lost this match")
                     }
 
                     else if(Number(element.match_hometeam_score) == Number(element.match_awayteam_score)){
                         status = "draw"
-                        console.log("While playing at home the drew this match")
+                        //("While playing at home the drew this match")
                     }
 
                 }
@@ -1597,8 +1482,8 @@ function Head_to_Headd(props){
 
 })
 
-                    console.log(home_obj)
-                    console.log(away_obj)
+                    //(home_obj)
+                    //(away_obj)
 
                     const len = main.firstTeam_VS_secondTeam.length
 
@@ -1834,9 +1719,9 @@ const [news, setNews] = useState()
 
 
 const today_date = d.toISOString().split('T')[0]
-console.log(today_date)
+//(today_date)
 
-console.log(props.props)
+//(props.props)
 
     const prop = props
     const [recip, setRecip] = useState()
@@ -1863,7 +1748,7 @@ console.log(props.props)
     
         const fetched = await sessionStorage.getItem("fyer")
         const release = await JSON.parse(fetched)
-        console.log(release, "release")
+        //(release, "release")
         
         const item = release
 
@@ -1953,7 +1838,7 @@ setRecip(
         first_half.sort((a,b)=>{
             return Number(a.item.time)-Number(b.item.time);
         })
-        console.log(first_half, "sorted")
+        //(first_half, "sorted")
         second_half.sort((a,b)=>{
 
             return Number(a.item.time)-Number(b.item.time);
@@ -2383,11 +2268,11 @@ setRecip(
            )
 
      
-        console.log("first half materials", first_half)
+        //("first half materials", first_half)
 
 
 
-        console.log("second half materials", second_half)
+        //("second half materials", second_half)
 
 
 
@@ -2396,10 +2281,10 @@ setRecip(
 
 first_half.map((item)=>{
     if(item.item_info == "goal"){
-        console.log("this is item is a goal", item)
+        //("this is item is a goal", item)
     }
     else{
-        console.log("this item is a card", item)
+        //("this item is a card", item)
     }
 })
 
@@ -2407,10 +2292,10 @@ first_half.map((item)=>{
 
 second_half.map((item)=>{
     if(item.item_info == "goal"){
-        console.log("this is item is a goal", item)
+        //("this is item is a goal", item)
     }
     else{
-        console.log("this item is a card", item)
+        //("this item is a card", item)
     }
 })
 
@@ -2508,7 +2393,7 @@ second_half.map((item)=>{
 
 
 
-                    console.log(trans, "trans")
+                    //(trans, "trans")
 
       
         
@@ -2516,7 +2401,7 @@ second_half.map((item)=>{
             
             var home_mvp
             var away_mvp
-            console.log(res.data)
+            //(res.data)
             var player_info = []
             var stating = res.statistics
 
@@ -2529,13 +2414,13 @@ second_half.map((item)=>{
             
             player_info.forEach((element)=>{
               if (element.team_name == "home"){
-              console.log("home player pushing home")
+              //("home player pushing home")
              
           }
 
 
           else if(element.team_name == "away"){
-            console.log("away player pushing away")
+            //("away player pushing away")
             
           }
 
@@ -2549,13 +2434,13 @@ second_half.map((item)=>{
             if (player_info.length > 0){
                       player_info.forEach((element)=>{
               if (element.team_name == "home"){
-              console.log("home player pushing home")
+              //("home player pushing home")
            
           }
 
 
           else if(element.team_name == "away"){
-            console.log("away player pushing away")
+            //("away player pushing away")
            
           }
 
@@ -2574,7 +2459,7 @@ second_half.map((item)=>{
             const ay = await axios.get("https://apiv3.apifootball.com/?action=get_players&player_id="+away_mvp.player_key+"&APIkey="+api_key)
             const a = ay.data 
              
-                console.log(a,h)
+                //(a,h)
              setPr(
 
         <div style = {{ background : "white", borderRadius : "10px", width : "98%", marginRight : "1%", marginLeft : "1%"}}>
@@ -2615,7 +2500,7 @@ second_half.map((item)=>{
                     streaks = item
                 }
             })
-            console.log("this array got something to tell")
+            //("this array got something to tell")
             setRtr(
                     <div className = "container" style = {{background : "white", borderRadius : "10px", width : "90%", marginRight : "5%", marginLeft : "5%"}}>
                         <h6 className = "text-center">Important Stats</h6>
@@ -2639,21 +2524,21 @@ second_half.map((item)=>{
           }
 
           else if (stating.length < 1){
-            console.log("this array got nothing to tell")
+            //("this array got nothing to tell")
           }
 
 
 
         
 
-              console.log("home player pushing home")
+              //("home player pushing home")
        
-            console.log(home_mvp, away_mvp, "mvps")
+            //(home_mvp, away_mvp, "mvps")
 
 
         const fetched = await sessionStorage.getItem("parse")
         const release = await JSON.parse(fetched)
-        console.log(release, "release")
+        //(release, "release")
         
         const item = release
         
@@ -2665,7 +2550,7 @@ second_half.map((item)=>{
 
             if (props.props.match_status === "After Pen."){
         setDis(<div><h3 className = "text-center" style = {{color : "midnightblue"}}>Full Time: {props.props.match_hometeam_ft_score} : {props.props.match_awayteam_ft_score}</h3></div>)
-        console.log("this match went into penalty")
+        //("this match went into penalty")
     }
     else{
         setDis("")
@@ -2678,7 +2563,7 @@ second_half.map((item)=>{
 useEffect(()=>{
                 axios.get("https://apiv3.apifootball.com/?action=get_odds&match_id="+id+"&APIkey="+api_key)
                 .then(res=>{
-                    console.log(res, "odds")
+                    //(res, "odds")
                     setOdds(
                             <div style = {{background : "white ", borderRadius : "10px", width : "98%", marginRight : "1%", marginLeft : "1%"}}>
                                 
@@ -2694,7 +2579,7 @@ useEffect(()=>{
                         )
 
                 })
-                .catch(err=>{console.log("err")})
+                .catch(err=>{("err")})
 }, [])
 
 
@@ -2772,8 +2657,8 @@ const api_key = api
         .then((res)=> { 
 
 
-            console.log(res, "live data commentary")
-            console.log(res.data[id], "particular mathc")
+            //(res, "live data commentary")
+            //(res.data[id], "particular mathc")
 
 
 
@@ -2916,12 +2801,12 @@ useEffect(()=>{
         let away = Number(item.away)
         if(Number(item.home) > Number(item.away)){
             let percent = away+home
-            console.log(percent)
+            //(percent)
             let inner = away*100/percent
             let outcome = 100-inner
             let main = outcome+"%"
-            console.log("bigger")
-            console.log(main)
+            //("bigger")
+            //(main)
             return(
                 <>
                  <div style={{justifyContent : "space-between", display:"flex"}}>
@@ -2940,12 +2825,12 @@ useEffect(()=>{
         }
         else if(Number(item.away) > Number(item.home)){
             let percent = away+home
-            console.log(percent)
+            //(percent)
             let inner = home*100/percent
          
             let main = inner+"%"
-            console.log("bigger")
-            console.log(main)
+            //("bigger")
+            //(main)
             return(
                 <>
                  <div style={{justifyContent : "space-between", display:"flex"}}>
@@ -2980,7 +2865,7 @@ useEffect(()=>{
             )
         }
         else{
-            console.log('equal')
+            //('equal')
             return(
                 <>
                       <div style={{justifyContent : "space-between", display:"flex"}}>

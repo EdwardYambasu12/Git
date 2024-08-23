@@ -164,6 +164,8 @@ alert("please login")
 
         const multi = await axios.get(Line+"/users")
 
+        if(parser != null){
+
          const auth = multi.data.filter((item)=> item.email == parserd.email_reader )
 
 
@@ -270,6 +272,7 @@ alert("please login")
 
 
    }
+ }
    fetcher()
 
 }, [value, playerRating, injuryList])
