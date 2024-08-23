@@ -44,12 +44,12 @@ let d = new Date()
    const navigate = useNavigate()
 
 const today_date = d.toISOString().split('T')[0]
-console.log(today_date)
+//(today_date)
 
 const tomorrow_setup = new Date(d)
 tomorrow_setup.setDate(d.getDate()+1)
 const tomorrow_date = tomorrow_setup.toISOString().split('T')[0]
-console.log(tomorrow_date)
+//(tomorrow_date)
 
 const yesterday_setup = new Date(d)
 yesterday_setup.setDate(d.getDate()-1)
@@ -71,7 +71,7 @@ function getTimeZone() {
     return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
 }
 
-console.log(getTimeZone())
+//(getTimeZone())
 
 	var arrs = []
 	const [response, setResponse] = useState()
@@ -110,19 +110,19 @@ console.log(getTimeZone())
   var APIkey='your_account_APIkey';
   var socket  = new WebSocket('wss://wss.apifootball.com/livescore?Widgetkey='+APIkey+'&timezone=+03:00');
   
-	console.log('Connecting...');	
+	//('Connecting...');	
 	socket.onopen = function(e) {
 		alert('Connected');
-		console.log('Connected');
-		console.log('Waiting data...');
+		//('Connected');
+		//('Waiting data...');
 	}		  
 	socket.onmessage = function(e) {
 		alert( e.data );
 		if (e.data) {
 			var data = JSON.parse(e.data);
-			console.log(data);
+			//(data);
 		} else {
-			console.log('No new data!');
+			//('No new data!');
 		}
 	}
 	socket.onclose = function(){
@@ -173,7 +173,7 @@ useEffect(()=>{
 
 	setDem(Math.random())
 	
-	setTimeout(dem, 60000)
+	setTimeout(dem, 30000)
 }
 
 dem()
@@ -191,18 +191,22 @@ useEffect(()=>{
 
 					const multi = await axios.get(Line+"/users")
         
-       const auth = multi.data.filter((item)=> item.email == parser.email_reader )
-       console.log(auth, "auth")
+      
 
 			axios.get("https://apiv3.apifootball.com/?action=get_events&withPlayerStats=1&from="+yesterday+"&to="+yesterday+"&timezone="+getTimeZone()+"&APIkey="+api_key)
 			.then(res=>{
+				var data = res.data
+				var important = []
 								
-			
-						var important = []
+								  if (parser != null){
+    
+			   const auth = multi.data.filter((item)=> item.email == parser.email_reader )
+       //(auth, "auth")
+						
 						var followup_team = []
 						var followup_league = []
-						var data = res.data
-
+						
+if(auth.length > 0){
 						auth[0].favorite_league.forEach((element)=>{
 			 				var filter = data.filter((item)=> item.league_id ===  element.league_id)
 
@@ -220,12 +224,12 @@ useEffect(()=>{
 			 			})
 
 
-			 			const mergedArray = [...followup_team, ...followup_league].filter((item, index, arr) => arr.indexOf(item) === index);
-						console.log(mergedArray, "merging"); 
+			 			
+}
+
+const mergedArray = [...followup_team, ...followup_league].filter((item, index, arr) => arr.indexOf(item) === index);
+						//(mergedArray, "merging"); 
 			 		
-
-
-
 
 
 
@@ -361,34 +365,34 @@ useEffect(()=>{
 
 
 if(mergedArray.length <1){
-	setFollow(<h6 className = "text-dark text-center">Favorites not Playing Today</h6>)
+	setFollow(<h6 className = "text-dark text-center">Favorites not Playing </h6>)
+}
+
+
 }
 
 
 
 
 
-
-
-
-			 			console.log(res)
+			 			//(res)
                         leagues_ids.forEach((element)=>{
                             var filter = data.filter((item)=> item.league_id== element)
-                            console.log(filter)
+                            //(filter)
                             filter.map((item)=>{
                                  important.push(item)
                             })
                            
 
                         })
-                        console.log(important, "filter")
+                        //(important, "filter")
                        	setResponse(important)
 
                        	var sorted1 = sortByKey(important, 'key');
 										        var sorted_array1 = sortByKeyAsc(sorted1, "match_time");
 										        var groubedByTeam1 = groupBy(sorted_array1, 'country_name');
 
-										        console.log(groubedByTeam1)
+										        //(groubedByTeam1)
 										        const orderedLeagues1 = {};
 										        Object.keys(groubedByTeam1).sort().forEach(function(key) {
 										            orderedLeagues1[key] = groubedByTeam1[key];
@@ -402,7 +406,7 @@ if(mergedArray.length <1){
 										        			(item)=>{
 										        				var m = item.list
 										        				var so =  groupBy(m, 'league_name');
-										        				console.log(so, item.name)
+										        				//(so, item.name)
 										     		 Object.keys(so).sort().forEach(function(key) {
 										            orderedLeagues1[key] = groubedByTeam1[key];
 										
@@ -411,7 +415,7 @@ if(mergedArray.length <1){
 										        });
 
 										        			})
-										        			console.log(league_route)
+										        			//(league_route)
 										        			
 
 										        			if(league_route1.length > 0){
@@ -442,7 +446,7 @@ if(mergedArray.length <1){
 			        
 			        			}
 			        		})
-			        		console.log(active_digit, item.league_name)
+			        		//(active_digit, item.league_name)
 			        		return(
 			        		<div style = {{marginTop : "2%", borderRadius : "10%", background : "white", width : "100%"}}>
 													     <Accordion defaultExpanded >
@@ -572,12 +576,12 @@ if(mergedArray.length <1){
 )
 						/////////////////////////////////////////////////////////////////////
 						setResponse(res.data)
-						console.log(res.data, "data")	
+						//(res.data, "data")	
 	        			var sorted = sortByKey(res.data, 'key');
 										        var sorted_array = sortByKeyAsc(sorted, "match_time");
 										        var groubedByTeam = groupBy(sorted_array, 'country_name');
 
-										        console.log(groubedByTeam)
+										        //(groubedByTeam)
 										        const orderedLeagues = {};
 										        Object.keys(groubedByTeam).sort().forEach(function(key) {
 										            orderedLeagues[key] = groubedByTeam[key];
@@ -591,7 +595,7 @@ if(mergedArray.length <1){
 										        			(item)=>{
 										        				var m = item.list
 										        				var so =  groupBy(m, 'league_name');
-										        				console.log(so, item.name)
+										        				//(so, item.name)
 										     		 Object.keys(so).sort().forEach(function(key) {
 										            orderedLeagues[key] = groubedByTeam[key];
 										
@@ -600,7 +604,7 @@ if(mergedArray.length <1){
 										        });
 
 										        			})
-										        			console.log(league_route)
+										        			//(league_route)
 
 										        	
 										        
@@ -617,7 +621,7 @@ if(mergedArray.length <1){
 			        		}
 			        		
 			        		setLive(<div onClick ={ ()=>{
-									console.log(item, "being selected")
+									//(item, "being selected")
 									  navigate("/match_small", {state : live_m})
 								}
 								} style = {{height : "40px", background : "white", alignItems : "center", display : "flex", justifyContent : "space-between"}}><div style = {{display : "flex", alignItems : "center" }}><img src = {require("../images/live.jpg")} id = "logod"></img><h6 className = "text-danger">Live Matches </h6></div><h6 className = "text-danger" style = {{marginRight : "5%"}}>{live_m.length}</h6></div>)
@@ -634,7 +638,7 @@ if(mergedArray.length <1){
 			        		details.map((item)=>{
 			        	
 			        			if(item.match_live === "1"){
-			        				console.log(item.match_live)
+			        				//(item.match_live)
 			        				number_system += 1
 			        				active_digit = number_system
 			        				live_m.push(item)
@@ -642,7 +646,7 @@ if(mergedArray.length <1){
 			        	
 			        			}
 			        			else if(item.match_live === "0"){
-			        				console.log(item.match_live)
+			        				//(item.match_live)
 			      
 			        			}
 
@@ -651,7 +655,7 @@ if(mergedArray.length <1){
 			        			})
 			        		})
 			        		 
-			        		console.log(active_digit, item.league_name)
+			        		//(active_digit, item.league_name)
 
 			        		
 

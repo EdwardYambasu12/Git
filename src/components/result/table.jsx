@@ -63,10 +63,15 @@ useEffect(() => {
 
 	   
         try {
+
+
+                const fyer = await sessionStorage.getItem("parse")
+                const parser = await JSON.parse(fyer)
+
            
 			
 
-			 const response2 = await axios.get("https://apiv3.apifootball.com/?action=get_standings&league_id="+league_id+"&APIkey="+api)
+			 const response2 = await axios.get("https://apiv3.apifootball.com/?action=get_standings&league_id="+parser.league_id+"&APIkey="+api)
             const data = response2.data
 
 			console.log(data, "data for case study")

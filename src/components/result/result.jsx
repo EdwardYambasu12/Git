@@ -269,18 +269,7 @@ function getTimeZone() {
 
 
 
-
-  var status 
-const date = new Date()
-    const seconds = date.getSeconds()
-
-      const dyerx = sessionStorage.getItem("fyer")
-                        const ryerx = JSON.parse(dyerx)
-
-                                  var new_seconds = seconds
-                        var minute = Number(ryerx.match_status)
-
-                        const [min, setMin]= useState(Number(ryerx.match_status))
+var status
 
 useEffect(()=>{
     function ren(){
@@ -1203,7 +1192,7 @@ function Head_to_Headd(props){
 
              const mature = JSON.stringify(maind)
 
-             sessionStorage.setItem("h2h", mature)
+           
                     
 
              const response2 = await axios.get("https://apiv3.apifootball.com/?action=get_standings&league_id="+parser.league_id+"&APIkey="+api)
@@ -1631,7 +1620,6 @@ const [news, setNews] = useState()
 
 
 
-
   useEffect(()=>{
             axios.get(Line+"/sportsup_news")
             .then((res)=>{
@@ -1731,7 +1719,7 @@ const today_date = d.toISOString().split('T')[0]
     const [dis, setDis]= useState()
     const navigate = useNavigate()
     const [leag, setLeag] = useState(
-                    <div style={{width : "100%", display : "flex", alignItem : "center"}}> <img style={{height :"30px", width : "30px"}} src = { props.props.league_logo === "" ? require("../images/no-img.png") : props.props.league_logo }></img> <h6 className = "text-secondary"  onClick = {()=>{navigate("/leagues/leauges_mall");const stringer = JSON.stringify(props.props); sessionStorage.setItem("selected_league", stringer)}} >{props.props.league_name} - {props.props.league_year}</h6></div>
+                    
                 )
         const [pr, setPr] = useState()
        let {id} = useParams();
@@ -1748,6 +1736,8 @@ const today_date = d.toISOString().split('T')[0]
     
         const fetched = await sessionStorage.getItem("fyer")
         const release = await JSON.parse(fetched)
+
+        setLeag(<div style={{width : "100%", display : "flex", alignItem : "center"}}> <img style={{height :"30px", width : "30px"}} src = { release.league_logo }></img> <h6 className = "text-secondary"  onClick = {()=>{navigate("/leagues/leauges_mall");const stringer = JSON.stringify(release); sessionStorage.setItem("selected_league", stringer)}} >{release.league_name} - {release.league_year}</h6></div>)
         //(release, "release")
         
         const item = release

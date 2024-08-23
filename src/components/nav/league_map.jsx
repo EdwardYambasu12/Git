@@ -247,9 +247,11 @@ if (data != null){
     const parser =  await JSON.parse(liner)
         const multi = await axios.get(Line+"/users")
 
-        if (parser != null){
+       
         
        const auth = multi.data.filter((item)=> item.email == parser.email_reader )
+
+       console.log(auth)
 
        
 
@@ -284,6 +286,7 @@ if (data != null){
 
 
     else{
+      alert("please login or Signup")
       setTop(
             <>Login Or Signup to follow leagues</>
         )
@@ -294,11 +297,11 @@ console.log(auth)
 
 setAll(
       data.map((item)=>{
-                        var status 
+                        var status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed; }}>follow</p> 
                       const followed = <p onClick = {()=>{ status = notfollowed; posterd(item); }}>following</p>
                       const notfollowed = <p className = "text-dark" onClick = {()=>{poster(item); status = followed}}>follow</p> 
 
-
+                        if(auth.length > 0){
 
                       const checker = auth[0].favorite_league.filter((it)=> it.league_id ===  item.league_id)
                    
@@ -311,6 +314,8 @@ setAll(
 
                         status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed; }}>follow</p> 
                       }
+
+                    }
         return(
 
 
@@ -330,7 +335,7 @@ setAll(
       console.log(data)
 
     }
-  }
+  
 }
     tolerate()
 

@@ -8,9 +8,8 @@ import {Link, useLocation, useNavigate} from "react-router-dom"
 
 export default function Head_to_Head(props){
 
-    const match_data = props.props
-    const homeID = match_data.match_hometeam_id
-    const awayID = match_data.match_awayteam_id
+   
+ 
     const [map_return, setMap_return] = useState()
     const [map_return_2, setMap_return_2] = useState()
     const [h2h, setH2h] = useState()
@@ -37,6 +36,8 @@ export default function Head_to_Head(props){
 
                 const fyer = await sessionStorage.getItem("parse")
                 const parser = await JSON.parse(fyer)
+
+                 const match_data = parser
 
                   const homeID = parser.match_hometeam_id
                   const awayID  = parser.match_awayteam_id

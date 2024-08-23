@@ -24,6 +24,7 @@ import SportsIcon from '@mui/icons-material/Sports';
 import FeedIcon from '@mui/icons-material/Feed';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import Line from "../../line.js"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 function LabelBottomNavigation() {
@@ -98,7 +99,7 @@ console.log(terms)
           confirm_password : password_value
         }
 
-         fetch("http://localhost:5000/register", {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body :new URLSearchParams(data)})
+         fetch(Line+"/register", {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body :new URLSearchParams(data)})
       
         async function auth(){
 
