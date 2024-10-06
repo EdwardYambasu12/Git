@@ -18,6 +18,8 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .App-header {
   background-color: #282c34;

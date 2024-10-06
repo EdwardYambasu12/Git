@@ -197,25 +197,26 @@ useEffect(()=>{
 
         if (parser != null){
         
-       const auth = multi.data.filter((item)=> item.email == parser.email_reader )
+       const auth = multi.data.filter((item)=> item.email == parser.email )
 
 
        if (auth.length > 0){
 
         setTeam(
-              auth[0].favorite_team.map((item)=>{
+              auth[0].favorite_team.map((it)=>{
+
+                const item = JSON.parse(it)
                   return(
-                         <div onClick = {()=>{const home = JSON.stringify(item.team_key); sessionStorage.setItem("team", home);  navigate("/team")}} style = {{background : "white", borderRadius : "10px"}}>
+                         <div onClick = {()=>{const home = JSON.stringify(item.team_key); sessionStorage.setItem("team", home);  navigate("/team/"+item.id)}} style = {{background : item.color, height : "160px", marginTop : "5%", borderRadius : "10px"}}>
                         <br></br>
                         <div className = "container" >
 
-                          <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src = {item.team_badge}></img>
-                          <h4 className = "text-dark" style = {{whiteSpace: "nowrap", overflow : "hidden", textOverflow: "ellipsis"}}>{item.team_name}</h4>
+                          <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"}></img>
                           <br></br>
-                          <div style = {{display : "flex", width : "100%"}}><StadiumIcon/> <p className = "text-danger" style = {{whiteSpace: "nowrap", overflow : "hidden", textOverflow: "ellipsis"}}>{item.venue.venue_name}</p></div>
-
-                          <h6 className = "text-success">{item.team_country}</h6>
-                          </div>
+                          <br></br>
+                          <h4 className = "text-light" style = {{whiteSpace: "nowrap", overflow : "hidden", color : "white", textOverflow: "ellipsis"}}>{item.name}</h4>
+                          <br></br>
+                        </div>
                         </div>
                     )
               })
@@ -227,16 +228,18 @@ useEffect(()=>{
     
 
           setPlayers(
-              auth[0].favorite_player.map((item)=>{
+              auth[0].favorite_player.map((it)=>{
+
+                const item = JSON.parse(it)
                 return(
-                    <div onClick = {()=>{const home = JSON.stringify(item.player_key); sessionStorage.setItem("player", home);  navigate("/player")}} style = {{background : "white", borderRadius : "10px"}}>
+                    <div onClick = {()=>{const home = JSON.stringify(item.player_key); sessionStorage.setItem("player", home);  navigate("/player/"+item.id)}} style = {{background : "white", height : "160px", marginTop : "5%", borderRadius : "10px"}}>
                         <br></br>
                         <div className = "container" >
 
-                          <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src = {item.player_image}></img>
-                          <h4 style = {{whiteSpace: "nowrap", overflow : "hidden", textOverflow: "ellipsis"}} className = "text-dark">{item.player_name}</h4>
+                          <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.id}.png`} ></img>
+                          <h4 style = {{whiteSpace: "nowrap", overflow : "hidden", textOverflow: "ellipsis"}} className = "text-dark">{item.name}</h4>
                           <br></br>
-                          <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}><p>Player Rating: </p><p className = "text-danger bg-dark">{item.player_rating}</p></div>
+                          <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}><p>⚽:{item.goals} </p> <p>🎯:{item.assist} </p> <p>🚩:{item.apps} </p></div>
 
                           <h6 className = "text-success">{item.player_type}</h6>
                           </div>

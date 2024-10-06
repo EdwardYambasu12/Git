@@ -50,7 +50,7 @@
     height:  60px;
     position: relative;
      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
- 
+         font-family: monospace;
     
 }
 #transformer{
@@ -307,6 +307,11 @@ body{
     margin-left: 2%;
     background-color: slategray;
     border-radius: 9px;
+}
+
+
+#field{
+    transform: rotateZ(90deg);
 }
 
 @media only screen and (min-width : 900px){

@@ -1,596 +1,481 @@
 import React, { useEffect, useState } from "react";
-import api from "../nav/details.js"
-import axios from "axios"
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Line from "../../line.js"
- import {createTheme} from '@mui/material/styles'
-import {ThemeProvider} from '@mui/material/styles'
+import axios from "axios";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
-import { Tabs, Tab, } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import RadioIcon from '@mui/icons-material/Radio';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { styled } from '@mui/material/styles';
-import {Link, useNavigate} from "react-router-dom"
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CircularProgress from '@mui/material/CircularProgress';
+import Pagination from '@mui/material/Pagination';
+import {
+  Button, 
+  CircularProgress, 
+  Divider, 
+  List, 
+  ListItemButton, 
+  ListItemText, 
+  Box, 
+  Skeleton, 
+  Tabs, 
+  Tab, 
+  Typography, 
+  AppBar, 
+  Toolbar, 
+  IconButton, 
+  Accordion, 
+  AccordionSummary, 
+  AccordionDetails, 
+  Dialog, 
+  Slide 
+} from '@mui/material';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
-import Slide from '@mui/material/Slide';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Line from "../../line.js"; // Make sure this path is correct
 
-
-
-
-
-
-const Theme = createTheme({
+const theme = createTheme({
   palette: {
     primary: {
-      
       main: '#FFD700',
-      
     },
     secondary: {
-      light: '#ff7961',
       main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
     },
   }
-})
-
-export default function Leagues(){
+});
 
 
-const [value, setValue] = useState(0);
+const calculateTimeDifference = (pastTimeString) => {
+    const pastDate = new Date(pastTimeString);
+    const now = new Date();
+    const diffInMs = now - pastDate;
+    
+    const diffInSeconds = Math.floor(diffInMs / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    return {
+        seconds: diffInSeconds,
+        minutes: diffInMinutes,
+        hours: diffInHours,
+    };
+};
 
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
+// TimeDifference Component
+const TimeDifference = ({ pastTimeString }) => {
+    const [timeDifference, setTimeDifference] = useState(() => calculateTimeDifference(pastTimeString));
 
-    var more
-    const [ret, setRet] = useState(<Box style={{ display: 'flex', width : "100%", justifyContent : "center",  }}>
-      <CircularProgress sx= {{backgroundColor : "white", borderRadius : "50%"}} />
-    </Box>)
-    const navigate = useNavigate()
-useEffect(()=>{
-   async function fetcher(){
+    useEffect(() => {
+        // Update the time difference every second
+        const intervalId = setInterval(() => {
+            setTimeDifference(calculateTimeDifference(pastTimeString));
+        }, 1000);
 
-    const league = sessionStorage.getItem("selected_league")
-    const data = JSON.parse(league)
-    console.log(data)
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
+    }, [pastTimeString]);
 
+    if(timeDifference.seconds < 60){
+      return(
+            <p>now</p>
+        )
+    }
 
-     const item = data
-async function poster(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
+    if( timeDifference.hours == 0 && timeDifference.minutes > 0){
+      return(
+            <p>{timeDifference.minutes} minutes ago</p>
+        )
+    }
 
-  
-if(data != null){
- 
-
-     const multi = await axios.get(Line+"/users")
-        
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
-
-       var _id = auth[0]._id
-        console.log(auth)
-
-
- console.log(Line+"/favorite_leagues")
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_leagues",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
+    if( timeDifference.hours > 0){
+      return(
+            <p>{timeDifference.hours} hours ago</p>
+        )
+    }
 
 
 
-window.location.reload();
-}
+};
 
-else if(data === null){
 
-alert("please login")
-}
-}
-
-async function posterd(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
+const Ayyah = ()=>{
 
   
+    const [modem, setModem] = useState()
+      const { id } = useParams();
+  const [value, setValue] = useState(0);
 
- if(data != null){
+  const [playerData, setPlayerData] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
 
-     const multi = await axios.get(Line+"/users")
-        
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
+  const fetchPlayerData = async () => {
+    try {
+      const response = await axios.get(`${Line}/league`, { params: { id } });
+      setPlayerData(response.data);
+    } catch (err) {
+      setError("Error fetching player data.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-       var _id = auth[0]._id
-        console.log(auth)
-       
+  const fetchUserFavorites = async () => {
+    const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
+    const { data: users } = await axios.get(`${Line}/users`);
+    const user = users.find(user => user.email === done.email && user.password === done.password);
 
- console.log(Line+"/favorite_leagues_remove")
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_leagues_remove",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
+      const monk = {
+        id : playerData.details.id,
+        name : playerData.details.name,
+              }
 
-window.location.reload();
-}
-else if(data === null){
+      const league = JSON.stringify(monk)
+     
 
-alert("please login")
-}
-}
+    if (user?.favorite_league.includes(league)) {
+      setIsFollowing(true);
+    }
 
-    console.log(data)
-
-     const liner = await localStorage.getItem("data")
-
-       const parser =  await JSON.parse(liner)
-         console.log(parser)
-
-
-
-
-        const multi = await axios.get(Line+"/users")
-
-        if(parser != null){
-
-         const auth = multi.data.filter((item)=> item.email == parser.email_reader )
-
-
-    var status 
-                      const followed = <p onClick = {()=>{ status = notfollowed; posterd(item); }}>following</p>
-                      const notfollowed = <p className = "text-dark" onClick = {()=>{poster(item); status = followed}}>follow</p> 
+    const filterer = user.favorite_league.filter(item=> item === league)
 
 
 
-                      const checker = auth[0].favorite_league.filter((it)=> it.league_id ===  item.league_id)
-                   
-                      if(checker.length > 0){
-                        status = <p onClick = {()=>{ status = notfollowed; posterd(item);  }} >following</p>
-                           console.log(checker)
-                      }
+    return(user)
+  };
 
-                      else{
+  const toggleFollowPlayer = async () => {
+    const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
 
-                        status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed; }}>follow</p> 
-                      }
+      const monk = {
+        id : playerData.details.id,
+        name : playerData.details.name,
+              }
 
+      const league = JSON.stringify(monk)
+    const user_id = await fetchUserFavorites()
+    const place = {
+      id_: user_id._id,
+      league_id: league,
+    };
 
-    setRet(
-            <div >
-        
-        <div className = " navbar-nav nav fixed-top bg-light">           
-         <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}}>
-            <Button onClick={()=>navigate("/leagues")} className = "text-dark" style = {{textAlign : "left"}} autoFocus color="inherit" >
-             <ArrowBackIcon/>
-            </Button>
+    const url = isFollowing ? `${Line}/favorite_league_remove` : `${Line}/favorite_league`;
+    
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(place),
+    });
+    setIsFollowing(!isFollowing);
+  };
 
-           <strong>{status}</strong>
+  useEffect(() => {
+
+        fetchPlayerData();
+   
+  }, []);
+
+  if (loading) return <CircularProgress />;
+  if (error) return <Typography color="error">{error}</Typography>;
+  if (!playerData) return null;
+var data = playerData
+console.log(data)
+
+ async function toller(){
+   
+    fetchUserFavorites();
+          const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
+    const { data: users } = await axios.get(`${Line}/users`);
+    const user = users.find(user => user.email === done.email && user.password === done.password);
+
+      const monk = {
+        id : playerData.details.id,
+        name : playerData.details.name,
+              }
+
+      const league = JSON.stringify(monk)
+    console.log(user)
+    const filterer = user.favorite_league.filter(id=> id === league )
+      
+    if(filterer.length > 0){
+      console.log("following this league")
+      setIsFollowing(true)
+    }
+  }
+
+  toller()
+   return(
+                  <div style={{ height: "150px" }}>
+                        <div style = {{ background: data.details.leagueColor,}} className =  "fixed-top">
+                  <br></br>
+            <div style={{ display: "flex", width: '100%', justifyContent: "space-between" }}>
+              <ArrowBackIcon onClick={() => navigate(-1)} style={{ color : "white", cursor: 'pointer' }} />
+              <Button style = {{background : "white", color : "blue"}} onClick={toggleFollowPlayer} variant={isFollowing ? "contained" : "outlined"}>
+            {isFollowing ? "Following" : "Follow"}
+          </Button>
             </div>
-
-             
-
-                        <div style = {{display : "flex",alignItems : "center", width : "100%" }}> 
-
-                        <div><img style = {{height : "80px", width : "80px"}} src = {data.league_logo} ></img></div>
-                        <div><div><h2>{data.league_name}</h2><h6 className = "text-warning" >{data.country_name}</h6></div>
-                            
-                        </div>
-                     
-                        </div>
-                  
-       
-
-
-      
-     
-   
-     
- 
-                        <div>
-
-      <ThemeProvider theme = {Theme}>
-        <Tabs style ={{background : "inherit", borderWidth : "0px",  boxShawdow : "none"}} textColor = "primary" value={value} TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }} onChange={handleChange}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"  >
-          <Tab label="Fixtures" />
-          <Tab label="Table" />
-          <Tab label="Teams" />
-          <Tab label="Top Scorer" />
-        </Tabs>
-        </ThemeProvider>
-        </div>
+            <div style={{ display: "flex", width: '100%', justifyContent: "space-between" }}>
+              <div style={{ display: "flex", width: "100%" }}>
+                <img style={{ width: "50px", height: "50px", background : "white" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${data.details.id}.png`} alt="League Logo" />
+                <div>
+                  <Typography variant="h5" color="white">{data.details.name}</Typography>
+                  <Typography color="gold">{data.details.country}</Typography>
+                </div>
+              </div>
+            </div>
+            <ThemeProvider theme={theme}>
+              <Tabs
+                style={{ background: "inherit", borderWidth: "0px", boxShadow: "none", color: "white" }}
+                value={value}
+                TabIndicatorProps={{ style: { backgroundColor: 'gold', color: "white" } }}
+                onChange={(event, newValue) => setValue(newValue)}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="gold tabs example"
+              >
+                {data.tabs.map((item) => (
+                  <Tab key={item} style={{ color: "white" }} label={item === "overview" ? "Info" : item} />
+                ))}
+              </Tabs>
+            </ThemeProvider>
 
 
-      
-     
-   
-     
- </div>
+            </div>
+            <div style = {{marginTop : 180}}  className = "container">
+              <SwipeableViews index={value} onChangeIndex={(index) => setValue(index)}>
+                {data.tabs.map((item, index) => (
+                <div>
+                  <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "overview" && <Info data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
+
+                   <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "table" && <Table data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
+
+                    <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "stats" && <Stats data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
+                  <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "matches" && <Matches data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
+
+                  <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "transfers" && <Transfers data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
 
 
+                  </div>
+                ))}
+              </SwipeableViews>
+            </div>
+          </div>
+            )
 
+    
 
-   <div id = "love" style = {{background : "#EEEEEE"}}>
-      <br></br>
-      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-        <Typography component="div" role="tabpanel" hidden={value !== 0}>
-        
-         
-        <Fixtures/>
-
-        </Typography>
-
-        <Typography component="div" role="tabpanel" hidden={value !== 1}>
-            <Table/>
-                    </Typography>
-        <Typography component="div" role="tabpanel" hidden={value !== 2}>
-          <Teams/>
-        </Typography>
-        <Typography component="div" role="tabpanel" hidden={value !== 3}>
-           <Top_Scorer/>
-        </Typography>
-       
-
-      </SwipeableViews>
-    </div>
-
-
-
-
-        </div>        )
-
-
-   }
-}
-   fetcher()
-
-}, [value])
-    return(
-        <body style = {{background : "#EEEEEE"}}>
-            
-            {ret}
-        </body>
-    )
     
 }
+const Player = ({ player }) => {
+  const { name, playerImage, horizontalLayout, verticalLayout, id, rating, teamId } = player;
+  const navigate = useNavigate()
+  const [data, setData] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+  const monk =  sessionStorage.getItem("data_");
+const parser = JSON.parse(monk);
+
+  useEffect(() => {
+    const fetchPlayerData = async () => {
 
 
 
-function Fixtures(){
-
-const [response, setResponse]= useState()
-const [all, setAll] = useState()
-const navigate = useNavigate()
-var league_route = []
-var route = []
-
-
-    async function sed(item){
-        const fyer = await JSON.stringify(item)
-
-
-        sessionStorage.setItem("fyer", fyer)
-          sessionStorage.setItem("parse", fyer)
-        navigate("/match_small/result/"+item.match_id, {state : item })
-
-}
-
-function getTimeZone() {
-    var offset = new Date().getTimezoneOffset(),
-        o = Math.abs(offset);
-    return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
-}
-
-let d = new Date()
-   
-
-
-
-const tomorrow_setup = new Date(d)
-tomorrow_setup.setDate(d.getDate()+60)
-const month = tomorrow_setup.toISOString().split('T')[0]
-
-
-const yesterday_setup = new Date(d)
-yesterday_setup.setDate(d.getDate()-15)
-const today_date = yesterday_setup.toISOString().split("T")[0]
-
-
-            var groupBy = function(xs, key) {
-            return xs.reduce(function(rv, x) {
-                (rv[x[key]] = rv[x[key]] || []).push(x);
-                return rv;
-            }, {});
-        };
-        function sortByKeyAsc(array, key) {
-            return array.sort(function(a, b) {
-                var x = a[key];
-                var y = b[key];
-                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-            });
-        }
-
-            function sortByKey(array, key) {
-                    return array.sort(function(a, b) {
-                        var x = a[key];
-                        var y = b[key];
-                        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-                    });
-                }
-
-
-    useEffect(()=>{
+        setData(
+          <div onClick = {()=>{navigate("/player/"+id)}}
+            style={{
+              position: 'absolute',
+              left: `${verticalLayout.x * 100}%`,
+              top: `${verticalLayout.y * 100}%`,
+              width: 50,
+              height: 50,
+              backgroundColor: 'white',
+              backgroundImage: `url("https://images.fotmob.com/image_resources/playerimages/${id}.png")`,
+              backgroundSize: 'cover',
+              color: 'white',
+              fontSize: '13px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '50%',
+              transform: 'translatex(-50%) translateY(-70%)',
+              textAlign: 'center'
+            }}
         
-       async function dom(){
+          >
+            <div
+              style={{
+                color: 'white',
+                height : 17,
+                borderRadius: '5px',
+                transform: 'translateY(-40%)',
+                background: rating.bgcolor
+              }}
+            >
+          <p>{rating.num}</p>
+            </div>
+            <div> <img
+                      src={`https://images.fotmob.com/image_resources/logo/teamlogo/${teamId}_xsmall.png`}
+                                                                                                                             
+                          style={{ width: "15px", height: "15px", borderRadius: "50%" }}
+                      /></div>
+            <div style={{ transform: 'translateY(170%)', textAlign: 'center' }}>
+              <strong>{name.lastName}</strong>
+            </div>
+          </div>
+        );
+      }
+  
+    
 
-        try{
-        const league = sessionStorage.getItem("selected_league")
-        const datam = JSON.parse(league)
-        const league_id = datam.league_id
-        console.log(datam)
-        console.log(league_id)
-           const raw_data = await axios.get("https://apiv3.apifootball.com/?action=get_events&withPlayerStats=1&from="+today_date+"&to="+month+"&league_id="+league_id+"&APIkey="+api)
-            const main_data = raw_data.data
-           const filterer = main_data.filter((item)=> item.league_id === datam.league_id)
+    fetchPlayerData();
+  }, [player.id, verticalLayout.x, verticalLayout.y]);
 
-            const data = filterer
-            console.log(data)
-        
-            if (data.length  < 1){
-                setAll(<h6 className = "text-center text-secondary">Cannot determing Fixtures at this moment</h6>)
-            }
-
-            else{
-
-var sorted = sortByKey(data, 'key');
-                                                var sorted_array = sortByKeyAsc(sorted, "match_time");
-                                                var groubedByTeam = groupBy(sorted_array, 'match_date');
-
-                                                console.log(groubedByTeam)
-                                                const orderedLeagues = {};
-                                                Object.keys(groubedByTeam).sort().forEach(function(key) {
-                                                    orderedLeagues[key] = groubedByTeam[key];
-                                        
-                                                    route.push({name : key, list : groubedByTeam[key]})
-
-                                                });
-                                             
-                                                    setResponse(route)
-                                                    route.map(
-                                                            (item)=>{
-                                                                var m = item.list
-                                                                var so =  groupBy(m, 'match_date');
-                                                                console.log(so, item.name)
-                                                     Object.keys(so).sort().forEach(function(key) {
-                                                    orderedLeagues[key] = groubedByTeam[key];
-                                        
-                                                   league_route.push({country : item.name,  match_date : key , list  : so[key] })
-
-                                                });
-
-                                                            })
-                                                            console.log(league_route)
-
-                                                            league_route.reverse()
+  return (
+    <>
+      {data}
 
 
-setAll(
+    </>
+  );
+};
 
 
-    league_route.map((item)=>{
-                    const details = item.list
-                    const declared_date = item.match_date
-                            var state 
-                            var active_digit = ""
-                    
-                            const badge = details[0].league_logo
-                            if (badge === ""){
-                                state = require("../images/no-img.png")
-                            }
-                            else{
-                                state = badge
-                            }
-                            var number_system  = 0 
-                            details.map((item)=>{
-                        
-                                if(item.match_live === "1"){
-                                    
-                                    number_system += 1
-                                    active_digit = number_system
-                        
-                                }
-                                else if(item.match_live === "0"){
-                    
-                                }
-                            })
+const Field = ({ players }) => {
 
-                            return(
-                <div style = {{marginTop : "2%", borderRadius : "10px"}}>
-                                                         <Accordion sx = {{borderRadius : "10px"}} defaultExpanded>
-                            <AccordionSummary
-                                 expandIcon={<ExpandMoreIcon />}
-                                  aria-controls="panel1-content"
-                                  id="panel1-header"
+     const fieldStyle = {
+    position: 'relative',
+    width: '100%', // Full width
+    height: '70%', // Taller height for portrait mode
+    backgroundColor: 'darkgray',
+    borderTopRadius : "10px"
+  };
 
-                                  sx = {{width : "100%", borderRadius : "10px" }}
-                            >
-                              <div className = "league_description">
+return (
+    <div style= {fieldStyle}>
+      {players.map(player =>{
 
-                              <div style = {{display: "flex", alignItems : "center", width : "90%"}}><img src = {state} id = "logod"></img><h6 id = "break-down1" >{declared_date}</h6></div>
+      return (
+        <Player key={player.id} player={player} />
+      )})}
+    </div>
+  );
+    
+};
 
-                              <div style = {{width : "10%", display : "flex", justifyContent : "space-between"}}><h6 style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "#EEEEEE"}}>{details.length}</h6><h6 style = {{color : "red"}}>{active_digit}</h6></div>
-
-                              </div>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                {details.map((id)=>{
-
-                                    var reddish_home = []
-                            var reddish_away = []
-
-                                    id.cards.map((it)=>{
-                                        if(it.away_fault === ""){
-                                        if(it.card === "red card"){
-                                            reddish_home.push(it)
-                                        }
-                                    }
-                                    if(it.home_fault === ""){
-                                        if(it.card === "red card"){
-                                            reddish_away.push(it)
-                                        }
-                                    }
-
-                                    })
-                                        
-                                    var radar = reddish_home.map(()=>{
-                                return(<span style = {{height : "8px", width : "6px", background : "red"}} id = "spaning"></span>)
-                            })
-                            var radar1 = reddish_away.map(()=>{
-                                return(<span style = {{height : "8px", width : "4px", background : "red"}} id = "spaning"></span>)
-                            })
-                                    var status
-                                    var live
-                                    var win_style1
-                                    var win_style2
-                                    if (id.match_status === "Finished"){
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
-                                        status =    <h6 className = "text-secondary"  style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "#EEEEEE"}}>FT</h6>                                
-                                        
-
-                                    }
-                                    else if(id.match_status === "After ET"){
-                                        status =    <h6 className = "text-secondary" style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "#EEEEEE"}}>AeT</h6>    
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
-
-                                    }
-                                    else if(id.match_status == "Half Time"){
-                                        status =    <h6 className = "text-secondary" style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "#EEEEEE"}}>HT</h6>                             
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
-
-                                    }
-
-                                    
-                                    else if (id.match_status == "Extra Time"){
-                                        status =    <h6 className = "text-secondary" style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "#EEEEEE"}}>ET</h6> 
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
-
-                                    }
-                                    else if (id.match_status == "Postponed"){
-                                        status =    <h6 className = "text-light" style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "black"}}>PP</h6>   
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
-
-                                    }
-                                    else if (id.match_status == "After Pen."){
-                                        status =    <h6 className = "text-light" style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", borderRadius : "50%", background : "black"}}>Pn</h6>   
-                                        live = <><h6>{id.match_hometeam_penalty_score}</h6>-<h6>{id.match_awayteam_penalty_score}</h6></>
-
-                                    }
-                                    else if (id.match_live == 1){
-                                        status =    <h6 style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", color : "white", borderRadius : "50%", background : "red"}}>{id.match_status}</h6>                          
-                                        live = <><h6>{id.match_hometeam_score}</h6>-<h6>{id.match_awayteam_score}</h6></>
+////////////////////////////////////////////////////////////////////////////////////
 
 
-                                    }
 
-                                    else if(id.match_status == ""){
-                                            status = <BookmarkBorderIcon className = "text-dark" onClick = {()=>{alert("take me home")}}/>  
-                                            live = <span className = "text-dark">{id.match_time}</span> 
-                                    }
-                                    var phone = <HeadphonesIcon sx = {{width : "15px", height : "10px"}}/> 
+/////////////////////////////////// T R A N S F E R S
 
-                                    return(
+const Transfers = ({data})=>{
 
-                            <div onClick={()=>{sed(id)}}   to = {"result/"+id.match_id} style = {{display : "flex", marginTop : "3%", width : "100%", justifyContent : "space-between", background : "white", borderRadius : "10px", textDecoration : "none"}} >
+        const [trans, setTrans]= useState()
 
-                                    <div style = {{display : "flex", justifyContent : "space-between", width : "100%", height : "50px", alignItems : "center", }}>
-                                    <div style = {{width : "5%"}}>{status} </div>   
-                                    <Link onClick={()=>{sed(id)}}  style = {{display : "flex", textDecoration : "none", justifyContent : "space-between", width : "90%",}}>
-                                    <div style = {{display : "flex", width : "33%",justifyContent : "space-between", display : "flex", alignItems : "center", }}><h6 className = "text-dark" style ={{fontSize : "0.8em", }}>{id.match_hometeam_name}</h6>{radar}<img src = {id.team_home_badge} style = {{width : "20px", height : "20px"}}></img></div>
-                                    <div className = "text-dark" style = {{width : "20%", justifyContent : "space-around", display : "flex", color : "black"}}>{live}{/*Space for match commentary icon*/}</div>
-                                    <div style = {{display : "flex", width : "33%", justifyContent : "space-between", display : "flex", alignItems : "center", }}><img src = {id.team_away_badge} style = {{width : "20px", height : "20px"}}></img>{radar1}<h6 className = "text-dark" style ={{  fontSize : "0.8em",}}>{id.match_awayteam_name}</h6></div>
-                                    </Link>
-                                    </div>
-                                    <div></div>
-
-                                    </div>
-                                        )
-                                })}
-                            </AccordionDetails>
-                          </Accordion>      
-
-                          </div>
-                          )
-                      })
-                
-)}
-
-                    
-                      
-}
-
-catch(e){
-    console.log(e)
-}
-}
-dom()
-
-                                       
-    }, [])
-
-
-    return(
-                <>
-                            {all}
-                </>
-    )
-
-}
-
-
-function Table(){
-
-    const [all, setAll] = useState()
-    const navigate = useNavigate()
 
         useEffect(()=>{
-            try{
-            async function dom(){
+
+                                setTrans(
+                                                data.transfers.data.map((item)=>{
+
+                                                    console.log("data transfer", item)
+
+                                                      const dateTimeString = item.transferDate;
+                                                        const dateObject = new Date(dateTimeString);
+
+                                                          // Format the date using toLocaleDateString for better readability
+                                                                const date_value = dateObject.toLocaleDateString();
+                                                                         return(
+                                                                    <div>
+                                                                                <div style = {{width : "100%", display : "flex", justifyContent : "center"}}>
+                                                                                            <img style = {{width : "60px", height : "60px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.playerId+".png"}/>
+                                                                                            
+                                                                                </div>
+
+                                                                                <h6 className = "text-center">{item.name}</h6>
+
+                                                                                <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                                                                                            <div><h6>from : {item.fromClub}</h6></div>
+                                                                                            <div><h6>to : {item.toClub} </h6></div>
+                                                                                </div>
+                                                                                <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                                                                                            <div><p>Fee : {item.fee!= null ? item.fee.vlaue : ""}</p></div>
+                                                                                            <div><p> Date : {date_value} </p></div>
+                                                                                </div>
+
+                                                                    </div>
+                                                        )
+                                                })
+                                    )
+        }, [])
+
+        return(
+                        <div>
+                                    {trans}
+                        </div>
+            )
+
+}
 
 
-             const league = sessionStorage.getItem("selected_league")
-             const datam = JSON.parse(league)
-                
-                const raw_data = await axios.get("https://apiv3.apifootball.com/?action=get_standings&league_id="+datam.league_id+"&APIkey="+api)
 
-                const data =  raw_data.data
+///////////////////////////////////M A T C H E S
 
-                console.log(data)
 
-                       
-try{
-                            function groupObjectsByProperty(objects, property) {
+const Matches = ({data})=>{
+    const navigate = useNavigate()
+    const [ba, setBa] = useState()
+
+
+const[page_value, setPage_value] = useState(1)
+
+
+
+
+useEffect(()=>{
+
+                async function wonder( ) {
+                    // body...
+            
+                    console.log("base on research ")
+                  const raw_data = await axios.get(Line+"/round",  {
+                        params : {
+                            season : data.details.latestSeason,
+                            id : data.details.id
+
+                        }
+                        })
+                     
+                            if(raw_data.rounds){
+                      
+                                setPage_value(raw_data.data.rounds[0].roundId)
+                             }
+                        }
+
+                        wonder()
+
+
+}, [])
+                        function groupObjectsByProperty(objects, property) {
                             return objects.reduce((groups, obj) => {
                                 const key = obj[property];
                                 if (!groups[key]) {
@@ -602,220 +487,834 @@ try{
                         }
 
                         // Group objects by the 'category' property
-                        const groupedObjects = groupObjectsByProperty(data, 'league_round');
+                        const groupedObjects = groupObjectsByProperty(data.matches.allMatches, 'round');
 
                         // Convert the grouped objects into an array of arrays
                         const groupedArrays = Object.values(groupedObjects);
 
-                        // Print the grouped arrays
-                        groupedArrays.forEach((arr, i) => {
-                            console.log(`Group ${i + 1}:`, arr);
+                      console.log(groupedArrays)
+                             useEffect(()=>{
 
-                             
+         const handlePageChange = (event, page) => {
+            // `page` is the clicked page number
+            setPage_value(page);
+                      window.scrollTo({
+                  top: 0, // Vertical position in pixels
+                  left: 0, // Horizontal position in pixels
+                  behavior: 'smooth' // Smooth scrolling
+              });
+      
+            // Call your function with the clicked page number
+          };
 
-                                                    });
-                                               
+            setBa(
+        
+                    <div>
+          <Pagination 
+      count={groupedArrays.length} 
+      onChange={handlePageChange} // Use `onChange` instead of `onClick`
+      color="primary" 
+    />
+        {groupedArrays[page_value-1].map((match, index)=>{
 
 
-var gem = groupedArrays.map((arr, i) => {
-                                    
-                                var state = 0
-                                    return(
-                                    <>
 
-                                    <div><h5 style = {{ fontFamily : "monospace"}}>{arr[0].league_round}</h5></div>
 
-                                    <table>
-                                                <thead>
-                                                <tr style = {{width : "100%"}}>
-                                                    <td style = {{width : "10%"}}>#</td>
-                                                    <td style = {{width : "30%"}}>Team</td>
-                                                    <td style = {{width : "10%"}}>Pld</td>
-                                                    <td style = {{width : "10%"}}>W</td>
-                                                    <td style = {{width : "10%"}}>D</td>
-                                                    <td style = {{width : "10%"}}>L</td>
-                                                    <td style = {{width : "10%"}}>GD</td>
-                                                    <td style = {{width : "10%"}}>PTS</td>
-                                                    </tr>
-                                                </thead>
+                    const dateTimeString = match.status.utcTime;
+                        const dateObject = new Date(dateTimeString);
+                    const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-                                                <tbody>
-                                                {
-                                                    arr.map((item)=>{
-                                                            
-                                                                        
-                                                                 
+
+                    const timestamp = match.timeTS;
+                const dateObject1 = new Date(timestamp);
+                  const timeString1 = dateObject1.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+
+
+                 var status 
+                    var live
+
+                    if(match.status.started == false){
+                      status = timeString
+                  
+                    }
+
+                    if(match.status.started == true && match.status.finished == false){
+                      status = <div style = {{display : "flex", width : "100%", color : "white", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
+                        live =  <h6 style = {{width : "20px",fontSize : "0.7em", display : "flex", justifyContent : "center", height : "20px",  alignItems : "center", color : "white", borderRadius : "50%", background : "red"}}>{match.status.liveTime.short}</h6>
                     
-                                                      
-                                    return(
+                    }
 
-                                                <tr onClick = {()=>{const home = JSON.stringify(item.team_id); sessionStorage.setItem("team", home);  navigate("/team")}} style = {{width : "100%", background : "inherit", height : "50px", fontSize :'0.7em', textDecoration : "bold", fontWeight : "5px", alignItems : "center"}}>
-                                                        <td style = {{width : "7%", background : "inherit"}}>{item.overall_league_position}</td>
-                                                        <td style = {{width : "30%", background : "inherit"}}>{item.team_name}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{item.overall_league_payed}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{item.overall_league_W}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{item.overall_league_D}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{item.overall_league_L}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{Number(item.overall_league_GF) - Number(item.overall_league_GA)}</td>
-                                                        <td style = {{width : "7%", background : "inherit",}}>{item.overall_league_PTS}</td>
-                                                </tr>
+                    if(match.status.finished == true){
+                        status = <div style = {{display : "flex", color : "white", width : "100%", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
+                      live =  <h6 style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", color : "black", borderRadius : "50%", background : "#EEEEEE"}}>FT</h6>
+                    
+                    }
+
+            return(
+                            <div    onClick={() => {navigate(`/result/${match.id}`); window.location.reload()}}  style={{ display: "flex", marginTop: "3%", width: "100%", justifyContent: "space-between", background: data.details.leagueColor, color : "white", borderRadius: "10px", textDecoration: "none" }}>
+                                      <div  style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "100%" }}>
+          <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+            <h6 className="text-light" style={{ fontSize: "1em" }}>{match.home.name}</h6>
+            <img  src={"https://images.fotmob.com/image_resources/logo/teamlogo/"+match.home.id+"_xsmall.png"} loading="lazy"  alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+          </div>
+          <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "whtie" }}>
+            <strong className = "text-light ">{status}</strong>
+          </div>
+          <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+            <img src={"https://images.fotmob.com/image_resources/logo/teamlogo/"+match.away.id+"_xsmall.png"} loading = "lazy"  alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
+            <h6 className="text-light" style={{ fontSize: "1em" }}>{match.away.name}</h6>
+          </div>
+        </div>
+                            </div>
+                )
+        })}
+
+    </div>
+
+
+
+    )
+    }, [page_value])
+                              
+                                     
+                                 
+
+    
+                           return(
+                                                    <div style = {{background : "white"}}>
+                                                         {ba}
+
+                                                    </div>
                                         )
-                                        
-                        
+
+}
+
+///////////////////////////////////S T A T S
+
+const Stats = ({data})=>{
+
+    const [ret, setRet] = useState()
+    const [value, setValue] = useState(0)
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+
+        if(data.stats.players != null && data.stats.teams != null){
+
+                    setRet(
+                                    <div>
+                                                <div>
+                                                      <ThemeProvider theme={theme}>
+              <Tabs
+                style={{ background: "inherit", borderWidth: "0px", boxShadow: "none", color: "white" }}
+                value={value}
+                TabIndicatorProps={{ style: { backgroundColor: 'gold', color: "white" } }}
+                onChange={(event, newValue) => setValue(newValue)}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="gold tabs example"
+              >
+            
+                        <Tab label = "Players">Players</Tab>
+                        <Tab label = "Teams">Teams</Tab>
+                     
+                    
+              </Tabs>
+            </ThemeProvider>
 
 
-                                                            
-                                        })
+            </div>
+           <SwipeableViews index={value} onChangeIndex={(index) => setValue(index)}>
+      
+          <Typography component="div" role="tabpanel" hidden={value !== 0}>
+                        <div>
+                                    {data.stats.players.map((item)=>{
 
+                                        var header 
+
+                                        if(item.header == "FotMob rating"){
+                                            header = "sportsup rating"
                                         }
-                                                </tbody>
 
-                                        </table>
-                                        </>
-                                        
-                                        )
+                                        else {
+                                            header = item.header
+                                        }
 
-                                    
-          
+                                        return(
+                                                        <div style = {{background : data.details.leagueColor, marginTop : "5%"}}>
+                                                                            <h5 className = "text-center text-warning">{header}</h5>
+
+                                                                            {
+                                                                                item.topThree.map((id)=>{
+                                                                                                return(
+                                                                                                             <div>
+                                                                                        <div onClick = {()=>{navigate("/player/"+id.id)}} style = {{display : "flex", justifyContent : "space-between", width : "100%"}}>
+                                                                                        <div style = {{display : "flex"}}>
+                                                                                                    <img src = {"https://images.fotmob.com/image_resources/playerimages/"+id.id+".png"} style = {{width : "50px", background : "white", height : "50px"}}></img>
+                                                                                                    <div >
+                                                                                                                <h6 className = "text-light">{id.name}</h6>
+                                                                                                                <div style = {{display : "flex"}}>
+                                                                                                                    <img
+                                                                                                                      src={`https://images.fotmob.com/image_resources/logo/teamlogo/${id.teamId}_xsmall.png`}
+                                                                                                                             
+                                                                                                                       style={{ width: "15px", height: "15px", borderRadius: "50%" }}
+                      />
+                                                                                                                    <small className = "text-light">{id.teamName}</small>
+                                                                                                                </div>
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                                    <h6 className = "text-light">{id.value}</h6>
+                                                                                        </div>
+                                                                                        <hr></hr>
+                                                                            </div>
+
+                                                                                                )
+                                                                            })
+                                                                        }
+                                                        </div>
+                                            )
+                                    })}
+                        </div>
+          </Typography>
+
+          <Typography component="div" role="tabpanel" hidden={value !== 1}>
+            {/* Content for the second panel */}
+          <div>
+                                    {data.stats.teams.map((item)=>{
+
+                                            
+                                            
+                                        var header 
+
+                                        if(item.header == "FotMob rating"){
+                                            header = "sportsup rating"
+                                        }
+
+                                        else {
+                                            header = item.header
+                                        }
+
+                                        return(
+                                                        <div style = {{background : data.details.leagueColor, marginTop : "5%"}}>
+                                                                            <h5 className = "text-center text-warning">{header}</h5>
+
+                                                                            {
+                                                                                item.topThree.map((id)=>{
+                                                                                                return(
+                                                                                                             <div>
+                                                                                        <div style = {{display : "flex", justifyContent : "space-between", width : "100%"}}  onClick = {()=>{navigate("/team/"+id.id);const stringer = JSON.stringify(id); sessionStorage.setItem("selected_league", stringer)}}>
+                                                                                        <div style = {{display : "flex"}}>
+
+                                                                                                    <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+id.teamId+"_xsmall.png"} style = {{width : "50px", background : "white", height : "50px"}}></img>
+                                                                                                    <div >
+                                                                                                                <h6 className = "text-light">{id.name}</h6>
+                                                                                                               
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                                    <h6 className = "text-light">{id.value}</h6>
+                                                                                        </div>
+                                                                                        <hr></hr>
+                                                                            </div>
+
+                                                                                                )
+                                                                            })
+                                                                        }
+                                                        </div>
+                                            )
+                                    })}
+                        </div>
+          </Typography>
+
+          <Typography component="div" role="tabpanel" hidden={value !== 2}>
+            {/* Content for the second panel */}
+          </Typography>
+ 
+      </SwipeableViews>
+                            dp
+                                    </div>
+                        )
+}
+    }, [value])
+
+    return(
+                <div>
+                            {ret}
+
+                            Stats
+                </div>
+    )
+}
+
+
+
+
+/////////////////////////////////T A B L E
+
+const Table = ({data})=>{
+
+
+    const [composite_true, setCompositeTrue] = useState()
+    const [composite_false, setCompositeFalse] = useState()
+    const navigate = useNavigate()
+
+
+    useEffect(()=>{
+
+        if(data.overview.table.length>0){
+
+
+                    ////////////////COMPOSITE TRUE
+
+
+
+                   if(data.overview.table[0].data.composite === true){
+
+                 setCompositeTrue(   data.overview.table[0].data.tables.map((item)=>{
+
+                var tabber = item.table.all 
+
+                var main_tabber = tabber
+
+                    
+
+
+
+                return(
+                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
+          <h2>{item.leagueName}</h2>
+          <table>
+            <thead>
+              <tr style={{ width: "100%" }}>
+                <td style={{ width: "10%" }}>#</td>
+                <td style={{ width: "55%" }}>Team</td>
+                <td style={{ width: "10%" }}>Pld</td>
+                <td style={{ width: "10%" }}>GD</td>
+                <td style={{ width: "10%" }}>PTS</td>
+              </tr>
+            </thead>
+
+            <tbody>
+                        {main_tabber.map((team, index)=>{
+
+                            return(
+                                                   <tr
+
+                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}
+                  key={team.id}
+                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
+                >
+                  <td style={{ width: "10%" }}>{index + 1}</td>
+                  <td style={{ width: "55%" }}>
+                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
+                        alt={team.name}
+                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
+                    </div>
+                  </td>
+                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
+                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
+                  <td style={{ width: "10%" }}>{team.pts}</td>
+                </tr>
+                            )
+
+                        })}
+            </tbody>
+
+                
+
+            </table>
+
+            </div>
+                    )
+                    })
+
+)
+}
+
+                    ///////////////COMPOSITE FALSE
+
+
+                    if(data.overview.table[0].data.composite === false){
+
+
+                        setCompositeFalse(
+                                <div>
+
+                                   { data.overview.table.map((item)=>{
+                                         var tabber = item.data.table.all 
+
+                var main_tabber = tabber
+
+                return(
+                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
+          <h2>{item.leagueName}</h2>
+          <table>
+            <thead>
+              <tr style={{ width: "100%" }}>
+                <td style={{ width: "10%" }}>#</td>
+                <td style={{ width: "55%" }}>Team</td>
+                <td style={{ width: "10%" }}>Pld</td>
+                <td style={{ width: "10%" }}>GD</td>
+                <td style={{ width: "10%" }}>PTS</td>
+              </tr>
+            </thead>
+
+            <tbody>
+                        {main_tabber.map((team, index)=>{
+
+                            return(
+                                                   <tr
+
+                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(team); sessionStorage.setItem("selected_league", stringer)}}
+                  key={team.id}
+                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
+                >
+                  <td style={{ width: "10%" }}>{index + 1}</td>
+                  <td style={{ width: "55%" }}>
+                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
+                        alt={team.name}
+                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
+                    </div>
+                  </td>
+                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
+                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
+                  <td style={{ width: "10%" }}>{team.pts}</td>
+                </tr>
+                            )
+
+                        })}
+            </tbody>
+
+                
+
+            </table>
+
+            </div>
+                    )
+                                    })
+}
+                                </div>
+                            )
+                    }
+
+
+}
+    }, [])
+
+    return(
+            <div>
+                    {composite_true}
+                    {composite_false}
+            </div>
+    )
+}
+
+
+
+//////////////////////////////// E  N D T A B L E //////////////////////////
+
+
+        
+const Info = ({ data }) => {
+
+
+  console.log(data, "props");
+  const [host, setHost] = useState()
+  const [tabled, setTable]  = useState()
+  const [topstats, setTopstats] = useState()
+  const [towt, setTOWT] = useState()
+  const navigate = useNavigate()
+  const [news, setNews] = useState()
+
+    useEffect(()=>{
+        ////////////////////////////LEAGUE NEWS////////////////////////
+                    axios.get(Line+"/league_news", {
+                        params : {
+                            id : data.details.id
+                        }
+                    
+                    })
+
+                    .then((res)=>{
+                        console.log(res)
+
+                          setNews(
+                      <div className = "row">
+
+                          { 
+                          res.data.data ?
+                          res.data.data.map((item)=>{
+
+                            var url 
+                              if(item.sourceStr === "FotMob" || item.sourceStr === "90min"){
+
+                               const baseUrl = "https://www.fotmob.com";
+                                const itemPageUrl = item.page.url; // Assuming item.page.url is a variable with the dynamic path
+
+                                url = `${baseUrl}${itemPageUrl}`;
+                                console.log(url)
+                                  return(
+
+
+                                  <Link onClick  = {()=>{
+
+                                window.open(url, '_blank', 'noopener,noreferrer');
+ 
+                                  }} state = {{l : url, m : 1}}   className = "col-md-4" style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
+                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "80%", borderRadius : 0, height : "160px"}}></img></div>
+                                      <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}>  <h6 className = "text-center" style = {{width : "80%"}}>{item.title}</h6></div>
+                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}> <div style = {{width : "80%", display : "flex"}}>
+
+                                        <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                                        <div style = {{display : "flex", width : "50%"}}><img style = {{width : "25px", height : "25px"}} src = {item.sourceIconUrl}></img> <p>{item.sourceStr}</p></div> 
+                                        </div>
+                                       <div className = "text-secondary" style = {{width : "50%"}}><TimeDifference pastTimeString={item.gmtTime} />
+                                       </div></div></div>
+                                  </Link>
+                              )
+                              }
+                              else{
+                                url = item.page.url
+                            return(
+                                  <Link onClick  = {()=>{
+
+                                window.open(url, '_blank', 'noopener,noreferrer');
+ 
+                                  }}  state = {{l : url, m : 0}}  className = "col-md-4"  style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
+                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "80%", borderRadius : 0, height : "160px"}}></img></div>
+                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}>  <h6 className = "text-center" style = {{width : "80%"}}>{item.title}</h6></div>
+                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}> <div style = {{width : "80%", display : "flex"}}>
+
+                                        <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                                        <div style = {{display : "flex", width : "50%"}}><img style = {{width : "25px", height : "25px"}} src = {item.sourceIconUrl}></img> <p>{item.sourceStr}</p></div> 
+                                        </div>
+                                       <div className = "text-secondary" style = {{width : "50%"}}><TimeDifference pastTimeString={item.gmtTime} />
+                                       </div></div></div>
+                                  </Link>
+                              )
+                          }
+                          })
+                          :
+                          ""
+                        }
+
+                
+                      </div>
+
+                      )
+                          
+                    })
+
+        /////////////////////////TEAM OF THE WEEK/////////////////
+
+            async function praise(){
+
+               
+
+                if(data.overview.hasTotw === true){
+
+                     const raw = await axios.get(Line+"/round",  {
+                        params : {
+                            season : data.details.latestSeason,
+                            id : data.details.id
+                        }
+                    })
+
+                const round = raw.data
+                console.log(round)
+               
+                    axios.get(Line+"/totw", {
+                        params : {
+                            season : data.details.latestSeason,
+                            id : data.details.id,
+                            round : raw.data.rounds[0].roundId
+                        }
+                    })
+                    .then((res)=>{
+                                    console.log(res, "team of the week")
+
+                                    setTOWT(
+                                    <div className="container" style={{ width: '100vw', height: '100vh', borderRadius : "10px", background : "white" }}>
+                                               <h6 className = "text-center text-dark">Team Of The Week</h6>
+                                                <Field players={res.data} />
+
+                                    </div>
+                                    )
+                    })
+                }
+
+            }
+
+            praise()
+
+            /////////////////Top Stats//////////////
+                        
+            if(data.overview.topPlayers.byAssists.players){
+
+
+                        setTopstats(
+
+                                    <div  style = {{ justifyContent : "space-between", width : "100%"}}>
+                                                <div style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                            <h6 className = "text-center text-light"><strong>Top Rated</strong></h6>
+                                                            
+                                                            {data.overview.topPlayers.byRating.players ? data.overview.topPlayers.byRating.players.map((item)=>{
+
+                                                                return(
+                                                                            <div>
+                                                                                        <div style = {{display : "flex", justifyContent : "space-between", width : "100%"}} onClick = {()=>{navigate("/player/"+item.id)}}>
+                                                                                        <div style = {{display : "flex"}}>
+                                                                                                    <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "50px", background : "white", height : "50px"}}></img>
+                                                                                                    <div >
+                                                                                                                <h6 className = "text-light">{item.name}</h6>
+                                                                                                                <div style = {{display : "flex"}}>
+                                                                                                                    <img
+                                                                                                                      src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`}
+                                                                                                                             
+                                                                                                                       style={{ width: "15px", height: "15px", borderRadius: "50%" }}
+                      />
+                                                                                                                    <small className = "text-light">{item.teamName}</small>
+                                                                                                                </div>
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                                    <h6 className = "text-light">{item.rating}</h6>
+                                                                                        </div>
+                                                                                        <hr></hr>
+                                                                            </div>
+                                                                )
+                                                            }) :
+                                                            ""
+                                                            }
+                                                </div>
+
+
+
+                                                {/*Goals*/}
+
+                                                 <div  style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                           
+                                                            <h6 className = "text-center text-light"><strong>Highest Scorers</strong></h6>
+                                                            {data.overview.topPlayers.byGoals.players ? data.overview.topPlayers.byGoals.players.map((item)=>{
+
+                                                                return(
+                                                                            <div>
+                                                                                        <div style = {{display : "flex", justifyContent : "space-between", width : "100%"}} onClick = {()=>{navigate("/player/"+item.id)}}>
+                                                                                        <div style = {{display : "flex"}}>
+                                                                                                    <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "50px", background : "white", height : "50px"}}></img>
+                                                                                                    <div >
+                                                                                                                <h6 className = "text-light">{item.name}</h6>
+                                                                                                                <div style = {{display : "flex"}}>
+                                                                                                                    <img
+                                                                                                                      src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`}
+                                                                                                                             
+                                                                                                                       style={{ width: "15px", height: "15px", borderRadius: "50%" }}
+                      />
+                                                                                                                    <small className = "text-light">{item.teamName}</small>
+                                                                                                                </div>
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                                    <h6 className = "text-light">{item.goals}</h6>
+                                                                                        </div>
+                                                                                        <hr></hr>
+                                                                            </div>
+                                                                )
+                                                            }) : ""}
+                                                </div>
+
+
+                                                  {/*Assist*/}
+
+                                                 <div  style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                            <h6 className = "text-center text-light"><strong>Top Assists</strong></h6>
+                                                            {data.overview.topPlayers.byAssists.players ? data.overview.topPlayers.byAssists.players.map((item)=>{
+
+                                                                return(
+                                                                            <div>
+                                                                                        <div style = {{display : "flex", justifyContent : "space-between", width : "100%"}} onClick = {()=>{navigate("/player/"+item.id)}}>
+                                                                                        <div style = {{display : "flex"}}>
+                                                                                                    <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "50px", background : "white", height : "50px"}}></img>
+                                                                                                    <div >
+                                                                                                                <h6 className = "text-light">{item.name}</h6>
+                                                                                                                <div style = {{display : "flex"}}>
+                                                                                                                    <img
+                                                                                                                      src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`}
+                                                                                                                             
+                                                                                                                       style={{ width: "15px", height: "15px", borderRadius: "50%" }}
+                      />
+                                                                                                                    <small className = "text-light">{item.teamName}</small>
+                                                                                                                </div>
+                                                                                                    </div>
+                                                                                        </div>
+                                                                                                    <h6 className = "text-light">{item.assists}</h6>
+                                                                                        </div>
+                                                                                        <hr></hr>
+                                                                            </div>
+                                                                )
+                                                            }) : ""}
+                                                </div>
+                                    </div>
+                        )
+                    }
+            //////////////////Table//////////////////
+            if(data.overview.table != null){
+        if(data.overview.table.length > 0){
+
+            const table = data.overview.table
+
+            setTable( table.map((item)=>{
+
+                if(item.data.composite === false){
+                var tabber = item.data.table.all 
+
+                var main_tabber = tabber.slice(0,4)
+
+                return(
+                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
+          <h2>{item.leagueName}</h2>
+          <table>
+            <thead>
+              <tr style={{ width: "100%" }}>
+                <td style={{ width: "10%" }}>#</td>
+                <td style={{ width: "55%" }}>Team</td>
+                <td style={{ width: "10%" }}>Pld</td>
+                <td style={{ width: "10%" }}>GD</td>
+                <td style={{ width: "10%" }}>PTS</td>
+              </tr>
+            </thead>
+
+            <tbody>
+                        {main_tabber.map((team, index)=>{
+
+                            return(
+                                                   <tr
+                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(team); sessionStorage.setItem("selected_league", stringer)}}
+                  key={team.id}
+                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
+                >
+                  <td style={{ width: "10%" }}>{index + 1}</td>
+                  <td style={{ width: "55%" }}>
+                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
+                        alt={team.name}
+                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
+                    </div>
+                  </td>
+                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
+                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
+                  <td style={{ width: "10%" }}>{team.pts}</td>
+                </tr>
+                            )
+
+                        })}
+            </tbody>
+
+                
+
+            </table>
+
+            </div>
+                    )
+
+                }
+
+              
             })
 
-             }
-                                                catch(e){
-                                                    console.log(e)
-                                                }
-
-           setAll(gem)
+            )
+        }
 
         }
-         dom()
 
-
-     }
-
-     catch(e){
-                console.log("There was an Error Fetching Data")
-                setAll(<h6 className = "text-secondary text-dark">There was an Error fetching Data</h6>)
-        }
-        }, [])
-
-    return(
-
-                <>{all}</>
-    )
-}
-
-
-
-
-
-function Teams(){
-
-    const [all, setAll] = useState()
-    const navigate = useNavigate()
-
-    useEffect(()=>{
-            async function dom(){
-
-                    try{
-                            console.log("more")
-                            const league = sessionStorage.getItem("selected_league")
-                            const datam = JSON.parse(league)
-                            const league_id = datam.league_id
-
-
-                            const raw_data = await axios.get("https://apiv3.apifootball.com/?action=get_teams&league_id="+league_id+"&APIkey="+api)
-                            const data = raw_data.data
-                            console.log(data)
-
-                             setAll(
-
-                            data.map((item)=>{
-                                    return(
-                                             <div onClick = {()=>{const home = JSON.stringify(item.team_key); sessionStorage.setItem("team", home);  navigate("/team")}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "10%", height : "100%"}}><img src = {item.team_badge} style = {{width : "25px", height : "20px", borderRadius : "50%",}}></img></div>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.team_name}</h6> </div>
-                                </div>
-                                    )
-
-                            })
-                           
-                               
-                            )
-                            
-                    }
-
-                    catch(e){
-
-                        console.log(e)
-                    }
-
-
-            }
-            dom()
     }, [])
 
-    return(
-        <>
+  return(
 
-        <div style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px", background : "white"}}>
-        {all}
+  <div >
+    <div style = {{background : "#EEEEEE", width : "100%", borderRadius : "10px"}}>
+
+    {tabled}
+
+    </div>
+
+    <div style = {{marginTop : "8%", height : "570px"}}>
+        {towt}
+    </div>
+
+
+    <div >
+                {topstats}
+    </div>
+
+        <div >
+                {news}
+    </div>
+  </div>
+
+  )
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Leagues = () => {
+
+    const {id} = useParams()
+
+  const [ret, setRet] = useState(
+    <div>
+      <Skeleton variant="rectangular" width="100%" height={180} />
+      <Skeleton variant="rectangular" width="100%" height={window.innerHeight - 180} />
+    </div>
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetcher = async () => {
+      try {
+        
+
+        setRet(
+        <div >
+                <Ayyah/>
         </div>
-        </>
-    )
-}
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setRet(<div>Error fetching data</div>);
+      }
+    };
 
+    fetcher();
+  }, []);
 
-function Top_Scorer(){
-    const navigate = useNavigate()
-    const [all, setAll] = useState()
+  return (
+    <div>
+      {ret}
+    </div>
+  );
+};
 
-    useEffect(()=>{
-
-        async function dom (){
-
-            try{
-
-                            const league = sessionStorage.getItem("selected_league")
-                            const datam = JSON.parse(league)
-                            const league_id = datam.league_id
-                            const raw_data = await axios.get("https://apiv3.apifootball.com/?action=get_topscorers&league_id="+league_id+"&APIkey="+api)
-                            const data = raw_data.data
-                            console.log(data, "this is the data needed")
-
-
-                            setAll(
-                                data.map((item)=>{
-
-                                     return(
-                                            <div onClick = {()=>{const home = JSON.stringify(item.player_key); sessionStorage.setItem("player", home);  navigate("/player")}} style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px", marginTop : "3%", background : "white"}}>
-                                                    <div style = {{display : "flex", width : "100%",  height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                                    <h6>{item.player_name}</h6>
-                                                    <h6>Goals : {item.goals}</h6>
-                                                    </div>
-
-                                                    <div style = {{display : "flex", width : "100%",  height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                                        <p className = "text-secondary">assists : {item.assists}</p>
-                                                        <p className = "text-secondary">penalties : {item.penalty_goals}</p>
-                                                    </div>
-
-                                                    <div style = {{width : "100%", textAlign : "center"}}>{item.team_name}</div>
-                                            </div>
-                                     )
-                                })
-                            )
-                    
-            }
-            catch(e){
-                console.log(e)
-            }
-
-        }
-
-        dom()
-
-    }, [])
-
-    return(
-            <>{all}</>
-    )
-}
+export default Leagues;

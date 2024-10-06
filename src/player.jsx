@@ -1,416 +1,331 @@
 import React, { useEffect, useState } from "react";
-import api from "./components/nav/details.js"
-import axios from "axios"
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Line from "./line.js"
- import {createTheme} from '@mui/material/styles'
-import {ThemeProvider} from '@mui/material/styles'
-import SwipeableViews from 'react-swipeable-views-react-18-fix';
-import { Tabs, Tab, } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import RadioIcon from '@mui/icons-material/Radio';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { styled } from '@mui/material/styles';
-import {Link, useNavigate} from "react-router-dom"
-
-import Slide from '@mui/material/Slide';
-import StadiumIcon from '@mui/icons-material/Stadium';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ReduceCapacityIcon from '@mui/icons-material/ReduceCapacity';
-import AssistWalkerIcon from '@mui/icons-material/AssistWalker';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
+import axios from "axios";
+import {
+  Button,
+  Typography,
+  CircularProgress,
+  Box,
+} from '@mui/material';
+import { useNavigate, useParams } from "react-router-dom";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import CircularProgress from '@mui/material/CircularProgress';
+import Line from "./line.js";
 
+const Player = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [playerData, setPlayerData] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const Theme = createTheme({
-  palette: {
-    primary: {
-      
-      main: '#FFD700',
-      
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    },
-  }
-})
-
-export default function Team(){
-
-
-const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const fetchPlayerData = async () => {
+    try {
+      const response = await axios.get(`${Line}/player`, { params: { id } });
+      setPlayerData(response.data);
+    } catch (err) {
+      setError("Error fetching player data.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleChangeIndex = (index) => {
-    setValue(index);
+  const fetchUserFavorites = async () => {
+    const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
+    const { data: users } = await axios.get(`${Line}/users`);
+    const user = users.find(user => user.email === done.email && user.password === done.password);
+
+    if (user?.favorite_player.includes(id)) {
+      setIsFollowing(true);
+    }
+
+    return(user)
   };
 
-    var more
-    const [ret, setRet] = useState(<Box style={{ display: 'flex', width : "100%", justifyContent : "center",  }}>
-      <CircularProgress sx= {{backgroundColor : "white", borderRadius : "50%"}} />
-    </Box>)
-    const navigate = useNavigate()
-    const [injuryList, setInjurylist] = useState()
-    const [playerRating, setPlayer_rating] = useState()
-    const [goals, setGoals] = useState()
-    const [players, setPlayers] = useState()
-useEffect(()=>{
-   async function fetcher(){
+  const toggleFollowPlayer = async () => {
+    const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
 
-    const player_id = sessionStorage.getItem("player")
-    const id = JSON.stringify(player_id)
+    	const monk = {
+    		id : playerData.id,
+    		name : playerData.name,
+    		goals : playerData.careerHistory ? playerData.careerHistory.careerItems.senior.seasonEntries[0].goals : "",
+    		apps :  playerData.careerHistory ?  playerData.careerHistory.careerItems.senior.seasonEntries[0].appearances: "",
+    		assist :  playerData.careerHistory ?  playerData.careerHistory.careerItems.senior.seasonEntries[0].assists: "",
+    	}
+
+    	const player = JSON.stringify(monk)
+    const user_id = await fetchUserFavorites()
+    const place = {
+      id_: user_id._id,
+      player_id: player,
+    };
+
+    const url = isFollowing ? `${Line}/favorite_player_remove` : `${Line}/favorite_player`;
     
-    console.log(id, "team id")
- 
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(place),
+    });
+    setIsFollowing(!isFollowing);
+  };
 
-    const raw_data = await axios.get("https://apiv3.apifootball.com/?action=get_players&player_id="+player_id+"&APIkey="+api)
-    const data = raw_data.data[0]
-    const parser = JSON.stringify(data)
+  useEffect(() => {
+    fetchPlayerData();
+    fetchUserFavorites();
+  }, []);
+
+  if (loading) return <CircularProgress />;
+  if (error) return <Typography color="error">{error}</Typography>;
+  if (!playerData) return null;
+var data = playerData
+console.log(data)
+
+ async function toller(){
+   
+    fetchUserFavorites();
+          const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
+    const { data: users } = await axios.get(`${Line}/users`);
+    const user = users.find(user => user.email === done.email && user.password === done.password);
+
+     const monk = {
+    		id : playerData.id,
+    		name : playerData.name,
+    		goals : playerData.careerHistory ? playerData.careerHistory.careerItems.senior.seasonEntries[0].goals : "",
+    		apps :  playerData.careerHistory ?  playerData.careerHistory.careerItems.senior.seasonEntries[0].appearances: "",
+    		assist :  playerData.careerHistory ?  playerData.careerHistory.careerItems.senior.seasonEntries[0].assists: "",
+    	}
+
+
+      const league = JSON.stringify(monk)
+    console.log(user)
+    const filterer = user.favorite_player.filter(id=> id === league )
+      console.log(filterer, user, monk)
+    if(filterer.length > 0){
+      console.log("following this league")
+      setIsFollowing(true)
+    }
+  }
+
+  toller()
+  return (
+    <div>
+      <div style={{ background: playerData.primaryTeam?.teamColors.color || "midnightblue" }}>
+        <Box display="flex" justifyContent="space-between" p={2}>
+          <ArrowBackIcon onClick={() => navigate(-1)} style={{ color : "white", cursor: 'pointer' }} />
+          <Button style = {{background : "white", color : "blue"}} onClick={toggleFollowPlayer} variant={isFollowing ? "contained" : "outlined"}>
+            {isFollowing ? "Following" : "Follow"}
+          </Button>
+        </Box>
+        <Box display="flex" alignItems="center" p={2}>
+          <img src={`https://images.fotmob.com/image_resources/playerimages/${playerData.id}.png`} alt="Player" style={{ width: "70px", height: "70px" }} />
+          <Box ml={2}>
+            <Typography variant="h5" color="white">{playerData.name}</Typography>
+            {playerData.primaryTeam && <Typography color="white">{playerData.primaryTeam.teamName}</Typography>}
+          </Box>
+        </Box>
+      </div>
+
+          <div className = "container"  style = {{borderRadius : "10px", background : "darkgray"}} >
+
+                    <h5 className = "text-center text-light">Personal Information</h5>
+                                 <div className = "row" style = {{justifyContent : "space-between"}}>
+                  {data.playerInformation.map((item) => (
+                    <div className = "col-md-4" key={item.key} style={{ flex: 0, width : "100%" }}>
+                      <h6>{item.title}: {item.value.fallback}</h6>
+                    </div>
+                  ))}
+                </div>
+
+                </div>
+
+
+        <Typography variant="h6">OnField Position</Typography>
+        <Box position="relative" height="120px" bgcolor="#00A36C">
+
+        {playerData.positionDescription.positions ? 
+
+          playerData.positionDescription?.positions.map(item => item.pitchPositionData && (
 
 
 
-    const item = data
 
-   async function poster(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
+          		
+            <Box
+              key={item.key}
+              position="absolute"
+              top={`${item.pitchPositionData.top * 100}%`}
+              right={`${item.pitchPositionData.right * 100}%`}
+              bgcolor="midnightblue"
+              borderRadius="50%"
+              width="10px"
+              height="10px"
+            />
+          )
+          )
 
- 
+          : ""}
+        </Box>
 
-     const multi = await axios.get(Line+"/users")
+        <Typography>Main Position: {playerData.positionDescription?.primaryPosition.label}</Typography>
+        	{data.traits ?
+        <ResponsiveContainer width="100%" height={400}>
+          <RadarChart outerRadius={90} data={playerData.traits.items}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="title" />
+            <PolarRadiusAxis angle={30} domain={[0, 1]} />
+            <Radar name="Player Stats" dataKey="value" stroke="#8884d8" fill={playerData.primaryTeam?.teamColors.color || "midnightblue"} fillOpacity={0.6} />
+          </RadarChart>
+        </ResponsiveContainer>
+        : ""}
 
-     if (data != null){
+       <div style = {{color : "white", background : data.primaryTeam ? data.primaryTeam.teamColors.color : "midnightblue", }}>
+          {data.mainLeague ? 
+          <div>
+
+
+          <h6 className = "text-center">Seasonal Stats  </h6>
+
+          <div style = {{display : "flex"}}>
+                <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${data.mainLeague.leagueId}.png`} style = {{background : "white", width : "50px", height : "50px"}}>
+
+                </img>
+                <h5>{data.mainLeague.leagueName}</h5>
+          </div>
+
+          <div>
+            
+             <div className = "row" style = {{justifyContent : "space-between"}}>
+                  {data.mainLeague.stats.map((item) => (
+                    <div className = "col-md-4" key={item.key} style={{ flex: 0, width : "100%" }}>
+                      <h6>{item.title}: {item.value}</h6>
+                    </div>
+                  ))}
+                </div>
+          </div>
+
+          </div>
+
+          :  
+          ""
+        }
+</div>
+
+        {
+
+      data.recentMatches ? 
+
+      <div>
         
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
+        <h6 className = "text-center">Recent Matches</h6>
 
-       var _id = auth[0]._id
-        console.log(auth)
+        <div>
+            {
 
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_player",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
-window.location.reload();
-}
+                  data.recentMatches.slice(0,10).map((match)=>{
 
-else if(data === null){
+                       const url = match.matchPageUrl;
 
-alert("please login")
-}
+        // Create a URL object with a base URL for relative URLs
+        const urlObject = new URL(url, 'http://example.com');
 
-}
+        // Extract and clean the fragment identifier
+        const fragmentIdentifier = urlObject.hash.replace(/^#/, '');
 
-async function posterd(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
+  const dateTimeString = match.matchDate.utcTime;
+                        const dateObject = new Date(dateTimeString);
+                    const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  
 
- if(data != null){
-
-     const multi = await axios.get(Line+"/users")
-        
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
-
-       var _id = auth[0]._id
-        console.log(auth)
- 
- 
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_player_remove",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
-window.location.reload();
-}
-
-else if(data === null){
-
-alert("please login")
-}
-}
-
-    console.log(data)
-
-     const liner = await localStorage.getItem("data")
-
-       const parserd =  await JSON.parse(liner)
-        console.log(parserd)
+                    const timestamp = match.timeTS;
+                const dateObject1 = new Date(timestamp);
+                  const timeString1 = dateObject1.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 
 
+                 var status  = status = <div style = {{display : "flex", color : "white", width : "100%", justifyContent : "spaceBetween"}}>{match.homeScore}-{match.awayScore}</div>
+                    var live
 
-        const multi = await axios.get(Line+"/users")
+               
 
-        if(parser != null){
+            return(
+                            <div    onClick={() => {navigate(`/result/${fragmentIdentifier}`); window.location.reload()}}  style={{ marginTop: "3%", width: "100%", height : "60px", alignItems : "center", justifyContent: "space-between", background: "darkgray", color : "white", borderRadius: "10px", textDecoration: "none" }}>
+                                      <div  style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "100%" }}>
+          <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+            <h6 className="text-light" style={{ fontSize: "1em" }}>{match.teamName}</h6>
+            <img  src={"https://images.fotmob.com/image_resources/logo/teamlogo/"+match.teamId+"_xsmall.png"} loading="lazy"  alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+          </div>
+          <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "whtie" }}>
+            <strong className = "text-light ">{status}</strong>
+          </div>
+          <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+            <img src={"https://images.fotmob.com/image_resources/logo/teamlogo/"+match.opponentTeamId+"_xsmall.png"} loading = "lazy"  alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
+            <h6 className="text-light" style={{ fontSize: "1em" }}>{match.opponentTeamName}</h6>
+          </div>
+        </div>
 
-         const auth = multi.data.filter((item)=> item.email == parserd.email_reader )
+        <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+          <h6 style = {{background : match.ratingProps.bgcolor, }}>{match.ratingProps.num}</h6>
+          <h6 > goals : {match.goals} </h6>
+          <h6 > assists : {match.assists} </h6>
+          <h6> {match.yellowCards > 0 ? "🟨": ""}</h6>
+          <h6> {match.redCards > 0 ? "🟥": ""}</h6>
+          <h6 className = "text-dark" style = {{width : "20%",  textOverflow: "ellipsis", whiteSpace: "nowrap",  overflow: "hidden", }}>{match.leagueName}</h6>
 
-
-  var status 
-                      const followed = <p onClick = {()=>{ status = notfollowed; posterd(item); }}>following</p>
-                      const notfollowed = <p className = "text-dark" onClick = {()=>{poster(item); status = followed}}>follow</p> 
-
-
-
-                      const checker = auth[0].favorite_player.filter((it)=> it.player_key ===  item.player_key)
-                   
-                      if(checker.length > 0){
-                        status = <p onClick = {()=>{ status = notfollowed; posterd(item);  }} >following</p>
-                           console.log(checker)
-                      }
-
-                      else{
-
-                        status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed;}}>follow</p> 
-                      }
-
-
-    sessionStorage.setItem("player_state", parser)
-
-    console.log(data)
-
- 
-
-    setRet(
-            <div >
-        
-        <div className = " navbar-nav nav fixed-top bg-light">           
-         <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}}>
-            <Button onClick={()=>navigate("/leagues")} className = "text-dark" style = {{textAlign : "left"}} autoFocus color="inherit" >
-               <ArrowBackIcon/>
-            </Button>
-<strong>{status}</strong>
-            </div>
-
+        </div>
+                            </div>
+                )
+                })
              
 
-                        <div style = {{display : "flex",alignItems : "center", width : "100%" }}> 
-
-                        <div><img style = {{height : "80px", width : "80px"}} src = {data.player_image} ></img></div>
-                        <div><div><h2>{data.player_name}</h2><h6 className = "text-warning" onClick = {()=>{const home = JSON.stringify(data.team_key); sessionStorage.setItem("team", home);  navigate("/team")}}>{data.team_name}</h6> <p style = {{color: "midnightblue"}}>#{data.player_number}</p></div>
-                            
-                        </div>
-                     
-                        </div>
-                  
-       
-
-
-      
-     
-   
-     
- 
-                        <div>
-
-      <ThemeProvider theme = {Theme}>
-        <Tabs style ={{background : "inherit", borderWidth : "0px",  boxShawdow : "none"}} textColor = "primary" value={value} TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }} onChange={handleChange}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"  >
-          <Tab label="Overview" />
-       
-        
-        </Tabs>
-        </ThemeProvider>
+            }
         </div>
 
 
-      
-     
-   
-     
- </div>
+      </div>
 
+      :
 
+      ""
+    }
 
+    
 
-   <div id = "love" style = {{ background : "#EEEEEE"}}>
-   <br></br>
-      <br></br>
-      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-        <Typography component="div" role="tabpanel" hidden={value !== 0}>
-        		
-			<Overview/>
-         
-
-
-
-        
-
-        </Typography>
-
-      
-      
-      </SwipeableViews>
+        {playerData.careerHistory && (
+          <Box>
+            <Typography align="center">Player History</Typography>
+            <table>
+              <thead>
+                <tr>
+                  <th>Teams</th>
+                  <th>Appearance</th>
+                  <th>Goals</th>
+                  <th>Assist</th>
+                </tr>
+              </thead>
+              <tbody>
+                {playerData.careerHistory.careerItems.senior.seasonEntries.map(item => (
+                  <tr key={item.teamId}>
+                    <td>
+                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`} alt={item.team} style={{ width: "20px", height: "20px" }} />
+                      {item.team} ({item.seasonName})
+                    </td>
+                    <td>{item.appearances}</td>
+                    <td>{item.goals}</td>
+                    <td>{item.assists}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Box>
+        )}
     </div>
 
+  );
+};
 
-
-
-        </div>        )
-
-
-   }
- }
-   fetcher()
-
-}, [value, playerRating, injuryList])
-    return(
-        <body style = {{background : "#EEEEEE", height : window.innerHeight}}>
-            
-            {ret}
-        </body>
-    )
-    
-}
-
-
-function Overview(){
-
-	const [ret, setRet] = useState()
-	const [stats, setStats] = useState()
-
-
-
-		useEffect(()=>{
-
-			async function dom(){
-					const mint = await sessionStorage.getItem("player_state")
-					const parser = JSON.parse(mint)
-
-
-					const data = parser
-
-					setRet(
-							<div style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px",  background: "white"}}>
-									<div style = {{display : "flex", justifyContent : "space-between", width : "100%"}}>
-										<p>Date of Birth : {data.player_birthdate}</p>
-										<p>Age : {data.player_age}</p>
-										<p>Country : {data.player_country}</p>
-									</div>
-									<br></br>
-
-										<div style = {{display : "flex", justifyContent : "space-between", width : "100%"}}>
-										<p>Player Position : {data.player_type}</p>
-										
-										<p style = {{background : "midnightblue", color : "white", borderRadius : "10px"}}>Player Rating : {data.player_rating}</p>
-									</div>
-									<div style = {{display : "flex", justifyContent : "center", width : "100%"}}>
-										<p className = "text-danger">Injury Status : {data.player_injured}</p>
-										
-										</div>
-								</div>
-						)
-
-					setStats(
-						<div style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px",  background: "white"}}>
-									<h6 className = "text-center">Player Seasonal Stats</h6>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Minutes Played</h6>
-										<h6>{data.player_minutes} mins</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Goals Scored</h6>
-										<h6>{data.player_goals}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Assists</h6>
-										<h6>{data.player_assists}</h6>
-									</div>
-
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Yellow Cards</h6>
-										<h6 className = "text-warning">{data.player_yellow_cards}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Red Cards</h6>
-										<h6 className = "text-danger">{data.player_red_cards}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Matches Played</h6>
-										<h6>{data.player_match_played}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Player Dispossed</h6>
-										<h6>{data.player_dispossesed}</h6>
-									</div>
-
-										<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Total Attempted Dribble </h6>
-										<h6>{data.player_dribble_attempts}</h6>
-									</div>
-
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Successful Dribbles</h6>
-										<h6>{data.player_dribble_succ}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Player Saves</h6>
-										<h6>{data.player_saves}</h6>
-									</div>
-
-								
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Player Goal conceded</h6>
-										<h6>{data.player_goals_conceded}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Player Total Duels</h6>
-										<h6>{data.player_duels_total}</h6>
-									</div>
-
-									<div style = {{display : "flex", width : "100%", justifyContent : "space-between", marginTop : "2%"}}>
-										<h6>Player Duels Won</h6>
-										<h6>{data.player_duels_won}</h6>
-									</div>
-
-
-
-						</div>
-						)
-
-
-			}
-
-			dom()
-
-		}, [])
-
-	return(
-			<>{ret}<br></br>{stats}</>
-		)
-}
-
-
+export default Player;

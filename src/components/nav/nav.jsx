@@ -13,7 +13,7 @@ import Calendar from "./calendar"
 import Datepicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import {generateToken} from "../../Notification/firebase.js"
 import Line from "../../line.js"
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
@@ -61,13 +61,12 @@ import Modal from '@mui/material/Modal';
 
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '50%',
   left: '50%',
-  height : window.innerHeight - 100,
   transform: 'translate(-50%, -50%)',
-  width : "100%",
+  width: "100%",
   bgcolor: 'background.paper',
-  
+borderRadius : "10px",
   boxShadow: 24,
   p: 4,
 };
@@ -98,40 +97,61 @@ useEffect(()=>{
 
 
 		async function reload(){
+			try{
 				const fetcher = await sessionStorage.getItem("league_data")
 					const parser = await JSON.parse(fetcher)
+					
 
 
-					const matched = await parser.filter((element)=> element.league_name.match(alpha))
+			
 
 
-					/*
-								
-										const first = axios.get(Line+"/players_data")
-
-										const player_data = first.data
-
-
-										const second = axios.get(Line+"/teams_data")
-										const teams_data = second.data
-
-
-
-					*/
+					const searcher_raw = await axios.get(Line+"/search", {
+						params : {
+							term : alpha
+						}
+					})
+					const searcher = searcher_raw.data
+					console.log(searcher, "search_return")
 
 
 
 					setTack(
-									matched.map((item)=>{
+									searcher[0].suggestions.map((item)=>{
+
+										var stat 
+                    
+
+										if(item.type == "player"){
+											var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
+										else if(item.type == "team"){
+											var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
+										else if(item.type == "league"){
+											var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
 													return(
-																	<div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-              <div style = {{width : "10%", height : "100%"}}><img src = {item.league_logo} style = {{width : "25px", height : "20px", borderRadius : "50%",}}></img></div>
-              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.league_name}</h6> </div>
-            </div>
+																<div>{stat}</div>			
 														)
 									}
-						))
+						)
 
+
+									)
+			}
+catch(e){
+	console.log(e)
+}
 					
 
 		}
@@ -158,7 +178,7 @@ useEffect(()=>{
       >
         <Box sx={style}>
 
-        <ArrowBackIcon onClick={()=> navigate("/")}/>
+        <ArrowBackIcon onClick={()=> navigate(window.location.reload())}/>
 
            <TextField
           id="filled-search"
@@ -333,7 +353,95 @@ function Custom_input1({value, onClick}){
 }
 export default function Nav(){
 
+const [anchorEl, setAnchorEl] = React.useState(null);
+  const [tack, setTack] = React.useState()
+  const [tack1, setTack1] = React.useState()
+  const [tack2, setTack2] = React.useState()
+  const navigate = useNavigate()
+   const [opend, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClosed = () => setOpen(false);
+  const [alpha, setAlpha] = useState()
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
+
+useEffect(()=>{
+
+
+
+
+		async function reload(){
+			try{
+				const fetcher = await sessionStorage.getItem("league_data")
+					const parser = await JSON.parse(fetcher)
+					
+
+
+			
+
+
+					const searcher_raw = await axios.get(Line+"/search", {
+						params : {
+							term : alpha
+						}
+					})
+					const searcher = searcher_raw.data
+					console.log(searcher, "search_return")
+
+
+
+					setTack(
+									searcher[0].suggestions.map((item)=>{
+
+										var stat 
+
+										if(item.type == "player"){
+											var stat = <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
+										else if(item.type == "team"){
+											var stat = <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
+										else if(item.type == "league"){
+											var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+										            </div>
+										}
+
+													return(
+																<div>{stat}</div>			
+														)
+									}
+						)
+
+
+									)
+			}
+catch(e){
+	console.log(e)
+}
+					
+
+		}
+
+		reload()
+
+},[alpha])
+
+
+
+    
   const [value, setValue] = React.useState(6);
 
   const handleChange = (event, newValue) => {
@@ -352,7 +460,7 @@ export default function Nav(){
 
 	const [selectedDate, setDate] = useState(null);
 	const [list, setListd] = useState()
-	const navigate = useNavigate()
+
 		const [listm, setListm] = useState()
 	var dated = []
 	var mated = []
@@ -388,14 +496,43 @@ const [side_news, setSidenews] = useState()
 		.then((res)=>{
 
 			setSidenews(
-					res.data.map((make)=>{
+					res.data.map((item)=>{
+						 var url 
+                              if(item.sourceStr === "FotMob" || item.sourceStr === "90min"){
 
-						return(
-							<Link to = {"/news/"+make._id}>
-									          <img src = {make.cover_photo} style = {{ width : "30%", height : 70, borderRadius : "0%"}}></img>
-                      <h6 style = {{width : "70%"}}>{make.title}</h6>
-						</Link>
-							)
+                               const baseUrl = "https://www.fotmob.com";
+                                const itemPageUrl = item.page.url; // Assuming item.page.url is a variable with the dynamic path
+
+                                url = `${baseUrl}${itemPageUrl}`;
+                                console.log(url)
+                                  return(
+
+
+                                  <Link onClick  = {()=>{
+
+                                window.open(url, '_blank', 'noopener,noreferrer');
+ 
+                                  }} state = {{l : url, m : 1}}  style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
+                                       <img src = {item.imageUrl} style = {{ width : "30%", height : 70, borderRadius : "0%"}}></img>
+                    									  <h6 style = {{width : "70%"}}>{item.title}</h6>
+                                  </Link>
+                              )
+                              }
+                              else{
+                                url = item.page.url
+                            return(
+                                  <Link onClick  = {()=>{
+
+                                window.open(url, '_blank', 'noopener,noreferrer');
+ 
+                                  }}  state = {{l : url, m : 0}}  style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
+                                       <img src = {item.imageUrl} style = {{ width : "30%", height : 70, borderRadius : "0%"}}></img>
+                  									    <h6 style = {{width : "70%"}}>{item.title}</h6>
+                                  </Link>
+                              )
+                          }
+
+					
 					})
 					)
 		})
@@ -458,10 +595,74 @@ const [side_news, setSidenews] = useState()
 			     const liner = await localStorage.getItem("data")
 
        const parserd =  await JSON.parse(liner)
+        if(parserd != null){
+
+          
+            const raw = localStorage.getItem("data");
+    const done = JSON.parse(raw);
+    const { data: users } = await axios.get(`${Line}/users`);
+    const user = users.find(user => user.email === done.email && user.password === done.password);
+
+        if(user){
+
+    const place = {
+      id_: user._id,
+      token: await generateToken(),
+    };
+}
+
+else {
+
+    const data = {
+
+                     email: `user${Math.round(Math.random() * 10000000)}@sportsup.com`, // Generate a mock email
+                     password: Math.random().toString(36).substring(2, 10), // Generate a random password
+                     phone_string: await  generateToken(),
+          }
+
+          console.log(data)
+
+          fetch(Line+"/register", {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body :new URLSearchParams(data)})
+
+              const stringer = JSON.stringify(data)
+             localStorage.setItem("data", stringer)
+
+        
+
+}
+
+    const place = {
+      id_: user._id,
+      token: await generateToken(),
+    };
+
+ await fetch(`${Line}/update_token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(place),
+    });
+        }
 
         if(parserd === null){
 
-        		navigate("/register")
+          
+
+          const data = {
+
+                     email: `user${Math.round(Math.random() * 10000000)}@sportsup.com`, // Generate a mock email
+                     password: Math.random().toString(36).substring(2, 10), // Generate a random password
+                     phone_string: await  generateToken(),
+          }
+
+          console.log(data)
+
+
+
+        		 fetch(Line+"/register", {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body :new URLSearchParams(data)})
+
+              const stringer = JSON.stringify(data)
+             localStorage.setItem("data", stringer)
+
 
         }
         
@@ -486,19 +687,59 @@ const [side_news, setSidenews] = useState()
 			async function dom (){
 
 				try{
-			const data = await axios.get("https://apiv3.apifootball.com/?action=get_leagues&APIkey="+api_key)
+			const data = await axios.get(Line+"/all_leagues")
 			
-				const la = data.data
-				const parser = JSON.stringify(la)
+				const la = data.data.international[0].leagues
+
+					const linkd = await JSON.stringify(data.data)
+					await sessionStorage.setItem("league_",linkd)
+
+			
+				
+
+					var monk = []
+
+
+
+
+			data.data.countries.map((item)=>{
+							
+							item.leagues.map((id)=>{
+
+									monk.push(id)
+							})
+						
+			})
+
+				data.data.popular.map((item)=>{
+							
+							
+
+									monk.push(item)
+						
+						
+			})
+				
+			
+
+				const parser = JSON.stringify(monk)
 				sessionStorage.setItem("league_data", parser)
+
 				setLeagues(
-				la.map((item)=>{
+				monk.map((item)=>{
 					return(
- 							 <button  onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} className="btn  btn-outline-dark "  style={{width : '100%'}}>{item.league_name}</button>
+ 							 <button  onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} className="btn  btn-outline-dark "  style={{width : '100%'}}>{item.name}</button>
 						)
 			
+
+
 			
 		})
+
+
+
+
+
 				)
 			}
 
@@ -611,38 +852,113 @@ async function fetcher(){
 	return(
 			<body style = {{background : "#EEEEEE"}}>
 			{/* Header for device over 750px in width */}
-			<header id = "larger_screens">
-				<nav className = "top_nav fixed-top">
 
-					<div className = "brand">
-						<img className = "brand_image" src = {require("../images/sportsup.png")}></img>
-						
-					</div>
+			<div>
 
-					<div className = "icons">
-						<Datepicker selected={selectedDate} onChange = {date=> setDate(date)} customInput = {<Custom_input/>}/>
-						<Link to = {"/news"} id = "nav-link" className = "btn btn-secondary"><img id = "icon" src = {require("../images/today.png")}></img><h6>News</h6></Link>
 
-						
-						
-					
-						<Link to = {"/login"} id = "nav-link" className = "btn btn-secondary"><img id = "icon" src = {require("../images/login.jpg")}></img><h6>Login or SignUp</h6></Link>
-					</div>
 
-				</nav>
-			
-				<div className = "mid_tab"style = {{marginTop : "60px"}}>
-				{listm}
-						<Link to={"/faves"} onClick = {()=> tab_change(1)} className = "text-dark" style = {{textDecoration : "none", display : "flex"}}><h6>💝</h6><h6>Favorites</h6></Link>
-						<button onClick = {()=> tab_change(2)} className = {tab_state === 2 ? "active" : "inactive"}><img id = "icon" src = {require("../images/yesterday.png")}></img><h6>Yesterday</h6></button>
-						<button onClick = {()=> tab_change(3)} className = {tab_state === 3 ? "active" : "inactive"}><img id = "icon" src = {require("../images/today.png")}></img><h6>All Matches</h6></button>
-						<button onClick = {()=> tab_change(4)} className = {tab_state === 4 ? "active" : "inactive"}><img id = "icon" src = {require("../images/tomorrow.png")}></img><h6>Tomorrow</h6></button>
-						<button onClick = {()=> tab_change(5)} className = {tab_state === 5 ? "active" : "inactive"}><h6>🔴</h6><h6>Live Matches</h6></button>
-						{list}
-						
-				</div>
-		
 
+
+
+      <Modal
+        open={opend}
+        onClose={handleClosed}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+
+     
+
+           <TextField
+          id="filled-search"
+          label="Search field"
+          type="search"
+          variant="filled"
+          sx = {{width : "90%"}}
+          onChange = {(val)=>{
+          				setAlpha(val.target.value)
+          }}
+        />
+        <div style = {{height : window.innerHeight-200, overflowX : "hidden", overflowY : "auto"}}>{tack}</div>
+      
+
+        </Box>
+      </Modal>
+    </div>
+
+
+
+
+
+
+
+    			<header id = "larger_screens">
+			<div className="container">
+      <header className="lh-1 py-3">
+        <div className="row flex-nowrap justify-content-between align-items-center">
+          <div className="col-1 pt-1">
+           
+            <ul className="dropdown-menu text-small">
+              <li><a className="dropdown-item" href="#">FAVOURITE</a></li>
+              <li><a className="dropdown-item" href="#">PROFILE</a></li>
+              <li><hr className="dropdown-divider" /></li>
+              <li><a className="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+          </div>
+
+          <div className="col-4 text-center">
+            <a className="blog-header-logo text-body-emphasis text-decoration-none" href="#">
+              <img src={require("../images/sportsup.png")} alt="LOGO" width="200" height="50" />
+            </a>
+          </div>
+
+          <div className="col-4 pt-1">
+ 
+             
+              <button className="btn btn-warning" onClick={handleOpen} >Search</button>
+         
+          </div>
+        </div>
+      </header>
+
+      <div className="nav-scroller py-1 mb-3 border-bottom">
+        <nav className="nav nav-underline justify-content-between">
+          <a className="nav-item nav-link link-body-emphasis active" href="#">
+            ⚽-SCORE <i className="fi fi-br-football"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            📰-NEWS <i className="fi fi-br-newspaper"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            ❤️-FAVOURITE <i className="fi fi-br-features"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            {/*GET THE APP <i className="fi fi-br-download"></i>*/}
+          </a>
+        </nav>
+      </div>
+
+      <div className="nav-scroller py-1 mb-3 border-bottom border-top">
+        <nav className="nav nav-underline justify-content-between">
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            LIVE <i className="fi fi-br-live"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            YESTERDAY <i className="fi fi-br-check-out-calendar"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis active" href="#">
+            TODAY <i className="fi fi-br-calendar-check"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            TOMORROW <i className="fi fi-br-check-in-calendar"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="#">
+            CALENDAR <i className="fi fi-br-calendar"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
 			</header>
 
 						{/* Header for device less than 750px in width */}
@@ -721,7 +1037,7 @@ async function fetcher(){
 
 			</div>
 
-			<div className = "live_score">{statement}</div>
+			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}>{statement}</div>
 			
 			<div className = "ads_news">
 				

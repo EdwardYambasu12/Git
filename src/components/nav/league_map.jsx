@@ -1,107 +1,14 @@
-import React, {useState, useEffect} from "react"
-import "./nav.css"
-import All_Matches from "./all_matches"
-import Tomorrow from "./tomorrow"
-import Yesterday from "./yesterday"
-import Live from "./live"
-import api from "./details.js"
-import {Link, useNavigate} from "react-router-dom"
-import Favorites from "./favorites"
-import axios from "axios"
-import Calendar from "./calendar"
-import Datepicker from "react-datepicker"
-import 'react-datepicker/dist/react-datepicker.css'
-
-
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-
+import React, { useState, useEffect } from "react";
+import "./nav.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SportsIcon from '@mui/icons-material/Sports';
 import FeedIcon from '@mui/icons-material/Feed';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
-import Line from "../../line.js"
-function PositionedMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <Button
-        id="demo-positioned-button"
-        aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-
-      >
-        <MoreVertIcon/>
-      </Button>
-      <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-      >
-        <MenuItem onClick={handleClose}>Search</MenuItem>
-        <MenuItem onClick={handleClose}>Leagues</MenuItem>
-        <MenuItem onClick={handleClose}>News</MenuItem>
-        <MenuItem onClick={handleClose}>Login/Signup</MenuItem>
-        <MenuItem onClick={handleClose}>Documentation</MenuItem>
-       
-      </Menu>
-    </div>
-  );
-}
-
-
+import Line from "../../line.js";
 function LabelBottomNavigation() {
   const [value, setValue] = React.useState('Leagues');
   const navigate = useNavigate()
@@ -131,272 +38,155 @@ function LabelBottomNavigation() {
         icon={<EmojiEventsIcon />}
       />
       <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
-    </BottomNavigation>  );
+    </BottomNavigation>
+  );
 }
 
+export default function League_Map() {
+  const [allLeagues, setAllLeagues] = useState([]);
+  const [followedLeagues, setFollowedLeagues] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [users, setUser] = useState()
+
+  useEffect(() => {
+    const fetchLeagues = async () => {
+      setLoading(true);
+      const raw_data = await sessionStorage.getItem("league_data");
+      const leagues = await JSON.parse(raw_data);
+
+      if (leagues) {
+        const user_data = JSON.parse(localStorage.getItem("data"));
+        const response = await axios.get(`${Line}/users`);
+        const user = response.data.find(u => u.email === user_data.email);
+
+        if (user) {
+          setFollowedLeagues(user.favorite_league.map(item => JSON.parse(item)));
+          setUser(user)
+        }
+        setAllLeagues(leagues);
+      } else {
+        alert("Please login or sign up");
+      }
+
+      setLoading(false);
+    };
+
+    fetchLeagues();
+  }, []);
+
+  const toggleFollowLeague = async(leagueId, leagueName) => {
+    const isFollowing = followedLeagues.some(league => league.id === leagueId);
+    const updatedFollowedLeagues = isFollowing
+      ? followedLeagues.filter(league => league.id !== leagueId)
+      : [...followedLeagues, allLeagues.find(league => league.id === leagueId)];
+
+    setFollowedLeagues(updatedFollowedLeagues);
 
 
+      if(isFollowing === false){
 
+                const monk = {
+        id : leagueId,
+        name : leagueName,
+              }
 
+      const league = JSON.stringify(monk)
+   
+    const place = {
+      id_: users._id,
+      league_id: league,
+    };
 
+              console.log(users)
 
+              await fetch(`${Line}/favorite_league`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(place),
+    });
+   
+  };
+      
 
+if(isFollowing === true){
 
+         const monk = {
+        id : leagueId,
+        name : leagueName,
+              }
 
+      const league = JSON.stringify(monk)
+   
+    const place = {
+      id_: users._id,
+      league_id: league,
+    };
 
-export default function League_Map(){
+              console.log(users)
 
-const [status, setStatus] = useState()
+              await fetch(`${Line}/favorite_league_remove`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(place),
+    });
+    
+  };
 
-const navigate = useNavigate()
-const [value, setValue] = React.useState(6);
-const [statement, setStatement] = useState()
-const [all, setAll] = useState(<Skeleton variant="rectangular" width={210} height={60} />)
-const [top, setTop] = useState()
-
-const [follow, setFollow] = useState();
-
-
-
-const [user_data, setuserData] = useState()
-
-
-async function poster(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
-
-  if(data != null){
-
-
+      
  
+  };
 
-     const multi = await axios.get(Line+"/users")
-        
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
-
-       var _id = auth[0]._id
-        console.log(auth)
-
- console.log(Line+"/favorite_leagues")
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_leagues",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
-
-window.location.reload();
-
-}
-
-else if(data === null){
-
-alert("please login")
-}
-}
-
-async function posterd(id){
-      const raw_data = await localStorage.getItem("data")
-  const data = JSON.parse(raw_data)
-if(data != null){
-  
-
- 
-
-     const multi = await axios.get(Line+"/users")
-        
-       const auth = multi.data.filter((item)=> item.email == data.email_reader )
-
-       var _id = auth[0]._id
-        console.log(auth)
-       
-
- console.log(Line+"/favorite_leagues_remove")
- const stringer = JSON.stringify(id)
-  await fetch(Line+"/favorite_leagues_remove",
-   {method : "POST", headers : {"content-type": "application/x-www-form-urlencoded"}, body : new URLSearchParams({userId : _id, pinned : stringer  })
-})
-
-window.location.reload();
-}
-else if(data == null){
-
-alert("please login")
-}
-}
-
-useEffect(()=>{
-
-    async function tolerate(){
-      const raw_data = await sessionStorage.getItem("league_data")
-      const data = await JSON.parse(raw_data)
-
-
-
-    
-
-
-       
-     
-
-
-if (data != null){
-    let important  = []
-
-    
-
-        const liner = await localStorage.getItem("data")
-    const parser =  await JSON.parse(liner)
-        const multi = await axios.get(Line+"/users")
-
-       
-        
-       const auth = multi.data.filter((item)=> item.email == parser.email_reader )
-
-       console.log(auth)
-
-       
-
-        if (auth.length > 0){
-                  auth[0].favorite_league.forEach((element)=>{
-                    const polay = data.find((id)=>id.league_id ===  element.league_id)
-                    important.push(polay)
-
-                  })
-
-
-
-                  console.log(important)
-                  setTop(
-
-      important.map((item)=>{
-            
-        return(
-            <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-              <div style = {{width : "10%", height : "100%"}}><img src = {item.league_logo} style = {{width : "25px", height : "20px", borderRadius : "50%",}}></img></div>
-              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.league_name}</h6> </div>
-            </div>
-      )
-
-
-
-              })
-
-
-      )
-                 }
-
-
-    else{
-      alert("please login or Signup")
-      setTop(
-            <>Login Or Signup to follow leagues</>
-        )
-    }
-
-console.log(auth)
-    
-
-setAll(
-      data.map((item)=>{
-                        var status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed; }}>follow</p> 
-                      const followed = <p onClick = {()=>{ status = notfollowed; posterd(item); }}>following</p>
-                      const notfollowed = <p className = "text-dark" onClick = {()=>{poster(item); status = followed}}>follow</p> 
-
-                        if(auth.length > 0){
-
-                      const checker = auth[0].favorite_league.filter((it)=> it.league_id ===  item.league_id)
-                   
-                      if(checker.length > 0){
-                        status = <p onClick = {()=>{ status = notfollowed; posterd(item);  }} >following</p>
-                           console.log(checker)
-                      }
-
-                      else{
-
-                        status = <p className = "text-dark" onClick = {()=>{poster(item); status = followed; }}>follow</p> 
-                      }
-
-                    }
-        return(
-
-
-          <div  style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}>
-            <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-              <div style = {{width : "10%", height : "100%"}}><img src = {item.league_logo} style = {{width : "25px", height : "20px", borderRadius : "50%",}}></img></div>
-              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.league_name}</h6> 
-            </div>
-</div>
-            <button className = "btn" style = {{background : "#EEEEEE", height : "30px", alignItems : "center"}}><strong>{status}</strong></button>
-
-            </div>
-          )
-      })
-      )
-
-      console.log(data)
-
-    }
-  
-}
-    tolerate()
-
-}, [])
-  
-
-
-
-	return(
-			<body style = {{background : "#EEEEEE", height : window.innerHeight}}>
-	
-				<nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
-				
-					<div className="top_nav">
-					<div className = "brand">
-						<img className = "brand_image" src = {require("../images/sportsup.png")}></img>
-						
-					</div>
-
-			<div className = "icons">
-					
-					
-						
-			</div>
-
-			    </div>
-  
-
-
-
-				</nav>
-				<br></br>
-					<br></br>
-				<br></br>
-		
-				<div className = "state" >
-        <div style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px", background : "white"}}>
-            <strong style = {{textDecoration : "bold"}}>Following</strong>
-            
-            {top}
-
+  return (
+    <div style={{ background: "#EEEEEE", height: "100vh" }}>
+      <nav className="fixed-top">
+        <div className="top_nav">
+          <div className="brand">
+            <img className="brand_image" src={require("../images/sportsup.png")} alt="Logo" />
           </div>
-				
+        </div>
+      </nav>
 
-   				
-<br></br>
-   						<div style = {{width : "98%", marginLeft : "1%", marginRight : "1%", borderRadius : "10px", background : "white"}}>
-   					<strong style = {{textDecoration : "bold"}}>All Competitions</strong>
-   					
-   					{all}
+      <div className="state">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <div style={{ width: "98%", margin: "1%",  marginTop : "7%", borderRadius: "10px", background: "white" }}>
+              <strong style={{ textDecoration: "bold" }}>Following</strong>
+              {followedLeagues.map(league => (
+                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
+                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
+                    <h6>{league.name}</h6>
+                  </div>
+                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
+                    <strong>Unfollow</strong>
+                  </button>
+                </div>
+              ))}
+            </div>
 
-   				</div>
-			{statement}
-					
-</div>
-		<LabelBottomNavigation/>
+            <div style={{ width: "98%", margin: "3%", borderRadius: "10px", background: "white" }}>
+              <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
+              {allLeagues.map(league => (
+                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
+                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
+                    <h6>{league.name}</h6>
+                  </div>
+                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
+                    <strong>{followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}</strong>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
 
-		
+     <LabelBottomNavigation/>
 
-
-			</body>
-		)
-
+    </div>
+  );
 }

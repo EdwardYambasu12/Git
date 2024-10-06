@@ -10,7 +10,6 @@ import axios from "axios"
 import Trial from "./trial.jsx"
 import Head_to_Head from "./h2h.js"
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 import {createTheme} from '@mui/material/styles'
 import {ThemeProvider} from '@mui/material/styles'
@@ -109,78 +108,13 @@ const Theme = createTheme({
   },
 });
 
-const Timer = ({ props }) => {
-  // Ensure props is not empty and has the required structure
-  if (!props || !props[0] || !props[0].header || !props[0].header.status || !props[0].header.status.liveTime) {
-    return <div>Error: Invalid props structure</div>;
-  }
 
-  // Extract minutes and seconds from props
-  const data = props[0];
-  const splitter = data.header.status.liveTime.long.split(":");
-  const initialMinutes = parseInt(splitter[0], 10); // Convert to number
-  const initialSeconds = parseInt(splitter[1], 10); // Convert to number
-  
-  // Initialize state with total seconds
-  const [time, setTime] = useState(initialMinutes * 60 + initialSeconds);
-
-  // Format time into MM:SS
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-
-  useEffect(() => {
-    // Initialize interval
-    const interval = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prevTime + 1; // Countdown logic
-      });
-    }, 1000);
-
-    // Cleanup on unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div id="timer" style={{ fontSize: '1em', fontFamily: 'Arial, sans-serif' }}>
-      {formatTime(time)}
-    </div>
-  );
-};
-
-const App = () => {
-  const exampleProps = [{
-    header: {
-      status: {
-        liveTime: {
-          long: "32:05" // Example time string
-        }
-      }
-    }
-  }];
-
-  return (
-    <div>
-      <h1>Game Timer</h1>
-      <Timer props={exampleProps} />
-    </div>
-  );
-};
-
-
-
-
+   
 
 const Rest_assure = ({props})=>{
 
     const [value, setValue] = useState(0);
-const [dom, setDom] = useState()
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -191,7 +125,7 @@ const [dom, setDom] = useState()
 
 
 
-var time = <Timer props = {props} />
+
 var it
     const [dd, setD] = useState()
 const [gem, setGem]= useState()
@@ -217,7 +151,6 @@ const [useful, setUseful]= useState()
 
     var comment = props[1]
     var tab = props[2]
-    var league = props[3]
 
 
        const [isScrolled, setIsScrolled] = useState(false);
@@ -239,15 +172,8 @@ const [teller, setTeller] = useState(160)
 
         }
 
-        if(data.header.status.started === true && data.header.status.finished === false){
-
-            if(data.header.status.liveTime.short === "HT"){
-                status = data.header.status.liveTime.long
-            }
-
-            else {
-            status = time
-                }
+        if(item.header.status.started === true && item.header.status.finished === false){
+            status = item.header.status.liveTime.long
         }
 
         if(item.header.status.started === false){
@@ -262,18 +188,103 @@ const [teller, setTeller] = useState(160)
 
       const currentScrollY = window.scrollY;
       const header = item.header.teams
+      if (currentScrollY > 0) {
+        setIsScrolled(true);
+        
 
+        setTeller(130)
+      
+            setD(
+            
+                
+                  <div className = "classaction"  TransitionComponent = {Fade} transitionDuration = {1000}>
+                  <div  id = "backgroundt" >
+                     
+                  </div>
+                  <div style = {{width : "100%", position : "absolute", top : "0%"}}>
+                
+        <div className="main_row">
+         <Link to = {"/"}><img src = {require("../images/R.png")} style = {{width : "30px", height : "30px", marginLeft : "3%"}}></img> </Link>
+                  
+                  
+            <div style={{width : "35%", textAlign : "right"}}  >
+                <img src = {header[0].imageUrl} className="team_logost"></img>
+        
+              
+                        
+                                    
+                                    
+                     
+            </div>
+        
+
+            <div style={{display : "flex", justifyContent : "space-between", width : "20%"}}>
+                <h1 className="text-dark">{header[0].score}</h1>
+                <h1 className="text-dark" style={{marginLeft : "2%", marginRight : "2%"}}>:</h1>
+                <h1 className="text-dark text-center">{header[1].score}</h1>
+            </div>
+           
+          
+          
+
+            <div id = "awaya" style={{width : "35%", textAlign : "left"}}>
+                <img src = {header[1].imageUrl} className="team_logost"></img>
+           
+           
+                        
+                                    
+               
+            </div>
+
+            <img src = {require("../images/bk.png")} style = {{width : "30px", height : "30px", marginRight : "3%"}}></img>
+
+
+
+
+
+
+
+
+
+
+              
+
+            </div>
+              <h6 className="text-center text-danger">{status}</h6>   
+
+
+         
+
+          
+            </div>
+
+ 
+
+
+               <div>
+
+           
+                </div>
+
+
+             
+              </div>)
+
+      } else {
+        setIsScrolled(false);
+        setTeller(160)
+    
             setD(
                   <div className = "classaction" TransitionComponent = {Fade} transitionDuration = {1000}>
                   <div  id = "background" >
                      
                   </div>
                   <div style = {{width : "100%", position : "absolute", top : "0%"}}>
-                  <div style = {{width : "100%", display : "flex", justifyContent : "space-between", marginTop : "1.5%"}}>  <ArrowBackIcon onClick={() => navigate(-1)} style={{ color : "black", cursor: 'pointer' }} />
-                
+                  <div style = {{width : "100%", display : "flex", justifyContent : "space-between", marginTop : "1.5%"}}>  <Link to = {"/"}><img src = {require("../images/R.png")} style = {{width : "30px", height : "30px", marginLeft : "3%"}}></img> </Link>
+                  <img src = {require("../images/bk.png")} style = {{width : "30px", height : "30px", marginRight : "3%"}}></img>
                   </div>
         <div className="main_row">
-            <div style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[0].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} >
+            <div style={{width : "40%"}} >
                 <img src = {header[0].imageUrl} className="team_logos"></img>
                 <br></br>
                 <br></br>
@@ -298,7 +309,7 @@ const [teller, setTeller] = useState(160)
            </div>
           
 
-            <div id = "awaya" style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[1].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}>
+            <div id = "awaya" style={{width : "40%"}} >
                 <img src = {header[1].imageUrl} className="team_logos"></img>
                 <br></br>
                 <br></br>
@@ -346,7 +357,7 @@ const [teller, setTeller] = useState(160)
 
                     
         
-       
+      }
     };
 
     window.addEventListener('scroll', handleScroll(data));  
@@ -361,12 +372,14 @@ const [teller, setTeller] = useState(160)
 
 
 
+
+
 }, [data])
 
 
-useEffect(()=>{
-    setDom(
-        <>
+    return(
+            
+                <>
                        
                   <div style = {{background : "white", borderBottom : "solid #EEEEEE", borderWidth : "3px"}} className = "fixed-top">
                         
@@ -479,7 +492,7 @@ useEffect(()=>{
                  else if(item === "table"){
 
                 action =   <Typography component="div" role="tabpanel" hidden={value !== index}>
-                                     <Table props = {tab} league = {league} data = {data}/>
+                                     <Table props = {tab}/>
                                       </Typography>
                         }
 
@@ -513,17 +526,6 @@ useEffect(()=>{
     </div>
      
                 </>
-    )
-
-
-}, [ data, value, dd])
-
-
-    return(
-            
-                <>
-                        {dom}
-                </>
 
 
 
@@ -554,15 +556,7 @@ const [palma, setPalma] = useState()
 
 
 const [data, setData] = useState()
-const [dd, setD] = useState(<div>
-
-    <Skeleton variant="rectangular" width={"100%"} height={160} />
-
-    <br></br>
-
-    <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
-
-    </div>)
+const [dd, setD] = useState()
 
 const [isScrolled, setIsScrolled] = useState(false);
   const handleScrollRemoval = () => {
@@ -571,78 +565,68 @@ const [teller, setTeller] = useState(160)
 
 useEffect(()=>{
 
- const reloader = async () => {
-    try {
-        // Fetch raw data
-        const raw_data = await axios.get(`${Lined}/result`, {
-            params: { id: id }
-        });
-        const datam = raw_data.data;
-        console.log(datam);
+            const reloader = async()=>{
 
-        let comment_data;
-        let trick;
-        var league_data;
 
-        if (datam.nav.includes("table")) {
-         
 
-            // Properly pass the leagueId as a parameter in the params object
-            const response = await axios.get(`${Lined}/league`, {
-                params: {
-                    id: datam.general.parentLeagueId  // Ensure correct syntax here
+               
+                const raw_data = await axios.get(Lined+"/result", {
+                    params : {id : id}
+
+
+
+                })
+
+                const datam = raw_data.data 
+
+                console.log(datam)
+
+                var comment_data
+
+                if(datam.content.liveticker != false){
+
+                console.log( datam.content.liveticker.teams)
+                
+
+                const comment = await axios.get(Lined+"/commentary", {
+                    params : {
+                       first : datam.content.liveticker.teams[0],
+                        second : datam.content.liveticker.teams[1]
+                    }
+                })
+
+                 comment_data = comment.data
+                console.log(comment_data)
+            }
+            var d
+
+            if(datam.content.table.url){
+            const rd = await axios.get(datam.content.table.url)
+             d = rd.data
+
+            console.log(d)
                 }
-            });
-            console.log(datam.general.parentLeagueId);
-            // Store the response data
-            league_data = response.data;
-            console.log(league_data, "league data");
-        }
+            var trick = d
 
-        if (datam.content.liveticker) {
-            console.log(datam.content.liveticker.teams);
+                const multi = [datam, comment_data, trick]
 
-            const str = datam.content.liveticker.langs;
-            const arr = str.split(',');
-            console.log(arr);
 
-            // Fetch commentary data
-            const comment = await axios.get(`${Lined}/commentary`, {
-                params: {
-                    first: datam.content.liveticker.teams,
-                    id: datam.general.matchId,
-                    arr: arr
-                }
-            });
-            comment_data = comment.data;
-            console.log(comment_data);
-        }
 
-        // Fetch additional data if URL is present
-        if (datam.content.table?.url) {
-            const rd = await axios.get(datam.content.table.url);
-            trick = rd.data;
-        }
 
-        const multi = [datam, comment_data, trick, league_data];
+             
 
-        // Update state
-        setD(<Rest_assure props={multi} />);
+                
 
-        // Check if the match is ongoing
-        if (datam.ongoing) { 
-            // Notify the user that the match is live
-            setTimeout(reloader, 10000);  // Reload the function after 10 seconds
-        }
+                setD(
+                        <Rest_assure props = {multi}/>
+                    )
 
-    } catch (error) {
-        console.error('Error in reloader:', error);
-    }
-};
 
-// Start reloading
-reloader();
 
+                
+            }
+
+            reloader()
 
 
 
@@ -686,7 +670,7 @@ const Info = ({props})=>{
 
     const data = props[0]
     var ticker = props[2]
-  
+    console.log(ticker, "ticker")
 
     const [pump, setPump]  = useState()
 
@@ -700,8 +684,6 @@ const Info = ({props})=>{
 
     const [stats, setStats] = useState()
 
-    const [topplayers, setTopPlayers] = useState()
-
     const [teamform, setForm] = useState()
 
     const [insight, setInsight] = useState()
@@ -709,49 +691,7 @@ const Info = ({props})=>{
     const [info, setInfo] = useState()
 
     const [pending_var, setPendingVar] = useState()
-
-    const navigate = useNavigate()
     useEffect(()=>{
-
-
-        ///////////////Top Players
-
-        if(data.content.matchFacts.topPlayers.homeTopPlayers.length > 0 && data.content.matchFacts.topPlayers.awayTopPlayers.length > 0){
-
-            setTopPlayers(
-                    <div style = {{background : "white",fontFamily : "Montserrat", borderRadius : "10px", marginTop : "5%"}}>
-                    <h6 className = "text-center">Top Players</h6>
-                        <div style = {{width : "100%", justifyContent : "space-between", display : "flex", }}>
-                            <div >
-
-                                {data.content.matchFacts.topPlayers.homeTopPlayers.map((item)=>(
-                                        <div style = {{width : "90%", marginTop : "3%", display : "flex", justifyContent : "space-between"}}>
-                                            <img style = {{width : "30px", height : "30px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.playerId+".png"}></img>
-                                            <h6>{item.name.lastName}</h6>
-                                            <h6 style = {{background : item.color, height : "fit-content", color : "black", textDecoration : "bold", borderRadius : "10px"}}>{item.playerRatingRounded}</h6>
-                                        </div>
-                                    ))}
-                                
-                            </div>
-
-
-                             <div >
-
-                                {data.content.matchFacts.topPlayers.awayTopPlayers.map((item)=>(
-                                        <div style = {{width : "90%", marginTop : "3%", display : "flex", justifyContent : "space-between"}}>
-                                              <img style = {{width : "30px", height : "30px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.playerId+".png"}></img>
-                                            <h6>{item.name.lastName}</h6>
-                                            <h6 style = {{background : item.color, height : "fit-content", color : "black", textDecoration : "bold", borderRadius : "10px"}}>{item.playerRatingRounded}</h6>
-                                        </div>
-                                    ))}
-                                
-                            </div>
-                        </div>
-
-                    </div>
-                )
-
-        }
 
       
         
@@ -773,7 +713,7 @@ const Info = ({props})=>{
               frameBorder="0"
               title="Embedded Content"
             ><small>credits to FOTMOB</small></iframe>
-                <button className = "btn btn-success" style = {{width : "100%"}} onClick={handleClick}>View in fullScreen</button>
+                <button onClick={handleClick}>View in fullScreen</button>
                         <br></br>
                 </div>
             )
@@ -782,7 +722,7 @@ const Info = ({props})=>{
 
             var var_ = data.hasPendingVAR
 
-            if(var_){
+            if(var_ != false){
                 setPendingVar(
                         <div style = {{background : "green", width : "100%", color : "white"}}><h6 className = "text-center">Var Check</h6></div>
                     )
@@ -835,7 +775,7 @@ const Info = ({props})=>{
                                          </div>
 
                                          <hr></hr>
-                                         <div style = {{display : "flex"}} onClick = {()=>{navigate("/leauges/"+box["Tournament"].id);}} >
+                                         <div style = {{display : "flex"}}>
                                          <img src = {source}></img> 
                                          <h5>{box["Tournament"] != null ? box["Tournament"].leagueName : ""}</h5>
                                          </div>
@@ -849,7 +789,7 @@ const Info = ({props})=>{
 
                                          <div style = {{display : "flex"}}>
                                          <p>Stadium:</p> 
-                                         <p>{box["Stadium"] != null ? box["Stadium"].name : ""}</p>
+                                         <p>{box["stadium"] != null ? box["Stadium"].name : ""}</p>
                                          </div>
 
                                         
@@ -997,7 +937,6 @@ const Info = ({props})=>{
 
         })
 
-
         var map_return_2= form[1].map((element)=>{
 
             var our_img = data.header.teams[1].imageUrl
@@ -1082,13 +1021,13 @@ const stat = data.content.stats.Periods.All
                                 var mernd = {}
                                 if(item.highlighted == "away"){
 
-                                    mern = {background : stat.teamColors.lightMode.away, height : "fit-content", color : "white", textDecoration : "bold", borderRadius : "10px"}
+                                    mern = {background : stat.teamColors.lightMode.away, borderRadius : "10px"}
 
 
                                 }
                                 else if(item.highlighted == "home"){
 
-                                    mernd = {background : stat.teamColors.lightMode.home,  height : "fit-content", color : "white", textDecoration : "bold", borderRadius : "10px"}
+                                    mernd = {background : stat.teamColors.lightMode.home, borderRadius : "10px"}
 
                                 }
                                 return(
@@ -1352,7 +1291,7 @@ const labels = moment.map(item => item.minute);
 
             
                 }
-    }, [data])
+    }, [])
    
  
 
@@ -1361,28 +1300,19 @@ const labels = moment.map(item => item.minute);
             <div className = "container" style = {{background : "#EEEEEE"}} >
                
                         {pending_var}
-                   
-                   <div style = {{marginTop : "5%"}}>
+                        <br></br>
 
                         {pump}
-                        </div>
-
 
                         {highlight}
     
                    
-                  <div style = {{marginTop : "5%"}}>
+                    <br></br>
                {motm}
-               </div>
 
-                <div style = {{marginTop : "5%"}}>
+                <br></br>
 
-                {topplayers}
-
-
-                </div>
-
-                <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
+                <div style = {{background : "white", borderRadius : "10px"}}>
                
                 {momentum}
                 </div>
@@ -1390,30 +1320,24 @@ const labels = moment.map(item => item.minute);
 
                 {stats}
 
-                               <div style = {{marginTop : "5%"}}>
+                                <br></br>
 
                {match_events}
-               </div>
+
 
                
-            
-                   <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
+                <br></br>
+                   <div style = {{background : "white", borderRadius : "10px"}}>
                 <h6 className = "text-center text-secondary">Team Form</h6>
                 {teamform}
                 </div>
 
-
-
-                <div style = {{marginTop : "5%"}}>
+                <br></br>
 
                 {insight}
-                </div>
-
-                <div style = {{marginTop : "5%"}}>
+                <br></br>
 
                 {info}
-
-                </div>
                 
             </div>
         )
@@ -1460,7 +1384,7 @@ const Commentary = ({props})=>{
 
 
 
-        }, [data])
+        }, [])
 
         return(
                 <div style = {{background : "#EEEEEE"}} className = "container">{comments}</div>
@@ -1471,80 +1395,6 @@ const Commentary = ({props})=>{
     
 
 }
-
-////////////////////SHOT MAPPER
-
-const ShotMap = ({data}) => {
-  // Data for the shot map
-
-    var team_color
-
-    if(data.length < 1){
-            team_color = "red"
-    }
-
-    else if(data.length > 0){
-                team_color = data[0].teamColor
-    }
- const shotData = {
-    datasets: [
-      {
-        label: 'Shots',
-        data: data.map(shot => ({
-          x: shot.x* 50/100, // X position on the field
-          y: shot.y, // Y position on the field
-          r: 5, // Radius of the point
-        })),
-        backgroundColor: team_color,  // Team color
-        borderColor: '#DE0209',
-        borderWidth: 1,
-      }
-    ]
-  };
-
-  // Configuration for the shot map
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            const { x, y, r } = context.raw;
-            return `X: ${x}, Y: ${y}, Radius: ${r}`;
-          }
-        }
-      },
-      drawGoalPost: drawGoalPostPlugin
-    },
-    scales: {
-      x: {
-        min: 0,
-        max: 100,
-        title: {
-          display: true,
-          text: 'X Position'
-        }
-      },
-      y: {
-        min: 0,
-        max: 50,
-        title: {
-          display: true,
-          text: 'Y Position'
-        }
-      }
-    }
-  };
-  return (
-    <div>
-     <h6 className = "text-center text-secondary"> Shots Map</h6>
-      <Scatter data={shotData} options={options} />
-    </div>
-  );
-};
 
 
 /////////////// STATS
@@ -1564,9 +1414,6 @@ const Stats = ({props})=>{
 
         setRegular(
                 <div>
-                     <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
-                <ShotMap data = {data.content.shotmap.shots} />
-                </div>
                     {sm_stats.map((item)=>{
                             return(
 
@@ -1608,7 +1455,7 @@ const Stats = ({props})=>{
             )
 }
 
-    }, [data])
+    }, [])
 
 
 
@@ -1723,7 +1570,7 @@ setBottom(
     </div>
     )
     }
-    }, [])
+    })
 
     return(
             <div className = "container" style = {{background : "#EEEEEE", minHeight : window.innerHeight - 200}}>
@@ -1787,7 +1634,77 @@ const drawGoalPostPlugin = {
 };
 
 
+const ShotMap = ({data}) => {
+  // Data for the shot map
 
+    var team_color
+
+    if(data.length < 1){
+            team_color = "red"
+    }
+
+    else if(data.length > 0){
+                team_color = data[0].teamColor
+    }
+ const shotData = {
+    datasets: [
+      {
+        label: 'Shots',
+        data: data.map(shot => ({
+          x: shot.x, // X position on the field
+          y: shot.y, // Y position on the field
+          r: 5, // Radius of the point
+        })),
+        backgroundColor: team_color,  // Team color
+        borderColor: '#DE0209',
+        borderWidth: 1,
+      }
+    ]
+  };
+
+  // Configuration for the shot map
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const { x, y, r } = context.raw;
+            return `X: ${x}, Y: ${y}, Radius: ${r}`;
+          }
+        }
+      },
+      drawGoalPost: drawGoalPostPlugin
+    },
+    scales: {
+      x: {
+        min: 0,
+        max: 100,
+        title: {
+          display: true,
+          text: 'X Position'
+        }
+      },
+      y: {
+        min: 0,
+        max: 50,
+        title: {
+          display: true,
+          text: 'Y Position'
+        }
+      }
+    }
+  };
+  return (
+    <div>
+     <h6>Player Shot Map</h6>
+      <Scatter data={shotData} options={options} />
+    </div>
+  );
+};
 
 
 
@@ -1796,7 +1713,6 @@ function BasicModal({ open, handleClose, props, player }) {
 
     const data = props
     const [main, setMain] = useState()
-    const navigate = useNavigate()
 
     useEffect(()=>{
 
@@ -1805,7 +1721,6 @@ function BasicModal({ open, handleClose, props, player }) {
         const item =  data.content.playerStats[player.id];
 
 
-            if(item){
 
    
 
@@ -1816,9 +1731,7 @@ function BasicModal({ open, handleClose, props, player }) {
 
                         <div><img style = {{height : "80px", width : "80px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+player.id+".png"} ></img></div>
                         <div><div><h6>{item.name}</h6></div>
-                        {item.stats[0]?
-                            <div><button className = "btn btn-info">{item.stats[0].stats["FotMob rating"].stat ? item.stats[0].stats["FotMob rating"].stat.value : ""}</button> <p className = "text-secondary">Sportsup Match Ratings</p></div>
-                        :""}
+                            <div><button className = "btn btn-info">{item.stats[0].stats["FotMob rating"].stat.value}.0</button> <p className = "text-secondary">Sportsup Match Ratings</p></div>
                         </div>
                                                     </div>
 
@@ -1864,7 +1777,7 @@ function BasicModal({ open, handleClose, props, player }) {
                                                                 </div>
                                                                 <hr></hr>
 
-                                                                <div><p className = "text-center" onClick={()=>navigate("/player/"+player.id)}>See player profile</p></div>
+                                                                <div><p className = "text-center">See player profile</p></div>
 
                           
 
@@ -1875,7 +1788,7 @@ function BasicModal({ open, handleClose, props, player }) {
                         )
 
                 }
-                     }      
+                           
     }, [])
 
   return (
@@ -1910,48 +1823,10 @@ const Player = ({ player }) => {
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
   const monk =  sessionStorage.getItem("data_");
-  const navigate = useNavigate()
 const parser = JSON.parse(monk);
 
   useEffect(() => {
     const fetchPlayerData = async () => {
-
-
-        if(parser.content.lineup.lineupType === "predicted"){
-            setData(
-                        <div
-            style={{
-              position: 'absolute',
-              left: `${verticalLayout.x * 100}%`,
-              top: `${verticalLayout.y * 100}%`,
-              width: 50,
-              height: 50,
-              backgroundColor: 'white',
-              backgroundImage: `url("https://images.fotmob.com/image_resources/playerimages/${id}.png")`,
-              backgroundSize: 'cover',
-              color: 'white',
-              fontSize: '13px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '50%',
-              transform: 'translatex(-50%) translateY(-70%)',
-              textAlign: 'center'
-            }}
-    onClick={()=>navigate("/player/"+id)}
-          >
-          
-
-            <div 
-
-             style={{ transform: 'translateY(170%)', textAlign: 'center' }}>
-              <strong>{lastName}</strong>
-            </div>
-          </div>
-                )
-        }
-
-        else{
       
 
       let rating_color, goal, assist, rating_value;
@@ -2024,7 +1899,6 @@ const parser = JSON.parse(monk);
           </div>
         );
       }
-  }
     };
 
     fetchPlayerData();
@@ -2051,7 +1925,7 @@ const Player1 = ({ player }) => {
 
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate()
+
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
@@ -2060,42 +1934,7 @@ const Player1 = ({ player }) => {
 
   useEffect(() => {
     const fetchPlayerData = async () => {
-
-         if(parser.content.lineup.lineupType === "predicted"){
-
-            setData(
-                        <div
-            style={{
-               position: 'absolute',
-              left: `${verticalLayout.x * 100-7}%`,
-              top: `${verticalLayout.y * 100}%`,
-              width: 50,
-              height: 50,
-              backgroundColor: 'white',
-              backgroundImage: `url("https://images.fotmob.com/image_resources/playerimages/${id}.png")`,
-              backgroundSize: 'cover',
-              color: 'white',
-              fontSize: '13px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '50%',
-              transform: 'rotateZ(180deg)',
-              textAlign: 'center'
-            }}
-        
-        onClick={()=>navigate("/player/"+id)}
-          >
-          
-
-            <div style={{ transform: 'translateY(170%)', textAlign: 'center' }}>
-              <strong>{lastName}</strong>
-            </div>
-          </div>
-                )
-        }
-        else{
-
+     
 
       let rating_color, goal, assist, rating_value;
       let rating_back = 'gray'; // Default rating color
@@ -2167,15 +2006,17 @@ const Player1 = ({ player }) => {
           </div>
         );
       }
-  }
     };
 
     fetchPlayerData();
   }, [player.id, verticalLayout.x, verticalLayout.y]);
- return (
+
+  return (
     <>
       {data}
-     
+    <>
+      {data}
+   
   <BasicModal 
     open={modalOpen} 
     handleClose={handleModalClose} 
@@ -2183,6 +2024,7 @@ const Player1 = ({ player }) => {
     player={player} 
   />
 
+    </>
     </>
   );
 };
@@ -2205,11 +2047,9 @@ const Field = ({ players }) => {
 
 return (
     <div style= {fieldStyle}>
-      {players.map(player =>{
-
-      return (
+      {players.map(player => (
         <Player key={player.id} player={player} />
-      )})}
+      ))}
     </div>
   );
     
@@ -2247,7 +2087,6 @@ const [ch, setCh] = useState()
 
 const [sa, setSa] = useState()
 const [sh, setSh] = useState()
-const navigate = useNavigate()
 var homeTeamPlayers 
     var awayTeamPlayers 
     if(data.content.lineup != null){
@@ -2282,7 +2121,7 @@ if("subs" in data.content.lineup.homeTeam){
         const h = [data.content.lineup.homeTeam.subs]
 
         setSh(
-                    <div >
+                    <div>
                                 {h.map((item)=>{
                                    
 
@@ -2290,14 +2129,14 @@ if("subs" in data.content.lineup.homeTeam){
                                     <>
                                              {item.map((item)=>{
                                                 return(
-                                                        <div onClick={()=>navigate("/player/"+item.id)}>
+                                                        <>
                                                             
                                                             <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"}></img>
                                 
                                                             <h6>{item.name}</h6>
 
                                                            
-                                                        </div>
+                                                        </>
                                                     )
                                              })}
                         </>)
@@ -2322,13 +2161,13 @@ if("subs" in data.content.lineup.awayTeam){
                                     <>
                                              {item.map((item)=>{
                                                 return(
-                                                        <div onClick={()=>navigate("/player/"+item.id)}>
+                                                        <>
                                                             
                                                             <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"}></img>
                                 
                                                             <h6>{item.name}</h6>
                                                            
-                                                        </div>
+                                                        </>
                                                     )
                                              })}
                         </>)
@@ -2351,12 +2190,12 @@ if("unavailable" in data.content.lineup.homeTeam){
                                     <>
                                              {item.map((item)=>{
                                                 return(
-                                                        <div onClick={()=>navigate("/player/"+item.id)}>
+                                                        <>
                                                             
                                                             <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"}></img>
                                 
                                                             <h6>{item.name}</h6>
-                                                        </div>
+                                                        </>
                                                     )
                                              })}
                         </>)     })}
@@ -2380,12 +2219,12 @@ if("unavailable" in data.content.lineup.awayTeam){
                                     <>
                                              {item.map((item)=>{
                                                 return(
-                                                        <div onClick={()=>navigate("/player/"+item.id)}>
+                                                        <>
                                                             
                                                             <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"}></img>
                                 
                                                             <h6>{item.name}</h6>
-                                                        </div>
+                                                        </>
                                                     )
                                              })}
                         </>)     })}
@@ -2401,26 +2240,24 @@ if("unavailable" in data.content.lineup.awayTeam){
     const fetchAndSetData = async () => {
       
     
-if(data.content.lineup.homeTeam.coach){
+
 
         const homeDataC = coach_a;
       setCa(
-                <div onClick={()=>navigate("/player/"+homeDataC[0].id)}>
+                <div>
                         <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+homeDataC[0].id+".png"}></img>
                         <h6>{homeDataC[0].name}</h6>
                 </div>
         );
-}
-if(data.content.lineup.awayTeam.coach){
 
 const homeDataH = coach_h;
       setCh(
-                <div onClick={()=>navigate("/player/"+homeDataH[0].id)}>
+                <div>
                         <img style = {{width : "60px", height : "60px"}} src  = {"https://images.fotmob.com/image_resources/playerimages/"+homeDataH[0].id+".png"}></img>
                         <h6>{homeDataH[0].name}</h6>
                 </div>
         );
-  }
+  
 
 
 
@@ -2432,7 +2269,7 @@ const homeDataH = coach_h;
     };
 
     fetchAndSetData();
-  }, [props, data]);
+  }, [props]);
 
   const home_formation = data.content.lineup.awayTeam.formation
   const away_formation = data.content.lineup.homeTeam.formation
@@ -2583,170 +2420,119 @@ if("unavailable" in data.content.lineup.awayTeam){
 
 
 
-const Table = ({props, league})=>{
-    const data = league
- const [composite_true, setCompositeTrue] = useState()
-    const [composite_false, setCompositeFalse] = useState()
-    const navigate = useNavigate()
-console.log(data)
+const Table = ({props})=>{
+const [teams, setTeams] = useState([]);
+  const [promotion, setPromotion] = useState({});
+  const [relegation, setRelegation] = useState({});
+  const [formUrl, setFormUrl] = useState('');
+  
+  useEffect(() => {
+    const xmlString = props
 
-    useEffect(()=>{ 
+    try {
+      // Parse XML string
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
 
-        if(data.overview.table.length>0){
+      // Extract teams
+      const teamElements = xmlDoc.getElementsByTagName('t');
+      const teamData = Array.from(teamElements).map((team) => ({
+        name: team.getAttribute('name'),
+        id: team.getAttribute('id'),
+        points: team.getAttribute('p'),
+        wins: team.getAttribute('w'),
+        draws: team.getAttribute('d'),
+        losses: team.getAttribute('l'),
+        goalsFor: team.getAttribute('g'),
+        goalsAgainst: team.getAttribute('c'),
+      }));
+
+      setTeams(teamData);
+
+      // Extract rules
+      const rules = xmlDoc.getElementsByTagName('rules')[0];
+      const promotionRule = rules.querySelector('ti[tkey="promotion"]');
+      const relegationRule = rules.querySelector('ti[tkey="relegation"]');
+
+      setPromotion({
+        description: promotionRule.getAttribute('desc') || 'No description',
+        color: promotionRule.getAttribute('color') || '#000000',
+        values: (promotionRule.getAttribute('value') || '').split(',').map(Number),
+      });
+
+      setRelegation({
+        description: relegationRule.getAttribute('desc') || 'No description',
+        color: relegationRule.getAttribute('color') || '#000000',
+        values: (relegationRule.getAttribute('value') || '').split(',').map(Number),
+      });
+
+      // Extract form URL
+      const formUrl = xmlDoc.getElementsByTagName('form')[0].getAttribute('url');
+      setFormUrl(formUrl);
+    } catch (error) {
+      console.error('Error parsing XML:', error);
+    }
+  }, []);
+
+  return (
+    <div className = "container" style = {{background : "white", borderRadius : "10px"}}>
+     
+      <table>
+        <thead>
+          <tr style = {{width : "100%"}}>
+                <td style = {{width : "10%"}}>#</td>
+                 <td style = {{width : "55%"}}>Team</td>
+                  <td style = {{width : "10%"}}>Pld</td>
+                 <td style = {{width : "10%"}}>GD</td>
+                 <td style = {{width : "10%"}}>PTS</td>
+                                                    </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>{teams.map((team, index) => (
+            
 
 
-                    ////////////////COMPOSITE TRUE
-
-
-
-                   if(data.overview.table[0].data.composite === true){
-
-                 setCompositeTrue(   data.overview.table[0].data.tables.map((item)=>{
-
-                var tabber = item.table.all 
-
-                var main_tabber = tabber
-
-                    
-
-
-
-                return(
-                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
-          <h2>{item.leagueName}</h2>
-          <table>
-            <thead>
-              <tr style={{ width: "100%" }}>
-                <td style={{ width: "10%" }}>#</td>
-                <td style={{ width: "55%" }}>Team</td>
-                <td style={{ width: "10%" }}>Pld</td>
-                <td style={{ width: "10%" }}>GD</td>
-                <td style={{ width: "10%" }}>PTS</td>
-              </tr>
-            </thead>
-
-            <tbody>
-                        {main_tabber.map((team, index)=>{
-
-                            return(
-                                                   <tr
-
-                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}
-                  key={team.id}
-                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
-                >
-                  <td style={{ width: "10%" }}>{index + 1}</td>
-                  <td style={{ width: "55%" }}>
-                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                      <img
-                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
-                        alt={team.name}
-                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                      />
-                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
-                    </div>
-                  </td>
-                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
-                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
-                  <td style={{ width: "10%" }}>{team.pts}</td>
+            <tr   style = {{width : "100%",  height : "50px", fontSize :'0.7em', textDecoration : "bold", fontWeight : "5px", alignItems : "center"}}>
+                          <td style = {{width : "10%", background : "inherit"}}>{index + 1}</td>
+                        <td style = {{width : "55%", background : "inherit"}}>
+                        <div style = {{display : "flex", width : "100%", justifyContent : "space-between", alignItems : "center"}}> <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`} style = {{width : "30px", height : "30px", borderRadius :"50%"}}></img> 
+                        <div style = {{ textOverflow : "ellipsis", whiteSpace : "nowrap", overFlow : "hidden"}}>{team.name}</div></div></td>
+                       <td style = {{width : "10%", background : "inherit"}}>{team.points}</td>
+                     <td style = {{width : "10%", background : "inherit"}}>{team.goalsFor - team.goalsAgainst}</td>
+                  <td style = {{width : "10%", background : "inherit"}}>{team.points}</td>
                 </tr>
-                            )
+          ))}
+      </table>
 
-                        })}
-            </tbody>
+      <h2>Promotion and Relegation</h2>
+      <div>
+        <h3 style={{ color: promotion.color }}>
+          {promotion.description}
+        </h3>
+        <ul>
+          {(promotion.values || []).map((value) => (
+            <li key={value}>Position {value}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 style={{ color: relegation.color }}>
+          {relegation.description}
+        </h3>
+        <ul>
+          {(relegation.values || []).map((value) => (
+            <li key={value}>Position {value}</li>
+          ))}
+        </ul>
+      </div>
 
-                
-
-            </table>
-
-            </div>
-                    )
-                    })
-
-)
-}
-
-                    ///////////////COMPOSITE FALSE
-
-
-                    if(data.overview.table[0].data.composite === false){
-
-
-                        setCompositeFalse(
-                                <div>
-
-                                   { data.overview.table.map((item)=>{
-                                         var tabber = item.data.table.all 
-
-                var main_tabber = tabber
-
-                return(
-                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
-          <h2>{item.leagueName}</h2>
-          <table>
-            <thead>
-              <tr style={{ width: "100%" }}>
-                <td style={{ width: "10%" }}>#</td>
-                <td style={{ width: "55%" }}>Team</td>
-                <td style={{ width: "10%" }}>Pld</td>
-                <td style={{ width: "10%" }}>GD</td>
-                <td style={{ width: "10%" }}>PTS</td>
-              </tr>
-            </thead>
-
-            <tbody>
-                        {main_tabber.map((team, index)=>{
-
-                            return(
-                                                   <tr
-
-                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(team); sessionStorage.setItem("selected_league", stringer)}}
-                  key={team.id}
-                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
-                >
-                  <td style={{ width: "10%" }}>{index + 1}</td>
-                  <td style={{ width: "55%" }}>
-                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                      <img
-                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
-                        alt={team.name}
-                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                      />
-                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
-                    </div>
-                  </td>
-                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
-                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
-                  <td style={{ width: "10%" }}>{team.pts}</td>
-                </tr>
-                            )
-
-                        })}
-            </tbody>
-
-                
-
-            </table>
-
-            </div>
-                    )
-                                    })
-}
-                                </div>
-                            )
-                    }
-
-
-}
-    }, [data])
-
-    return(
-            <div>
-                    {composite_true}
-                    {composite_false}
-            </div>
-    )
-
+      <h2>Form URL</h2>
+      <a href={formUrl} target="_blank" rel="noopener noreferrer">
+        {formUrl}
+      </a>
+    </div>
+  );
 };
 
 

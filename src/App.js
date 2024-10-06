@@ -1,14 +1,15 @@
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import {React, useEffect} from "react"
 import Home from "./components/home"
-
+import {generateToken, messaging} from "./Notification/firebase.js"
+import {onMessage} from "firebase/messaging";
 import Result from "./components/result/result"
 import Login from "./components/auth/login.jsx"
 import Register from "./components/auth/signin.jsx"
 import Search from "./components/nav/search.jsx"
 import Player from "./player.jsx"
 import Leagues from "./components/leagues/leagues.js"
-import Team from "./team.jsx"
+import Teams from "./team.jsx"
 import News from "./news.jsx"
 import Minor from "./components/nav/smaller_leagues.jsx"
 import Match_small from "./components/nav/match_small.jsx"
@@ -27,13 +28,20 @@ import "./components/result/result.css"
 function App(){
 
 
- 
+ useEffect(()=>{
+  generateToken();
+  onMessage(messaging, (payload)=>{
+    console.log(payload)
+
+    
+  })
+ })
 
 
 
 
   return(
-<ErrorBoundary>
+
       <div className = "app">
    
     <Router>
@@ -44,12 +52,12 @@ function App(){
         <Route path = "/login" element = {<Login/>}></Route>
         <Route path = "/register" element = {<Register/>}></Route>
         <Route path = "/search" element = {<Search/>}> </Route>
-        <Route path = "/team" element = {<Team/>}></Route>
-        <Route path = "/player" element = {<Player/>}></Route>
+        <Route path = "/team/:id" element = {<Teams/>}></Route>
+        <Route path = "/player/:id" element = {<Player/>}></Route>
         <Route path = "/leagues/leauges_mall" element = {<Leagues/>}></Route>
-        <Route path = "/news/:id" element = {<Inner_News/>}></Route>
+        <Route path = "/news/inw" element = {<Inner_News/>}></Route>
         <Route path = "/result/:id/leagues/leauges_mall" element = {<Leagues/>}></Route>
-        <Route path = "/leauges_mall" element = {<Leagues/>}></Route>
+        <Route path = "/leauges/:id" element = {<Leagues/>}></Route>
         <Route path = "/leagues" element = {<League_Map/>}></Route>
         <Route path = "/news" element = {<News/>}></Route>
         <Route path = "/minor" element = {<Minor/>}></Route>
@@ -61,13 +69,8 @@ function App(){
     </Router>
     </div>
 
-</ErrorBoundary>
+
   )
 }
 
-window.addEventListener('unhandledrejection', function(event) {
-  console.error(`Unhandled promise rejection: ${event.reason}`);
-  // Optionally, send error details to an error tracking service
-  event.preventDefault(); // Prevent the default handling of the promise rejection
-});
 export default App

@@ -1,4 +1,4 @@
-const link =  "https://backend-server-u8kn.onrender.com"
+const link =  "https://back-zama.onrender.com"
 
 module.exports = link
            
