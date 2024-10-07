@@ -231,8 +231,7 @@ catch(e){
         <MenuItem onClick={handleOpen}>Search</MenuItem>
         <MenuItem onClick={()=>{handleClose(); navigate("/leagues")}}>Leagues</MenuItem>
         <MenuItem onClick={()=>{handleClose(); navigate("/news")}}>News</MenuItem>
-        <MenuItem onClick={()=>{handleClose(); navigate("/register")}}>Login/Signup</MenuItem>
-        <MenuItem onClick={()=>{handleClose(); navigate("/search")}}>Documentation</MenuItem>
+  
        
       </Menu>
     </div>
