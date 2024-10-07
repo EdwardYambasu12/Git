@@ -668,7 +668,7 @@ else {
 			}
 			job()
 				setListd(
-			dated.map((item)=>{
+			dated.slice(2,5).map((item)=>{
 				return(
 					  <LinkTab label={item}  onClick = {()=> setStatement(<Calendar date = {item}/>)} />
 					)
@@ -677,7 +677,7 @@ else {
 
 				mated.reverse()
 			setListm(
-			mated.map((item)=>{
+			mated.slice(0,3).map((item)=>{
 				return(
 					  <LinkTab label = {item}  onClick = {()=>setStatement(<Calendar date = {item}/>)} />
 					)
