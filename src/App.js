@@ -21,6 +21,7 @@ import Timer from "./timer.js"
 import OneSignal from 'react-onesignal';
 import ErrorBoundary from "./ed.jsx"
 import Inner_News from "./inner_news.js"
+import { Analytics } from '@vercel/analytics/react';
 //import initOneSignal from "./onesignal-init.js"
 
 import "./components/result/result.css"
@@ -43,7 +44,7 @@ function App(){
   return(
 
       <div className = "app">
-   
+   <Analytics />
     <Router>
       <Routes>
         <Route path="/" element = {<Home/>}></Route>
