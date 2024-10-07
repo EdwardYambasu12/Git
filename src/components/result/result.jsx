@@ -7,6 +7,7 @@ import Lined from "../../line.js"
 import "./result.css"
 import api from "../nav/details.js"
 import axios from "axios"
+import Timer from "./timer.js"
 import Trial from "./trial.jsx"
 import Head_to_Head from "./h2h.js"
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
@@ -109,50 +110,6 @@ const Theme = createTheme({
   },
 });
 
-const Timer = ({ props }) => {
-  // Ensure props is not empty and has the required structure
-  if (!props || !props[0] || !props[0].header || !props[0].header.status || !props[0].header.status.liveTime) {
-    return <div>Error: Invalid props structure</div>;
-  }
-
-  // Extract minutes and seconds from props
-  const data = props[0];
-  const splitter = data.header.status.liveTime.long.split(":");
-  const initialMinutes = parseInt(splitter[0], 10); // Convert to number
-  const initialSeconds = parseInt(splitter[1], 10); // Convert to number
-  
-  // Initialize state with total seconds
-  const [time, setTime] = useState(initialMinutes * 60 + initialSeconds);
-
-  // Format time into MM:SS
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-
-  useEffect(() => {
-    // Initialize interval
-    const interval = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prevTime + 1; // Countdown logic
-      });
-    }, 1000);
-
-    // Cleanup on unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div id="timer" style={{ fontSize: '1em', fontFamily: 'Arial, sans-serif' }}>
-      {formatTime(time)}
-    </div>
-  );
-};
 
 const App = () => {
   const exampleProps = [{
