@@ -18,11 +18,10 @@ import api from "./details.js"
 import League_Map from "./components/nav/league_map.jsx"
 import Favorites from "./components/nav/favorites.jsx"
 import Timer from "./timer.js"
-import OneSignal from 'react-onesignal';
+
 import ErrorBoundary from "./ed.jsx"
 import Inner_News from "./inner_news.js"
 import { Analytics } from '@vercel/analytics/react';
-//import initOneSignal from "./onesignal-init.js"
 
 import "./components/result/result.css"
 

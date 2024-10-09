@@ -20,8 +20,7 @@ const All_Matches = () => {
     const fetchData = async () => {
       try {
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const response = await fetch('https://ipapi.co/json/');
-        const { country_code: userCode } = await response.json();
+        const userCode = "INT"
 
         
 

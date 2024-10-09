@@ -23,9 +23,7 @@ const navigate = useNavigate()
     const Data_to_use = async () => {
       try {
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const response = await fetch('https://ipapi.co/json/');
-        const lenovo = await response.json();
-        const userCode = lenovo.country_code;
+       const userCode = "INT"
 
         const date = new Date();
         const year = date.getFullYear();

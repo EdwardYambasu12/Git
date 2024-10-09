@@ -31,8 +31,7 @@ export default function Calendar(props) {
     const fetchData = async () => {
       try {
         const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const response = await fetch('https://ipapi.co/json/');
-        const { country_code: userCode } = await response.json();
+        const userCode = "INT"
         const formatted_date = formatDate(props.date);
         
         const raw_data = await axios.get(`${Line}/match`, {

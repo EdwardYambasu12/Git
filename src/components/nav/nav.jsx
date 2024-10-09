@@ -400,23 +400,24 @@ useEffect(()=>{
 
 										var stat 
 
-										if(item.type == "player"){
-											var stat = <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-										            </div>
-										}
+                    if(item.type == "player"){
+                      var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
 
-										else if(item.type == "team"){
-											var stat = <div onClick = {()=>{navigate("leauges_mall");const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
-										            </div>
-										}
+                    else if(item.type == "team"){
+                      var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
 
-										else if(item.type == "league"){
-											var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-										              <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-										            </div>
-										}
+                    else if(item.type == "league"){
+                      var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
 
 													return(
 																<div>{stat}</div>			
@@ -629,18 +630,24 @@ else {
         
 
 }
+const token_read = sessionStorage.getItem("token_read")
 
+if(user){
     const place = {
       id_: user._id,
       token: await generateToken(),
     };
-
+if(token_read === null){
  await fetch(`${Line}/update_token`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(place),
     });
+
+ sessionStorage.setItem("token_read", "ok")
+}
         }
+      }
 
         if(parserd === null){
 
@@ -899,7 +906,7 @@ async function fetcher(){
           <div className="col-1 pt-1">
            
             <ul className="dropdown-menu text-small">
-              <li><a className="dropdown-item" href="#">FAVOURITE</a></li>
+              <li><a className="dropdown-item" href="/faves">FAVOURITE</a></li>
               <li><a className="dropdown-item" href="#">PROFILE</a></li>
               <li><hr className="dropdown-divider" /></li>
               <li><a className="dropdown-item" href="#">Sign out</a></li>
@@ -926,35 +933,36 @@ async function fetcher(){
           <a className="nav-item nav-link link-body-emphasis active" href="#">
             ⚽-SCORE <i className="fi fi-br-football"></i>
           </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
+          <a className="nav-item nav-link link-body-emphasis" href="/news">
             📰-NEWS <i className="fi fi-br-newspaper"></i>
           </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
+          <a className="nav-item nav-link link-body-emphasis" href="/faves">
             ❤️-FAVOURITE <i className="fi fi-br-features"></i>
           </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
-            {/*GET THE APP <i className="fi fi-br-download"></i>*/}
-          </a>
+          
         </nav>
       </div>
 
       <div className="nav-scroller py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">
-          <a className="nav-item nav-link link-body-emphasis" href="#">
-            LIVE <i className="fi fi-br-live"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
-            YESTERDAY <i className="fi fi-br-check-out-calendar"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis active" href="#">
-            TODAY <i className="fi fi-br-calendar-check"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
-            TOMORROW <i className="fi fi-br-check-in-calendar"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="#">
-            CALENDAR <i className="fi fi-br-calendar"></i>
-          </a>
+         <Tabs
+        value={value}
+        onChange={handleChange}
+        TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"
+        sx = {{background : "white", }}
+
+        className = "mid_tab"
+        id = "idl"
+      >
+      
+       {listm}
+        <LinkTab label="Yesterday" onClick = {()=>{tab_change(1)}} />
+          <LinkTab label="Today" onClick = {()=>{tab_change(2)}}/>
+            <LinkTab label="Tomorrow" onClick = {()=>{tab_change(3)}}/>
+            {list}
+     
+
+      </Tabs>
         </nav>
       </div>
     </div>

@@ -37,8 +37,10 @@ const checkNotificationSupport = async () => {
     displayMessage("Notifications are enabled.");
   } else if (permission === "denied") {
     displayMessage("Notifications are blocked. Please enable them in the browser settings.");
+    await Notification.requestPermission();
   } else {
     displayMessage("Notifications are not yet granted. Please allow notifications when prompted.");
+    await Notification.requestPermission();
   }
 };
 
@@ -70,6 +72,7 @@ export const generateToken = async () => {
     }
   } else {
     displayMessage("Permission for notifications was denied.");
+
     return null;
   }
 };
