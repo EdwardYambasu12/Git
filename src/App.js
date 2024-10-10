@@ -48,24 +48,20 @@ function App(){
       <Routes>
         <Route path="/" element = {<Home/>}></Route>
         <Route path="/result/:id" element = {<Result/>}></Route>
-          <Route path="match_small/result/:id" element = {<Result/>}></Route>
-        <Route path = "/login" element = {<Login/>}></Route>
-        <Route path = "/register" element = {<Register/>}></Route>
+        
+   
         <Route path = "/search" element = {<Search/>}> </Route>
         <Route path = "/team/:id" element = {<Teams/>}></Route>
         <Route path = "/player/:id" element = {<Player/>}></Route>
         <Route path = "/leagues/leauges_mall" element = {<Leagues/>}></Route>
-        <Route path = "/news/inw" element = {<Inner_News/>}></Route>
-        <Route path = "/result/:id/leagues/leauges_mall" element = {<Leagues/>}></Route>
+ 
+     
         <Route path = "/leauges/:id" element = {<Leagues/>}></Route>
         <Route path = "/leagues" element = {<League_Map/>}></Route>
         <Route path = "/news" element = {<News/>}></Route>
-        <Route path = "/minor" element = {<Minor/>}></Route>
-        <Route path = "/match_small" element = {<Match_small/>}></Route>
+
         <Route path = "/faves" element = {<Favorites/>}></Route>
-        <Route path = "/trial" element = {<Trial/>}></Route>
-        <Route path = "/timer" element = {<Timer/>}></Route>
-      </Routes>
+       </Routes>
     </Router>
     </div>
 
