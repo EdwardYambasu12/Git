@@ -1,2 +1,3 @@
-google.com, pub-pub-5765675396995319, DIRECT, f08c47fec0942fa0
+
+google.com, pub-5765675396995319, DIRECT, f08c47fec0942fa0
 mobfox.com, 2300, DIRECT, f08c47fec0942fa0
