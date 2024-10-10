@@ -123,7 +123,10 @@ const Ayyah = ()=>{
     const raw = localStorage.getItem("data");
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
+     if(raw!= null){
     const user = users.find(user => user.email === done.email && user.password === done.password);
+
+   
 
       const monk = {
         id : playerData.details.id,
@@ -142,6 +145,8 @@ const Ayyah = ()=>{
 
 
     return(user)
+
+  }
   };
 
   const toggleFollowPlayer = async () => {
@@ -188,7 +193,10 @@ console.log(data)
           const raw = localStorage.getItem("data");
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
+      if(raw != null){
     const user = users.find(user => user.email === done.email && user.password === done.password);
+
+  
 
       const monk = {
         id : playerData.details.id,
@@ -203,6 +211,8 @@ console.log(data)
       console.log("following this league")
       setIsFollowing(true)
     }
+
+  }
   }
 
   toller()

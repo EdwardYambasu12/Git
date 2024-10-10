@@ -82,6 +82,7 @@ const All_Matches = () => {
       const raw = localStorage.getItem("data");
       const done = JSON.parse(raw);
       const { data: users } = await axios.get(`${Line}/users`);
+      if(raw != null){
       const user = users.find(user => user.email === done.email && user.password === done.password);
 
       
@@ -219,6 +220,9 @@ const All_Matches = () => {
       setAds(
             <AdComponent/>
         )
+
+
+    }
     }
       console.log(raw_data.data);
     } catch (e) {
@@ -246,11 +250,15 @@ const All_Matches = () => {
       const raw = localStorage.getItem("data");
       const done = JSON.parse(raw);
       const { data: users } = await axios.get(`${Line}/users`);
+
+      if(raw != null){
       const user = users.find(user => user.email === done.email && user.password === done.password);
       setUserFavorites(user);
+    }
     };
 
     fetchUserFavorites();
+
   }, []);
 
   useEffect(() => {

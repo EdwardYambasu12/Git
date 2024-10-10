@@ -35,6 +35,7 @@ const Player = () => {
     const raw = localStorage.getItem("data");
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
+    if(raw != null){
     const user = users.find(user => user.email === done.email && user.password === done.password);
 
     if (user?.favorite_player.includes(id)) {
@@ -42,6 +43,8 @@ const Player = () => {
     }
 
     return(user)
+
+  }
   };
 
   const toggleFollowPlayer = async () => {
@@ -90,8 +93,10 @@ console.log(data)
           const raw = localStorage.getItem("data");
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
-    const user = users.find(user => user.email === done.email && user.password === done.password);
 
+    if(raw != null){
+    const user = users.find(user => user.email === done.email && user.password === done.password);
+    console.log(users)
      const monk = {
     		id : playerData.id,
     		name : playerData.name,
@@ -109,6 +114,7 @@ console.log(data)
       console.log("following this league")
       setIsFollowing(true)
     }
+  }
   }
 
   toller()
