@@ -11,42 +11,50 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Line from "../../line.js";
 import Box from '@mui/material/Box';
 
-
 const AdComponent = () => {
   useEffect(() => {
-    // Create and append the AdSense script
     const script = document.createElement('script');
     script.async = true;
     script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5765675396995319";
     script.crossOrigin = "anonymous";
     document.body.appendChild(script);
 
-    // Function to initialize ads after script load
-    const initAds = () => {
+    script.onload = () => {
+      // Remove existing adsbygoogle ins elements
+      const existingAds = document.querySelectorAll('.adsbygoogle');
+      existingAds.forEach(ad => ad.remove());
+
+      // Create a new ins element
+      const newAd = document.createElement('ins');
+      newAd.className = 'adsbygoogle';
+      newAd.style.display = 'block';
+      newAd.style.width = '100%';
+      newAd.setAttribute('data-ad-format', 'fluid');
+      newAd.setAttribute('data-ad-layout-key', '-fb+5w+4e-db+86');
+      newAd.setAttribute('data-ad-client', 'ca-pub-5765675396995319');
+      newAd.setAttribute('data-ad-slot', '9599407082');
+
+      // Append the new ins element
+      document.body.appendChild(newAd);
+
+      // Push the ad
       (window.adsbygoogle = window.adsbygoogle || []).push({});
+
+        console.log({
+        adClient: newAd.getAttribute('data-ad-client'),
+        adSlot: newAd.getAttribute('data-ad-slot'),
+        adFormat: newAd.getAttribute('data-ad-format'),
+        adLayoutKey: newAd.getAttribute('data-ad-layout-key')
+      });
     };
 
-    // Wait for script to load
-    script.onload = initAds;
-
-    // Cleanup on component unmount
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
-  return (
-    <ins
-      className="adsbygoogle"
-      style={{ display: 'block', minWidth: '250px' }} // Ensure a minimum width
-      data-ad-format="fluid"
-      data-ad-layout-key="-fb+5w+4e-db+86"
-      data-ad-client="ca-pub-5765675396995319"
-      data-ad-slot="9599407082"
-    ></ins>
-  );
+  return null; // or return a loading indicator if necessary
 };
-
 
 
 const All_Matches = () => {
@@ -69,74 +77,32 @@ const All_Matches = () => {
       });
 
       setLeagues(raw_data.data.leagues);
-      console.log(raw_data.data);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    fetchData(); // Initial fetch
-
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 10000); // Fetch every 5 seconds
-
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, []);
-
-  // Fetch user favorites as before
-  const [userFavorites, setUserFavorites] = useState(null);
-
-  useEffect(() => {
-    const fetchUserFavorites = async () => {
+      const league = raw_data.data.leagues
       const raw = localStorage.getItem("data");
       const done = JSON.parse(raw);
       const { data: users } = await axios.get(`${Line}/users`);
       const user = users.find(user => user.email === done.email && user.password === done.password);
-      setUserFavorites(user);
-    };
 
-    fetchUserFavorites();
-  }, []);
-
-  useEffect(() => {
-    if (userFavorites && leagues.length > 0) {
-      const pinnedIds = userFavorites.pinned_matches.map(item => JSON.parse(item).id);
-      const statusMap = {};
-      leagues.forEach(item => {
-        item.matches.forEach(match => {
-          statusMap[match.id] = pinnedIds.includes(match.id);
-        });
-      });
-      setMatchPinnedStatus(statusMap);
-    }
-  }, [leagues, userFavorites]);
-
-useEffect(()=>{
-
-
-
-  function followed(){
+      
     var pinner = []
-    
+  
 
-    leagues.map((item)=>{
+    league.map((item)=>{
       item.matches.map((id)=>{
         pinner.push(id)
       })
     })
-
+  console.log(user, pinner, leagues)
 
   var involved =  []
 
   pinner.map((item)=>{
-    if(userFavorites != null){
-    userFavorites.favorite_league.map((id)=>{
+   
+   if(user != null){
+    user.favorite_league.map((id)=>{
 
-      leagues.map((i)=>{
+      league.map((i)=>{
 
 
          if(i.primaryId === JSON.parse(id).id){
@@ -162,7 +128,7 @@ useEffect(()=>{
       
         
     })
-    userFavorites.favorite_team.map((id)=>{
+    user.favorite_team.map((id)=>{
         if(item.home.id === JSON.parse(id).id){
           if(involved.includes(item)){
             
@@ -194,7 +160,7 @@ useEffect(()=>{
     setFollowing(
         <Accordion  defaultExpanded sx={{ borderRadius: '15px' }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
-          <div className="league_description" onClick={() => { navigate("/leauges/")}} style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
             <h6 id="break-down1">Following</h6>
           </div>
@@ -254,6 +220,58 @@ useEffect(()=>{
             <AdComponent/>
         )
     }
+      console.log(raw_data.data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 10000); // Fetch every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
+
+  // Fetch user favorites as before
+  const [userFavorites, setUserFavorites] = useState(null);
+
+  useEffect(() => {
+    const fetchUserFavorites = async () => {
+      const raw = localStorage.getItem("data");
+      const done = JSON.parse(raw);
+      const { data: users } = await axios.get(`${Line}/users`);
+      const user = users.find(user => user.email === done.email && user.password === done.password);
+      setUserFavorites(user);
+    };
+
+    fetchUserFavorites();
+  }, []);
+
+  useEffect(() => {
+    if (userFavorites && leagues.length > 0) {
+      const pinnedIds = userFavorites.pinned_matches.map(item => JSON.parse(item).id);
+      const statusMap = {};
+      leagues.forEach(item => {
+        item.matches.forEach(match => {
+          statusMap[match.id] = pinnedIds.includes(match.id);
+        });
+      });
+      setMatchPinnedStatus(statusMap);
+    }
+  }, [leagues, userFavorites]);
+
+useEffect(()=>{
+
+
+
+  async function followed(){
+      
   }
 
   followed()

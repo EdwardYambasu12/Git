@@ -9,6 +9,44 @@ import FeedIcon from '@mui/icons-material/Feed';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import Line from "../../line.js";
+
+const AdComponent = () => {
+  const [adData, setAdData] = useState(null);
+  const placementId = '3118'; // Your Mobfox placement ID
+
+  useEffect(() => {
+    const fetchAd = async () => {
+      // Replace placeholders with actual values
+      const adRequestUrl = `https://bes.mobfox.com/?c=n&m=tag&placementId=${placementId}&ip=YOUR_IP&ua=YOUR_UA&domain=YOUR_DOMAIN&page=YOUR_PAGE&secure=1&language=en-US&bidfloor=0.01&gdpr_consent=1&coppa=0&gpp=&gpp_sid=`;
+
+      try {
+        const response = await fetch(adRequestUrl);
+        const data = await response.json();
+        
+        // Check if the ad data is valid
+        if (data && data.adContent) {
+          setAdData(data.adContent); // Assume adContent contains the ad HTML
+        } else {
+          console.error('No ad data returned');
+        }
+      } catch (error) {
+        console.error('Error fetching ad:', error);
+      }
+    };
+
+    fetchAd();
+  }, [placementId]);
+
+  return (
+    <div>
+      {adData ? (
+        <div dangerouslySetInnerHTML={{ __html: adData }} />
+      ) : (
+        <p>Loading ad...</p>
+      )}
+    </div>
+  );
+};
 function LabelBottomNavigation() {
   const [value, setValue] = React.useState('Leagues');
   const navigate = useNavigate()
@@ -166,7 +204,7 @@ if(isFollowing === true){
                 </div>
               ))}
             </div>
-
+            <AdComponent/>
             <div style={{ width: "98%", margin: "3%", borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
               {allLeagues.map(league => (
