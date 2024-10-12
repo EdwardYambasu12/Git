@@ -176,6 +176,8 @@ const [useful, setUseful]= useState()
     var tab = props[2]
     var league = props[3]
 
+    const schemaMarkup = JSON.stringify(data.seo.eventJSONLD)
+
 
        const [isScrolled, setIsScrolled] = useState(false);
   const handleScrollRemoval = () => {
@@ -480,6 +482,9 @@ useEffect(()=>{
             
                 <>
                         {dom}
+                        <script type="application/ld+json">
+        {schemaMarkup}
+      </script>
                 </>
 
 
@@ -614,6 +619,7 @@ return(
             <div style = {{  background : "#EEEEEE" }}>
                 
                 {dd}
+
             </div>
     )
 
@@ -1773,7 +1779,7 @@ function BasicModal({ open, handleClose, props, player }) {
 
                         <div><img style = {{height : "80px", width : "80px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+player.id+".png"} ></img></div>
                         <div><div><h6>{item.name}</h6></div>
-                        {item.stats[0]?
+                        {item.stats[0].stats["FotMob rating"]?
                             <div><button className = "btn btn-info">{item.stats[0].stats["FotMob rating"].stat ? item.stats[0].stats["FotMob rating"].stat.value : ""}</button> <p className = "text-secondary">Sportsup Match Ratings</p></div>
                         :""}
                         </div>
