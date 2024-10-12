@@ -177,6 +177,77 @@ const [useful, setUseful]= useState()
     var league = props[3]
 
     const schemaMarkup = JSON.stringify(data.seo.eventJSONLD)
+    const main = data.seo.eventJSONLD
+    const home_name = data.general.homeTeam.name
+     const away_name = data.general.awayTeam.name
+      const home_id = data.general.homeTeam.id
+       const away_id = data.general.awayTeam.id
+       const matchId = data.general.matchId
+
+    const scheme ={
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "sport": "Football/Soccer",
+      "homeTeam": {
+        "@context": "https://schema.org",
+        "@type": "SportsTeam",
+        "name": home_name,
+        "sport": "Football/Soccer",
+        "logo": "https://images.fotmob.com/image_resources/logo/teamlogo/"+home_id+".png",
+        "url": "https://www.sportsupd.com/team/"+home_id,
+        "location": null,
+        "memberOf": null
+      },
+      "awayTeam": {
+        "@context": "https://schema.org",
+        "@type": "SportsTeam",
+        "name": away_name,
+        "sport": "Football/Soccer",
+        "logo":  "https://images.fotmob.com/image_resources/logo/teamlogo/"+away_id+".png",
+        "url":"https://www.sportsupd.com/team/"+away_id,
+        "location": null,
+        "memberOf": null
+      },
+      "name": main.name,
+      "description": main.description,
+      "startDate": main.starDate,
+      "endDate": main.endDate,
+      "eventStatus": main.eventStatus,
+      "eventAttendanceMode": main.eventAttendanceMoe,
+      "location": main.location,
+      "image": [
+        "https://images.fotmob.com/image_resources/logo/teamlogo/"+away_id+".png",
+        "https://images.fotmob.com/image_resources/logo/teamlogo/"+home_id+".png"
+      ],
+      "organizer": {
+        "@type": "Organization",
+        "name": "Sportsup",
+        "url": "https://www.sportsupd.com",
+        "logo": ""
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "http://www,sportsupd.com/result/"+matchId,
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "priceCurrency": "USD",
+        "validFrom": "2024-10-12T16:00:00.000Z"
+      },
+      "performer": [
+        {
+          "@type": "SportsTeam",
+          "name": home_name,
+          "url":"https://www.sportsupd.com/team/"+home_id,
+        },
+        {
+          "@type": "SportsTeam",
+          "name": away_name,
+          "url":"https://www.sportsupd.com/team/"+away_id,
+        }
+      ]
+    }
+
+    console.log(scheme, "scheme")
 
 
        const [isScrolled, setIsScrolled] = useState(false);
@@ -483,7 +554,7 @@ useEffect(()=>{
                 <>
                         {dom}
                         <script type="application/ld+json">
-        {schemaMarkup}
+        {scheme}
       </script>
                 </>
 
