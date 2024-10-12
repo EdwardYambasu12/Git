@@ -248,6 +248,7 @@ const [useful, setUseful]= useState()
     }
 
     console.log(scheme, "scheme")
+    const sch = JSON.stringify(scheme)
 
 
        const [isScrolled, setIsScrolled] = useState(false);
@@ -554,7 +555,7 @@ useEffect(()=>{
                 <>
                         {dom}
                         <script type="application/ld+json">
-        {scheme}
+        {sch}
       </script>
                 </>
 
