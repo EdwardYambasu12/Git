@@ -19,6 +19,8 @@ import { AppBar, Toolbar,Tabs, Tab,  Typography, List, ListItem,  ListItemText }
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 
 
@@ -671,6 +673,7 @@ useEffect(()=>{
 
     } catch (error) {
         console.error('Error in reloader:', error);
+        setD(<Alert severity="error">Fail to load data Try checking Network Connection</Alert>)
     }
 };
 
@@ -1289,7 +1292,29 @@ const labels = moment.map(item => item.minute);
                     }
 
                 }
+                     if(item.type === "MissedPenalty"){
 
+                    if(item.isHome === true){
+
+                        return(
+
+                       <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center" , justifyContent : "space-between", display : "flex"}}><div><h6 className = "text-dark"><strong>❌Missed Penalty</strong></h6><h6 className = "text-dark">{item.nameStr}</h6></div> <div><strong>{item.time}</strong></div> </div> {assist} <hr></hr></div>
+                          ) 
+
+
+                    }
+
+                     if(item.isHome === false){
+
+                        return(
+
+                       <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center", marginLeft : "50%" , justifyContent : "space-between", display : "flex"}}><div><strong>{item.time}</strong></div><div><h6 className = "text-success"><strong>{item.swap[0].name}</strong></h6><h6 className = "text-danger">{item.swap[1].name}</h6></div> </div> {assist} <hr></hr></div>
+                          ) 
+
+
+                    }
+
+                }
 
                 if(item.type === "Card"){
 
@@ -1314,6 +1339,30 @@ const labels = moment.map(item => item.minute);
 
                 }
 
+
+         
+
+                    if(item.card === "YellowRed"){
+                        if(item.isHome === true){
+
+                            return(
+
+                                <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center" , justifyContent : "space-between", display : "flex"}}><div><strong>{item.nameStr}</strong></div> <div><h6 className = "text-success"><strong>🟨🟥</strong></h6></div> <div><strong>{item.time}</strong></div> </div> {assist} <hr></hr></div>
+
+                                )
+                        }
+
+                        if(item.isHome == false){
+
+                            return(
+
+                            <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center" , justifyContent : "space-between", marginLeft : "50%", display : "flex"}}> <div><strong>{item.time}</strong></div> <div><h6 className = "text-success"><strong>🟨🟥</strong></h6></div>  <div><strong>{item.nameStr}</strong></div></div> {assist} <hr></hr></div>
+
+                                    )
+                        }
+
+}
+                
 
                     if(item.card == "Red"){
 

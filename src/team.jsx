@@ -935,7 +935,7 @@ const Stats = ({data})=>{
                                         }
 
                                         return(
-                                                        <div style = {{background : data.history.teamColor, marginTop : "5%"}}>
+                                                        <div style = {{background : data.history ? data.history.teamColor:"midnightblue", marginTop : "5%"}}>
                                                                             <h5 className = "text-center text-warning">{header}</h5>
 
                                                                             {
@@ -989,7 +989,7 @@ const Stats = ({data})=>{
                                         }
 
                                         return(
-                                                        <div style = {{background : data.history.teamColor, marginTop : "5%"}}>
+                                                        <div style = {{background : data.history ? data.history.teamColor:"midnightblue", marginTop : "5%"}}>
                                                                             <h5 className = "text-center text-warning">{header}</h5>
 
                                                                             {

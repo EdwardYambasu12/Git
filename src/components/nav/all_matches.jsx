@@ -10,6 +10,8 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Line from "../../line.js";
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const AdComponent = () => {
   useEffect(() => {
@@ -197,11 +199,14 @@ const All_Matches = () => {
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                     {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                     </div>
                     <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
                       <strong>{status}</strong>
                     </div>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                       {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
+                     
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
                       <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.away.name}</h6>
                     </div>
@@ -227,6 +232,7 @@ const All_Matches = () => {
       console.log(raw_data.data);
     } catch (e) {
       console.error(e);
+       setFollowing(<Alert severity="error">Fail to load data Try checking Network Connection</Alert>)
     } finally {
       setLoading(false);
     }
@@ -342,13 +348,16 @@ useEffect(()=>{
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                       {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                     </div>
                     <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
                       <strong>{status}</strong>
                     </div>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                       {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
                       <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.away.name}</h6>
+                     
                     </div>
                   </Link>
                 </div>
