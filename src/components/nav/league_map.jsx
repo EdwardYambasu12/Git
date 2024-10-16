@@ -104,7 +104,7 @@ export default function League_Map() {
         }
         setAllLeagues(leagues);
       } else {
-        alert("Please login or sign up");
+
       }
 
       setLoading(false);
@@ -181,6 +181,7 @@ if(isFollowing === true){
         <div className="top_nav">
           <div className="brand">
             <img className="brand_image" src={require("../images/sportsup.png")} alt="Logo" />
+             <h1 style = {{display : "none"}}> Sportsup</h1>
           </div>
         </div>
       </nav>

@@ -168,6 +168,10 @@ const navigate = useNavigate()
 
 
           );
+
+if(live_data.length < 1){
+  setLeagues("No live games at the moment")
+}
       } catch (e) {
         console.log(e);
       }

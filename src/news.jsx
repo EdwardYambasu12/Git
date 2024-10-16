@@ -320,6 +320,8 @@ const [latest, setLatest]= useState()
     />
                             <br></br>
                             <br></br>
+                            <br></br>
+                            <br></br>
                             <hr></hr>
                       </div>
                           
@@ -339,6 +341,7 @@ const [latest, setLatest]= useState()
         
           <div className="top_nav">
           <div className = "brand">
+           <h1 style = {{display : "none"}}> Sportsup</h1>
             <img className = "brand_image" loading = "lazy" src = {require("./components/images/sportsup.png")}></img>
             
           </div>

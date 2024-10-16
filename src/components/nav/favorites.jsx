@@ -212,7 +212,7 @@ useEffect(()=>{
                         <div className = "container" >
 
                           <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"}></img>
-                          <br></br>
+                          <br></br> 
                           <br></br>
                           <h4 className = "text-light" style = {{whiteSpace: "nowrap", overflow : "hidden", color : "white", textOverflow: "ellipsis"}}>{item.name}</h4>
                           <br></br>
@@ -284,6 +284,7 @@ dom()
 				
 					<div className="top_nav">
 					<div className = "brand">
+           <h1 style = {{display : "none"}}> Sportsup</h1>
 						<img className = "brand_image" src = {require("../images/sportsup.png")}></img>
 					
 					</div>
