@@ -1257,7 +1257,7 @@ const Info = ({ data }) => {
 
     </div>
 
-    <div style = {{marginTop : "8%", height : "530px"}}>
+    <div style = {{marginTop : "8%", height : "630px"}}>
         {towt}
     </div>
 
