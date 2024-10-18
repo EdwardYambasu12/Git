@@ -25,8 +25,8 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.icon || 'https://www.google.com/imgres?q=football&imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F6e%2FFootball_%2528soccer_ball%2529.svg%2F452px-Football_%2528soccer_ball%2529.svg.png&imgrefurl=https%3A%2F%2Fen.m.wikinews.org%2Fwiki%2FFile%3AFootball_(soccer_ball).svg&docid=lphGJ9jbA3AKFM&tbnid=M-69Y7ABrMKTTM&vet=12ahUKEwi9ibKYwYmJAxW2QEEAHcm6AEgQM3oECHsQAA..i&w=452&h=480&hcb=2&ved=2ahUKEwi9ibKYwYmJAxW2QEEAHcm6AEgQM3oECHsQAA', // Production icon URL
-    data: { link: payload.fcmOptions ? payload.notification.title : notificationTitle }, // Store the link in the notification data
+    icon: payload.notification.icon || 'https://www.sportsupd.com/sportsup.png', // Production icon URL
+    data: { link: payload.fcmOptions ? payload.fcmOptions.link : "https://www.sportsupd.com" }, // Store the link in the notification data
   };
 
   // Display the notification
@@ -38,7 +38,7 @@ self.addEventListener('notificationclick', (event) => {
   console.log('Notification click event:', event);
 
   event.notification.close(); // Close the notification when clicked
-  const notificationLink = event.notification.title || event.notification.title; // Customize fallback
+  const notificationLink = event.notification.data.link || 'https://www.sportsupd.com/'; // Customize fallback
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
