@@ -18,7 +18,7 @@ import api from "./details.js"
 import League_Map from "./components/nav/league_map.jsx"
 import Favorites from "./components/nav/favorites.jsx"
 import Timer from "./timer.js"
-
+import PrivacyPolicy from './PrivacyPolicy';
 import ErrorBoundary from "./ed.jsx"
 import Inner_News from "./inner_news.js"
 import { Analytics } from '@vercel/analytics/react';
@@ -48,7 +48,7 @@ function App(){
       <Routes>
         <Route path="/" element = {<Home/>}></Route>
         <Route path="/result/:id" element = {<Result/>}></Route>
-        
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
    
         <Route path = "/search" element = {<Search/>}> </Route>
         <Route path = "/team/:id" element = {<Teams/>}></Route>
