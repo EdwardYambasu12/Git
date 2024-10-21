@@ -316,7 +316,9 @@ useEffect(()=>{
 />
             <h6 id="break-down1">{item.name || 'League Name'}</h6>
           </div>
+
         </AccordionSummary>
+  <div style= {{width : "100%", background : "lightgrey", height : "1px"}}></div>
         <AccordionDetails>
           {item.matches.map((match, matchIndex) => {
             const dateTimeString = match.status.utcTime;
