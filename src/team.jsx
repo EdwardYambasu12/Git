@@ -536,7 +536,7 @@ const History = ({data})=>{
             setHistory(
                   <div>
 
-                        {data.history.trophyList.map((item)=>{
+                        {data.history.trophyList ?data.history.trophyList.map((item)=>{
 
 
                             return(
@@ -558,7 +558,7 @@ const History = ({data})=>{
                                         <br></br>
                                   </div>
                               )
-                        })}
+                        }): ""}
 
                   </div>
               )
