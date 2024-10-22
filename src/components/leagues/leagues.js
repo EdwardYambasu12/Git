@@ -181,7 +181,9 @@ const Ayyah = ()=>{
    
   }, []);
 
-  if (loading) return <CircularProgress />;
+  if (loading) return(<Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
+          <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
+        </Box>);
   if (error) return <Typography color="error">{error}</Typography>;
   if (!playerData) return null;
 var data = playerData
