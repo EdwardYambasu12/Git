@@ -28,6 +28,7 @@ const PrivacyPolicy = () => {
         If you have any questions about this Privacy Policy, please contact us at contact@sportsupd.com.
       </p>
     </div>
+    
   );
 };
 

@@ -1306,11 +1306,12 @@ const labels = moment.map(item => item.minute);
 
                      if(item.isHome === false){
 
+                        if(item.swap){
                         return(
 
                        <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center", marginLeft : "50%" , justifyContent : "space-between", display : "flex"}}><div><strong>{item.time}</strong></div><div><h6 className = "text-success"><strong>{item.swap[0].name}</strong></h6><h6 className = "text-danger">{item.swap[1].name}</h6></div> </div> {assist} <hr></hr></div>
                           ) 
-
+}
 
                     }
 
