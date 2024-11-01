@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {generateToken} from "../../Notification/firebase.js"
 import Line from "../../line.js"
+import CookieConsentPopup from "../../pop.js"
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -352,6 +353,29 @@ function Custom_input1({value, onClick}){
 }
 export default function Nav(){
 
+  const [cookie_jar, setCookie] = useState()
+
+  console.log(localStorage.getItem("cookie"))
+
+  useEffect(()=>{
+
+    const term =   localStorage.getItem("cookie")
+          if(term === "accepted"){
+            setCookie("")
+          }
+
+          else if(term === "rejected"){
+            setCookie("")
+          }
+
+          else if(term === null){
+            setCookie(<CookieConsentPopup/>)
+          }
+
+  }, [cookie_jar])
+
+
+
 const [anchorEl, setAnchorEl] = React.useState(null);
   const [tack, setTack] = React.useState()
   const [tack1, setTack1] = React.useState()
@@ -602,7 +626,7 @@ const [side_news, setSidenews] = useState()
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
     const user = users.find(user => user.email === done.email && user.password === done.password);
-
+    console.log("requesting")
         if(user){
 
     const place = {
@@ -1114,7 +1138,7 @@ async function fetcher(){
 
 {toggle}
  
-           
+           {cookie_jar}
 
 			</body>
 		)

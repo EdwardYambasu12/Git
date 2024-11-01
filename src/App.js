@@ -22,7 +22,7 @@ import PrivacyPolicy from './PrivacyPolicy';
 import ErrorBoundary from "./ed.jsx"
 import Inner_News from "./inner_news.js"
 import { Analytics } from '@vercel/analytics/react';
-
+import CookieConsentPopup from "./pop.js"
 import "./components/result/result.css"
 
 function App(){
@@ -49,7 +49,7 @@ function App(){
         <Route path="/" element = {<Home/>}></Route>
         <Route path="/result/:id" element = {<Result/>}></Route>
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-   
+   <Route path="/cookies" element={<CookieConsentPopup />} />
         <Route path = "/search" element = {<Search/>}> </Route>
         <Route path = "/team/:id" element = {<Teams/>}></Route>
         <Route path = "/player/:id" element = {<Player/>}></Route>

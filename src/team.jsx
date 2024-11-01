@@ -1236,14 +1236,16 @@ const Info = ({ data }) => {
                     })
 
                     .then((res)=>{
-                        console.log(res)
+                        console.log(res.data, "news")
 
                           setNews(
                       <div className = "row">
 
-                      {res.data.length > 0 ?
+                      {res.data.data.length > 0 ?
 
                           res.data.data.map((item)=>{
+
+                           
 
                             var url 
                               if(item.sourceStr === "FotMob" || item.sourceStr === "90min"){

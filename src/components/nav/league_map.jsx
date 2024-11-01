@@ -9,6 +9,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import Line from "../../line.js";
+import Box from '@mui/material/Box';
+import { Tabs, Tab,  CircularProgress,  } from '@mui/material';
 
 const AdComponent = () => {
   const [adData, setAdData] = useState(null);
@@ -39,11 +41,7 @@ const AdComponent = () => {
 
   return (
     <div>
-      {adData ? (
-        <div dangerouslySetInnerHTML={{ __html: adData }} />
-      ) : (
-        <p>Loading ad...</p>
-      )}
+     
     </div>
   );
 };
@@ -188,7 +186,9 @@ if(isFollowing === true){
 
       <div className="state">
         {loading ? (
-          <p>Loading...</p>
+          <p style = {{marginTop : "7%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
+          <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
+        </Box></p>
         ) : (
           <>
             <div style={{ width: "98%", margin: "1%",  marginTop : "7%", borderRadius: "10px", background: "white" }}>
