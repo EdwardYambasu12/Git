@@ -18,7 +18,7 @@ import {ThemeProvider} from '@mui/material/styles'
 import { AppBar, Toolbar,Tabs, Tab,  Typography, List, ListItem,  ListItemText } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box';                                                                
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
@@ -512,7 +512,7 @@ useEffect(()=>{
                  else if(item === "table"){
 
                 action =   <Typography component="div" role="tabpanel" hidden={value !== index}>
-                                     <Table props = {tab} league = {league} data = {data}/>
+                                     <Table props = {data} league = {league} data = {data}/>
                                       </Typography>
                         }
 
@@ -620,20 +620,7 @@ useEffect(()=>{
         let trick;
         var league_data;
 
-        if (datam.nav.includes("table")) {
-         
-
-            // Properly pass the leagueId as a parameter in the params object
-            const response = await axios.get(`${Lined}/league`, {
-                params: {
-                    id: datam.general.parentLeagueId  // Ensure correct syntax here
-                }
-            });
-            console.log(datam.general.parentLeagueId);
-            // Store the response data
-            league_data = response.data;
-            console.log(league_data, "league data");
-        }
+        
 
         if (datam.content.liveticker) {
             console.log(datam.content.liveticker.teams);
@@ -2669,15 +2656,31 @@ if("unavailable" in data.content.lineup.awayTeam){
 
 
 const Table = ({props, league})=>{
-    const data = league
+
+    const prop = props
  const [composite_true, setCompositeTrue] = useState()
     const [composite_false, setCompositeFalse] = useState()
     const navigate = useNavigate()
-console.log(data)
 
     useEffect(()=>{ 
 
-        if(data.overview.table.length>0){
+       async function tab(){
+
+        if (prop.nav.includes("table")) {
+         
+
+            // Properly pass the leagueId as a parameter in the params object
+            const response = await axios.get(`${Lined}/league`, {
+                params: {
+                    id: prop.general.parentLeagueId  // Ensure correct syntax here
+                }
+            });
+            console.log(prop.general.parentLeagueId);
+            // Store the response data
+            var data = response.data;
+            console.log(data, "league data");
+
+             if(data.overview.table.length>0){
 
 
                     ////////////////COMPOSITE TRUE
@@ -2823,10 +2826,23 @@ console.log(data)
 
 
 }
-    }, [data])
+      
+}
+
+}
+tab()
+/*
+       
+*/
+    }, [])
 
     return(
-            <div>
+            <div className = "container" style = {{background : "white", borderRadius : "10px"}}>
+
+            <div style = {{width : "100%", display : "flex", height : "30px", alignItems : "center" }}>
+                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${prop.content.table.leagueId}.png`} style = {{width : "30px", height : "30px"}}></img>
+                    <h5>{prop.content.table.parentLeagueName}</h5>
+            </div>
                     {composite_true}
                     {composite_false}
             </div>
