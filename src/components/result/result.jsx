@@ -622,24 +622,6 @@ useEffect(()=>{
 
         
 
-        if (datam.content.liveticker) {
-            console.log(datam.content.liveticker.teams);
-
-            const str = datam.content.liveticker.langs;
-            const arr = str.split(',');
-            console.log(arr);
-
-            // Fetch commentary data
-            const comment = await axios.get(`${Lined}/commentary`, {
-                params: {
-                    first: datam.content.liveticker.teams,
-                    id: datam.general.matchId,
-                    arr: arr
-                }
-            });
-            comment_data = comment.data;
-            console.log(comment_data);
-        }
 
         // Fetch additional data if URL is present
         if (datam.content.table?.url) {
@@ -1497,14 +1479,34 @@ const labels = moment.map(item => item.minute);
 
 const Commentary = ({props})=>{
         const data = props[0]
-        const comment = props[1]
+        
 
 
         const [comments, setComments] = useState()
 
         useEffect(()=>{
-                const main = comment.events
 
+            async function trainer(){
+
+        if (data.content.liveticker) {
+            console.log(data.content.liveticker.teams);
+
+            const str = data.content.liveticker.langs;
+            const arr = str.split(',');
+            console.log(arr);
+
+            // Fetch commentary data
+            const commentd = await axios.get(`${Lined}/commentary`, {
+                params: {
+                    first: data.content.liveticker.teams,
+                    id: data.general.matchId,
+                    arr: arr
+                }
+            });
+            var comment = commentd.data;
+
+            const main = comment.events
+            console.log(main, "main comments")
                 setComments(
                             <div style = {{width : "100%", background : "white", borderRadius : "10px"}}>
 
@@ -1519,8 +1521,14 @@ const Commentary = ({props})=>{
                                         timer = item.time.main
                                     }
 
+                                    var picker 
+
+                                    if(item.onlyText === false){
+                                        picker = <img style = {{width : "30px", height : "30px"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.players[0].id}.png`} ></img>
+                                    }
+
                                     return(<>
-                                            <div ><h6 className = "text-success">{timer}</h6></div>
+                                            <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
                                             <div style = {{fontFamily : "monospace"}}><h6><strong>{item.text}</strong></h6></div>
                                             <hr></hr>
                                             </>
@@ -1529,6 +1537,13 @@ const Commentary = ({props})=>{
                                 })}
                             </div>
                     )
+           
+        }
+
+            }
+
+            trainer()
+                
 
 
 
@@ -2785,12 +2800,22 @@ const Table = ({props, league})=>{
             <tbody>
                         {main_tabber.map((team, index)=>{
 
+                            var styling = "inherit"
+
+                            if(prop.content.table.teams[0] === team.id){
+                                styling =  "beige"
+                            }
+                            else if(prop.content.table.teams[1] === team.id){
+                                styling =  "beige"
+                            }
+                            
+
                             return(
                                                    <tr
 
                                                    onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(team); sessionStorage.setItem("selected_league", stringer)}}
                   key={team.id}
-                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
+                  style={{ width: "100%", background : styling, height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
                 >
                   <td style={{ width: "10%" }}>{index + 1}</td>
                   <td style={{ width: "55%" }}>
