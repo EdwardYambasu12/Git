@@ -1524,8 +1524,11 @@ const Commentary = ({props})=>{
                                     var picker 
 
                                     if(item.onlyText === false){
+                                        if(item.players.length > 0){
+
                                         picker = <img style = {{width : "30px", height : "30px"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.players[0].id}.png`} ></img>
                                     }
+                                }
 
                                     return(<>
                                             <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
