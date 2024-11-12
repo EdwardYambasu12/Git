@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Mini_Nav from "../nav/mini-nav";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress'
@@ -12,7 +12,7 @@ import Trial from "./trial.jsx"
 import Head_to_Head from "./h2h.js"
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-
+import TabsSticky from "./tabber.jsx"
 import {createTheme} from '@mui/material/styles'
 import {ThemeProvider} from '@mui/material/styles'
 import { AppBar, Toolbar,Tabs, Tab,  Typography, List, ListItem,  ListItemText } from '@mui/material';
@@ -149,7 +149,17 @@ const [dom, setDom] = useState()
   };
 
 
+ const [scrolled, setScrolled] = useState(false);
+ useEffect(() => {
+    const handleScroll = () => {
+      // Log the scroll position to ensure the event is detected
+      console.log("Scroll position:", window.scrollY);
+      setScrolled(window.scrollY > 50); // Set `scrolled` to true when scroll position > 50
+    };
 
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 var time = <Timer props = {props} />
 var it
     const [dd, setD] = useState()
@@ -297,8 +307,227 @@ const [teller, setTeller] = useState(160)
       const header = item.header.teams
 
             setD(
-                  <div className = "classaction" TransitionComponent = {Fade} transitionDuration = {1000}>
+
+                
+
+                    )
+
+           
+
+                
+
+                    
+        
+       
+    };
+
+    
+
+
+
+
+
+
+
+}, [data, scrolled])
+     const elementRef = useRef(null); // Reference to the element we want the height of
+  const [elementHeight, setElementHeight] = useState(0);
+
+  useEffect(() => {
+    // Check if elementRef.current is defined, then get height
+    if (elementRef.current) {
+      const height = elementRef.current.getBoundingClientRect().height;
+      setElementHeight(height); // Store height in state
+      console.log("Element height:", height); // Log height for debugging
+
+    }
+  }, [data]); 
+ 
+useEffect(()=>{
+
+
+const item = data
+
+   const header = data.header.teams
+     var status
+
+
+        if(item.header.status.finished === true){
+
+            status = "Full Time"
+
+        }
+
+        if(data.header.status.started === true && data.header.status.finished === false){
+
+            if(data.header.status.liveTime.short === "HT"){
+                status = data.header.status.liveTime.long
+            }
+
+            else {
+            status = time
+                }
+        }
+
+        if(item.header.status.started === false){
+               const dateTimeString = item.header.status.utcTime;
+                        const dateObject = new Date(dateTimeString);
+                    const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+
+                    status = timeString
+        }
+
+    var hommie
+    var awayer
+if(data.header.events.homeTeamGoals != null && data.header.events.awayTeamGoals != null) {
+    hommie =  Object.keys(data.header.events.homeTeamGoals).map(key => {
+        var og
+
+       var min =  data.header.events.homeTeamGoals[key].map((id)=>{
+            return(
+                    <>{id.time}",</>
+                )
+        })
+
+        key.ownGoal != null ?  og = <small style = {{fontSize : "0.5em"}} className = "text-danger">⚽{key} {min}</small> : og = <small style = {{fontSize : "0.5em", margin: `-200px 2px`}} className = "text-secondary">⚽{key} {min}</small>
+
+    return(
+            <div>{og}</div>
+
+    ) // Output: "a", "b", "c"
+});
+
+     awayer =  Object.keys(data.header.events.awayTeamGoals).map(key => {
+        var og
+         var min =  data.header.events.awayTeamGoals[key].map((id)=>{
+            return(
+                      <>{id.time}",</>
+                )
+        })
+        key.ownGoal != null ?  og = <small style = {{fontSize : "0.5em"}} className = "text-danger">⚽{key} {min}</small> : og = <small style = {{fontSize : "0.5em"}} className = "text-secondary">⚽{key} {min}</small>
+
+    return(
+            <div>{og}</div>
+
+    ) // Output: "a", "b", "c"
+});}
+           
+var small =  <div style = {{background : "white", borderBottom : "solid #EEEEEE", borderWidth : "3px"}} >
+        
+
+
+
+ <div >
+           <div >
                   <div  id = "background" >
+
+             
+                     
+                  </div>
+                  <div style = {{width : "100%", position : "absolute", top : "0%"}}>
+                  <div style = {{width : "100%", display : "flex", justifyContent : "space-between", marginTop : "1.5%"}}>  <ArrowBackIcon onClick={() => navigate(-1)} style={{ color : "black", cursor: 'pointer' }} />
+                
+                  </div>
+        <div className="main_row">
+            <div style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[0].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} >
+                <img src = {header[0].imageUrl} className="team_logos"></img>
+                <br></br>
+                <br></br>
+             
+            </div>
+            <div>
+
+            <div style={{display : "flex", justifyContent : "space-between", width : "100%"}}>
+                <h1 className="text-dark">{header[0].score}</h1>
+                <h1 className="text-dark" style={{marginLeft : "2%", marginRight : "2%"}}>:</h1>
+                <h1 className="text-dark text-center">{header[1].score}</h1>
+            </div>
+             <h6 className="text-center text-danger">{status}</h6>
+           </div>
+          
+
+            <div id = "awaya" style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[1].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}>
+                <img src = {header[1].imageUrl} className="team_logos"></img>
+                <br></br>
+                <br></br>
+               
+               
+            </div>
+
+
+              
+
+            </div>
+             
+
+
+         
+
+            </div>
+
+ 
+
+
+            
+
+
+               
+              </div>
+
+               
+              </div>
+       
+      
+<div style={{
+    
+    top: 0,
+    zIndex: 10000,  // Ensures it stays above other elements
+    background: "white",  // Solid background to cover content underneath
+    backdropFilter: "blur(10px)",
+}}>
+  <ThemeProvider theme={Theme}>
+    <Tabs
+      textColor="primary"
+      value={value}
+      TabIndicatorProps={{ style: { backgroundColor: 'midnightblue' } }}
+      onChange={handleChange}
+      variant="scrollable"
+      scrollButtons="auto"
+      aria-label="gold tabs example"
+    >
+      {data.nav.map((item, index) => {
+        const tabLabel = {
+          matchfacts: "Info",
+          liveticker: "Commentary",
+          lineup: "Lineup",
+        }[item] || item;
+
+        return <Tab key={index} label={tabLabel} />;
+      })}
+    </Tabs>
+  </ThemeProvider>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+var large = <div style = {{background : "white", borderBottom : "solid #EEEEEE", borderWidth : "3px"}} >
+        
+
+
+
+ <div >
+           <div >
+                  <div  id = "background" >
+
+             
                      
                   </div>
                   <div style = {{width : "100%", position : "absolute", top : "0%"}}>
@@ -369,93 +598,69 @@ const [teller, setTeller] = useState(160)
 
                
               </div>
-                
 
-                    )
-
-           
-
-                
-
-                    
-        
-       
-    };
-
-    window.addEventListener('scroll', handleScroll(data));  
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll(data));
-    };
-
-
-
-
-
-
-
-}, [data])
-
-
-useEffect(()=>{
-    setDom(
-        <>
-                       
-                  <div style = {{background : "white", borderBottom : "solid #EEEEEE", borderWidth : "3px"}} className = "fixed-top">
-                        
-
-{dd}
-       
+               
+              </div>
+       <div className = "container" style={{justifyContent : "space-between",  width : "100%", display : "flex"}}>
+          <div style = {{width : "35%", textAlign : "right"}}>{hommie}</div>
+          <div>{awayer}</div>
+       </div>
       
-<div >
+<div style={{
+    position: "sticky",
+    top: 0,
+    zIndex: 10000,  // Ensures it stays above other elements
+    background: "white",  // Solid background to cover content underneath
+    backdropFilter: "blur(10px)",
+}}>
+  <ThemeProvider theme={Theme}>
+    <Tabs
+      textColor="primary"
+      value={value}
+      TabIndicatorProps={{ style: { backgroundColor: 'midnightblue' } }}
+      onChange={handleChange}
+      variant="scrollable"
+      scrollButtons="auto"
+      aria-label="gold tabs example"
+    >
+      {data.nav.map((item, index) => {
+        const tabLabel = {
+          matchfacts: "Info",
+          liveticker: "Commentary",
+          lineup: "Lineup",
+        }[item] || item;
 
-      <ThemeProvider theme = {Theme}>
-        <Tabs  style ={{background : "inherit", borderWidth : "0px",  boxShawdow : "none"}} textColor = "primary" value={value} TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }} onChange={handleChange}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"  >
-          {
-                data.nav.map((item)=>{
-                    
-                        var new_item
-
-                        if (item === "matchfacts"){
-                            new_item = "Info"
-                        }
-
-                        else if(item === "liveticker"){
-                            new_item = "Commentary"
-                        }
-
-                        else if(item === "lineup"){
-                            new_item = "Lineup"
-                        }
-                        else{
-                            new_item = item
-                        }
-
-
-                    return(
-
-                          <Tab label={new_item} />
-
-                        )
-                })
-          }
-        </Tabs>
-        </ThemeProvider>
-        </div>
+        return <Tab key={index} label={tabLabel} />;
+      })}
+    </Tabs>
+  </ThemeProvider>
+</div>
 
 </div>
 
       
-     
-   
+
      
  
 
 
 
 
-   <div style={{marginTop : teller+"px"}}>
+
+    setDom(
+        <>
+            <br></br>
+            <br></br>
+         <div ref={elementRef}  className={`header ${scrolled ? "scrolled" : ""}`}>
+        {/* Dynamic header text to check which state is active */}
+        <h1>{scrolled ? small : large}</h1>
+      </div>
+                       
+                  
+   <div style={{marginTop : elementHeight, position : "relative"}}>
       <br></br>
+
+
       <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
        
        {
@@ -549,7 +754,7 @@ useEffect(()=>{
     )
 
 
-}, [ data, value, dd])
+}, [ data, value, dd, scrolled])
 
 
     return(
@@ -661,7 +866,8 @@ reloader();
 return(
 
             <div style = {{  background : "#EEEEEE" }}>
-                
+                  
+         
                 {dd}
 
             </div>

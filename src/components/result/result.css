@@ -1,3 +1,33 @@
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  left: 0   ;
+  background-color: white;
+  text-align: center;
+  transition: all 0.5s ease; /* Smooth transition for all changes */
+/* Initial font size for the large header */
+  z-index: 1000;
+}
+
+.header.scrolled {
+   /* Smaller font size for the scrolled state */
+  opacity: 0.8; /* Slightly transparent in scrolled state */
+}
+
+small{
+    font-size: 0.5em;
+}
+#shyo{
+
+     position: sticky;
+  top: 0; /* Distance from the top */
+  background-color: inherit;
+  padding: 10px;
+  z-index: 10; /* Ensure it stays above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for emphasis */
+
+}
 .main_info{
     display : flex;
 
@@ -128,7 +158,7 @@
     align-items: center;
     background: inherit;
     width: 90%;
-     margin-left: 4%;
+     
     margin-right: 4%;
     font-family: monospace;
     justify-content: space-between;

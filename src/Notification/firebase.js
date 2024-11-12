@@ -35,12 +35,16 @@ const checkNotificationSupport = async () => {
   const permission = Notification.permission;
   if (permission === "granted") {
     displayMessage("Notifications are enabled.");
+    sessionStorage.setItem("noti", "no")
   } else if (permission === "denied") {
     displayMessage("Notifications are blocked. Please enable them in the browser settings.");
     await Notification.requestPermission();
+    sessionStorage.setItem("noti", "no")
   } else {
     displayMessage("Notifications are not yet granted. Please allow notifications when prompted.");
+
     await Notification.requestPermission();
+    sessionStorage.setItem("noti", "no")
   }
 };
 
