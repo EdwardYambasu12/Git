@@ -1237,9 +1237,11 @@ const Info = ({ data }) => {
 
                     .then((res)=>{
                         console.log(res.data, "news")
-
+if(res.data.length > 0){
                           setNews(
                       <div className = "row">
+
+
 
                       {res.data.data.length > 0 ?
 
@@ -1303,7 +1305,7 @@ const Info = ({ data }) => {
                       </div>
 
                       )
-                          
+                        }  
                     })
 
 

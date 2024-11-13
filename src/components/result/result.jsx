@@ -354,7 +354,7 @@ const item = data
 
         if(item.header.status.finished === true){
 
-            status = "Full Time"
+            status = "FT"
 
         }
 
@@ -380,7 +380,7 @@ const item = data
 
     var hommie
     var awayer
-if(data.header.events.homeTeamGoals != null && data.header.events.awayTeamGoals != null) {
+if(data.header.events != null && data.header.events != null) {
     hommie =  Object.keys(data.header.events.homeTeamGoals).map(key => {
         var og
 
@@ -420,7 +420,7 @@ var small =  <div style = {{background : "white", borderBottom : "solid #EEEEEE"
 
  <div >
            <div >
-                  <div  id = "background" >
+                  <div  id = "backgroundt" >
 
              
                      
@@ -431,24 +431,24 @@ var small =  <div style = {{background : "white", borderBottom : "solid #EEEEEE"
                   </div>
         <div className="main_row">
             <div style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[0].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} >
-                <img src = {header[0].imageUrl} className="team_logos"></img>
+                <img src = {header[0].imageUrl} style = {{width : "30px", height : "30px"}}></img>
                 <br></br>
                 <br></br>
              
             </div>
             <div>
 
-            <div style={{display : "flex", justifyContent : "space-between", width : "100%"}}>
-                <h1 className="text-dark">{header[0].score}</h1>
-                <h1 className="text-dark" style={{marginLeft : "2%", marginRight : "2%"}}>:</h1>
-                <h1 className="text-dark text-center">{header[1].score}</h1>
+            <div style={{display : "flex", transform : `translateX(25%)`, justifyContent : "space-between", width : "100%"}}>
+                <h5 className="text-dark">{header[0].score}</h5>
+                <h6 className="text-center text-danger" style={{marginLeft : "2%", marginRight : "2%"}}>{status}</h6>
+                <h5 className="text-dark text-center">{header[1].score}</h5>
             </div>
-             <h6 className="text-center text-danger">{status}</h6>
+        
            </div>
           
 
             <div id = "awaya" style={{width : "40%"}} onClick = {()=>{navigate("/team/"+header[1].id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}>
-                <img src = {header[1].imageUrl} className="team_logos"></img>
+                <img src = {header[1].imageUrl} style = {{width : "30px", height : "30px"}}></img>
                 <br></br>
                 <br></br>
                
@@ -478,13 +478,16 @@ var small =  <div style = {{background : "white", borderBottom : "solid #EEEEEE"
                
               </div>
        
-      
+     
+
 <div style={{
     
-    top: 0,
+    marginTop : "80px",
     zIndex: 10000,  // Ensures it stays above other elements
     background: "white",  // Solid background to cover content underneath
     backdropFilter: "blur(10px)",
+
+
 }}>
   <ThemeProvider theme={Theme}>
     <Tabs
@@ -551,12 +554,12 @@ var large = <div style = {{background : "white", borderBottom : "solid #EEEEEE",
             </div>
             <div>
 
-            <div style={{display : "flex", justifyContent : "space-between", width : "100%"}}>
+            <div style={{display : "flex",  transform : `translateX(25%)`, justifyContent : "space-between", width : "100%"}}>
                 <h1 className="text-dark">{header[0].score}</h1>
                 <h1 className="text-dark" style={{marginLeft : "2%", marginRight : "2%"}}>:</h1>
                 <h1 className="text-dark text-center">{header[1].score}</h1>
             </div>
-             <h6 className="text-center text-danger">{status}</h6>
+             <h6 style = {{transform : `translateX(25%)`,}} className="text-center text-danger">{status}</h6>
            </div>
           
 
@@ -601,10 +604,12 @@ var large = <div style = {{background : "white", borderBottom : "solid #EEEEEE",
 
                
               </div>
-       <div className = "container" style={{justifyContent : "space-between",  width : "100%", display : "flex"}}>
-          <div style = {{width : "35%", textAlign : "right"}}>{hommie}</div>
-          <div>{awayer}</div>
+       <div className = "container" style={{justifyContent : "space-between", marginTop : "4%",  width : "100%", display : "flex"}}>
+          <div style = {{width : "35%",  maxHeight : "100px", overflowY : "auto", textAlign : "right"}}>{hommie}</div>
+          <div style = {{ maxHeight : "120px", overflowY : "auto",}}>{awayer}</div>
        </div>
+
+       <br></br>
       
 <div style={{
     position: "sticky",
@@ -649,15 +654,14 @@ var large = <div style = {{background : "white", borderBottom : "solid #EEEEEE",
 
     setDom(
         <>
-            <br></br>
-            <br></br>
+            
          <div ref={elementRef}  className={`header ${scrolled ? "scrolled" : ""}`}>
         {/* Dynamic header text to check which state is active */}
         <h1>{scrolled ? small : large}</h1>
       </div>
                        
                   
-   <div style={{marginTop : elementHeight, position : "relative"}}>
+   <div style={{marginTop : "90%", position : "relative"}}>
       <br></br>
 
 
