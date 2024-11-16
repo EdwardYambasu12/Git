@@ -28,7 +28,7 @@ const CookieConsentPopup = () => {
    <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
       <DialogTitle>
         <Box display="flex" alignItems="center">
-          <img src="https://www.sportsupd.com/sportsup.png" alt="Logo" style={{ marginRight: 8, width: 50 }} />
+          <img src="https://www.sportsupd.com/icon.jpg" alt="Logo" style={{ marginRight: 8, width: 50 }} />
           <Typography variant="h6">SportsUp - We Care About Your Privacy</Typography>
         </Box>
       </DialogTitle>

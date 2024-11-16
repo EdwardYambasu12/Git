@@ -369,7 +369,7 @@ if(data.header.events != null && data.header.events != null) {
                 </Tabs>
             </ThemeProvider>
         </div>
-
+                      <br/>
         <SwipeableViews index={value} onChangeIndex={(index) => setValue(index)}>
             {data.nav.map((item, index) => (
                 <Typography key={index} component="div" role="tabpanel" hidden={value !== index}>
@@ -533,7 +533,7 @@ const Info = ({props})=>{
     const data = props[0]
     var ticker = props[2]
   
-
+  const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
     const [pump, setPump]  = useState()
 
     const [motm, setMotm] = useState()
@@ -556,8 +556,123 @@ const Info = ({props})=>{
 
     const [pending_var, setPendingVar] = useState()
 
+
+    const [top_scorers, setTopScorers] = useState()
+
+    const [fifa_ranking, setFifaRanking] = useState()
+    const [headrecord, setHeadrecord] = useState()
     const navigate = useNavigate()
     useEffect(()=>{
+      ////////////// Head to Head record
+      if(data.content.h2h != null){
+        const main = data.content.h2h
+        setHeadrecord(
+
+          <div style={{borderRadius : "10px", background : "white"}}>
+            <h6 className="text-center">Head TO Head Record</h6>
+
+            <div style = {{width : "100%", height : "100px", alignItems : "center", display : "flex", justifyContent : "space-around", background : "white", borderRadius : "10px"}}>
+                  <div style = {{ width : "14%",}}>  <div style = {{background : data.general.teamColors.lightMode.home, height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-light text-center"><strong>{main.summary[0]}</strong></h6></div> <p className = "text-center"><strong>Wins</strong></p></div>
+                  <div style = {{ width : "14%",}}>  <div style = {{background : "#EEEEEE", height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-dark text-center"><strong>{main.summary[1]}</strong></h6></div> <p className = "text-center"><strong>Draw</strong></p></div>
+                   <div style = {{ width : "14%",}}>  <div style = {{background : data.general.teamColors.lightMode.away, height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-light text-center"><strong>{main.summary[2]}</strong></h6></div> <p className = "text-center"><strong>Wins</strong></p></div>
+                </div>
+          </div>
+        )
+      }
+      ///////////////fifa ranking
+
+      if(data.header.teams[0].fifaRank != null && data.header.teams[1].fifaRank != null){
+        setFifaRanking(
+          <div style={{width : "100%", background : "white", borderRadius : "10px"}}>
+            <h6 className="text-center">Fifa Ranking</h6>
+            <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+              
+            <div style = {{display : "flex"}}>
+              <img style={{width : "60px", height : "60px"}} src = {data.header.teams[0].imageUrl}></img>
+            <div>
+              <h5>#{data.header.teams[0].fifaRank}</h5>
+              <h6 className="text-secondary">{data.header.teams[0].name}</h6>
+              </div>
+            </div>
+            <div>
+
+            </div>
+
+            <div style = {{display : "flex"}}>
+            
+            <div>
+              <h5 style = {{textAlign : "right"}}>#{data.header.teams[1].fifaRank}</h5>
+              <h6  style = {{textAlign : "right", wordBreak : "break-word", }} className="text-secondary">{data.header.teams[1].name}</h6>
+              </div>
+              <img style={{width : "60px", height : "60px"}} src = {data.header.teams[1].imageUrl}></img>
+            </div>
+            <div>
+
+            </div>
+            </div>
+
+          
+
+
+          </div>
+        )
+      }
+
+      ///////////////// Top Scorers
+
+      if(data.content.matchFacts.topScorers != null){
+        if(data.header.status.started == false && data.header.status.finished == false ){
+          const item = data.content.matchFacts.topScorers
+          setTopScorers(
+
+            <div style = {{background : "white", borderRadius : "10px"}} >
+
+                  <h6 className = "text-center">{item.section}</h6>
+
+                  <div style = {{width : "100%", display : "flex", justifyContent : "space-around"}}>
+                      <div onClick={()=>navigate("/player/"+item.homePlayer.playerId)}>
+                          <img style = {{height : "50px", height : "50px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.homePlayer.playerId+".png"}  onError={(e) => { e.target.src = replacement }} />
+                          <h6>{item.homePlayer.lastName}</h6>
+                      </div>
+                      <div onClick={()=>navigate("/player/"+item.homePlayer.playerId)}>
+                          <img style = {{height : "50px", height : "50px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.awayPlayer.playerId+".png"}  onError={(e) => { e.target.src = replacement }} />
+                          <h6>{item.awayPlayer.lastName}</h6>
+                      </div>
+                  </div>
+                  <br/>
+                  <div>
+                    <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                      <h6><strong>{item.homePlayer.stats.playerRating}</strong></h6>
+                     <h6 className="text-secondary">Sportsup Rating</h6> 
+                     <h6><strong>{item.awayPlayer.stats.playerRating}</strong></h6></div>
+                 <br/>
+                  <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                      <h6><strong>{item.homePlayer.stats.goals}</strong></h6>
+                     <h6 className="text-secondary">Goals</h6> 
+                     <h6><strong>{item.awayPlayer.stats.goals}</strong></h6></div>
+                     <br/>
+                    <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                    <h6><strong>{item.homePlayer.stats.goalAssist}</strong></h6>
+                   <h6 className="text-secondary">Assist</h6> 
+                   <h6><strong>{item.awayPlayer.stats.goalAssist}</strong></h6>
+                </div>
+                <br/>
+                <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                <h6><strong>{item.homePlayer.stats.gamesPlayed}</strong></h6>
+               <h6 className="text-secondary">Matches Played</h6> 
+               <h6><strong>{item.awayPlayer.stats.gamesPlayed}</strong></h6></div>
+            </div>
+            <hr></hr>
+
+            <div>
+             
+              <h5 className="text-center">{data.content.matchFacts.infoBox["Tournament"].leagueName}</h5>
+            </div>
+            <hr></hr>
+            </div>
+          )
+        }
+      }
 
 
         ///////////////Top Players
@@ -1252,8 +1367,14 @@ const labels = moment.map(item => item.minute);
     return(
 
             <div className = "container" style = {{background : "#EEEEEE"}} >
-               
+
                         {pending_var}
+
+                        
+
+                        <div style = {{marginTop:"5%"}}>
+                          {top_scorers}
+                        </div>
                    
                    <div style = {{marginTop : "5%"}}>
 
@@ -1275,6 +1396,8 @@ const labels = moment.map(item => item.minute);
 
                 </div>
 
+                <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
+                <div style = {{marginTop : "5%"}}>{headrecord}</div>
                 <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
                
                 {momentum}
