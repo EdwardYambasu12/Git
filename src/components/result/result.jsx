@@ -584,7 +584,7 @@ const Info = ({props})=>{
       if(data.header.teams[0].fifaRank != null && data.header.teams[1].fifaRank != null){
         setFifaRanking(
           <div style={{width : "100%", background : "white", borderRadius : "10px"}}>
-            <h6 className="text-center">Fifa Ranking</h6>
+            <h6 className="text-center">Fifa Ranking</h6> 
             <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
               
             <div style = {{display : "flex"}}>
@@ -1396,8 +1396,7 @@ const labels = moment.map(item => item.minute);
 
                 </div>
 
-                <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
-                <div style = {{marginTop : "5%"}}>{headrecord}</div>
+              
                 <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
                
                 {momentum}
@@ -1412,7 +1411,8 @@ const labels = moment.map(item => item.minute);
                </div>
 
                
-            
+              <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
+                <div style = {{marginTop : "5%"}}>{headrecord}</div>
                    <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
                 <h6 className = "text-center text-secondary">Team Form</h6>
                 {teamform}
