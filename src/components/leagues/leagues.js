@@ -181,9 +181,15 @@ const Ayyah = ()=>{
    
   }, []);
 
-  if (loading) return(<Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
-          <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
-        </Box>);
+  if (loading) return(<div>
+
+    <Skeleton variant="rectangular" width={"100%"} height={160} />
+
+    <br></br>
+
+    <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
+
+    </div>);
   if (error) return <Typography color="error">{error}</Typography>;
   if (!playerData) return null;
 var data = playerData

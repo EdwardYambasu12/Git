@@ -49,7 +49,7 @@ import Stack from '@mui/material/Stack';
  import {createTheme} from '@mui/material/styles'
 import {ThemeProvider} from '@mui/material/styles'
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
-import { Tabs, Tab,  CircularProgress,  } from '@mui/material';
+import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 const Theme = createTheme({
   palette: {
@@ -228,9 +228,15 @@ const [statement, setStatement] = useState()
 
 const [page_value, setPage_value] = useState(1)
 const [latest, setLatest]= useState(
-<Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
-          <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
-        </Box>
+<div>
+
+    <Skeleton variant="rectangular" width={"100%"} height={160} />
+
+    <br></br>
+
+    <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
+
+    </div>
   )
 
 
