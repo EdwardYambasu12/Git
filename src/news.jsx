@@ -50,7 +50,7 @@ import Stack from '@mui/material/Stack';
 import {ThemeProvider} from '@mui/material/styles'
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+
 const Theme = createTheme({
   palette: {
     primary: {
