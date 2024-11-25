@@ -268,7 +268,7 @@ console.log(data)
                
 
             return(
-                            <div    onClick={() => {navigate(`/result/${fragmentIdentifier}`); window.location.reload()}}  style={{ marginTop: "3%", width: "100%", height : "60px", alignItems : "center", justifyContent: "space-between", background: "darkgray", color : "white", borderRadius: "10px", textDecoration: "none" }}>
+                            <div    onClick={() => {navigate(`/result/${fragmentIdentifier}`); window.location.reload()}}  style={{ marginTop: "3%", width: "100%", alignItems : "center", justifyContent: "space-between", background: "darkgray", color : "white", borderRadius: "10px", textDecoration: "none" }}>
                                       <div  style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "100%" }}>
           <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
             <h6 className="text-light" style={{ fontSize: "1em" }}>{match.teamName}</h6>
@@ -309,35 +309,73 @@ console.log(data)
     }
 
     
-
-        {playerData.careerHistory && (
-          <Box>
-            <Typography align="center">Player History</Typography>
-            <table>
-              <thead>
-                <tr>
-                  <th>Teams</th>
-                  <th>Appearance</th>
-                  <th>Goals</th>
-                  <th>Assist</th>
-                </tr>
-              </thead>
-              <tbody>
-                {playerData.careerHistory.careerItems.senior.seasonEntries.map(item => (
-                  <tr key={item.teamId}>
-                    <td>
-                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`} alt={item.team} style={{ width: "20px", height: "20px" }} />
-                      {item.team} ({item.seasonName})
-                    </td>
-                    <td>{item.appearances}</td>
-                    <td>{item.goals}</td>
-                    <td>{item.assists}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Box>
-        )}
+{playerData.careerHistory && (
+  <Box>
+    <Typography align="center" variant="h6" style={{ marginBottom: "16px" }}>
+      Player History
+    </Typography>
+    <table
+      style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        margin: "0 auto",
+        fontFamily: "Arial, sans-serif",
+        tableLayout: "fixed", // Ensures columns respect width constraints
+      }}
+    >
+      <thead>
+        <tr
+          style={{
+            backgroundColor: "#f4f4f4",
+            borderBottom: "2px solid #ddd",
+          }}
+        >
+          <th style={{ width: "40%", padding: "10px", textAlign: "left" }}>Teams</th>
+          <th style={{ width: "20%", padding: "10px", textAlign: "center" }}>App.</th>
+          <th style={{ width: "20%", padding: "10px", textAlign: "center" }}>Goals</th>
+          <th style={{ width: "20%", padding: "10px", textAlign: "center" }}>Assist</th>
+        </tr>
+      </thead>
+      <tbody>
+        {playerData.careerHistory.careerItems.senior.seasonEntries.map((item) => (
+          <tr key={item.teamId} style={{ borderBottom: "1px solid #ddd" }}>
+            <td
+              style={{
+                padding: "10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                width : "30%",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap", // Ensures text truncates
+              }}
+            >
+              <img
+                src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.teamId}_xsmall.png`}
+                alt={item.team}
+                style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+              />
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {item.team} ({item.seasonName})
+              </span>
+            </td>
+            <td style={{ padding: "10px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {item.appearances}
+            </td>
+            <td style={{ padding: "10px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {item.goals}
+            </td>
+            <td style={{ padding: "10px", textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {item.assists}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </Box>
+)}
+   
     </div>
 
   );

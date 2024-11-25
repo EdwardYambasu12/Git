@@ -1047,7 +1047,7 @@ const Info = ({ data }) => {
                     })
 
                 const round = raw.data
-                console.log(round)
+                console.log(round, "round")
                
                     axios.get(Line+"/totw", {
                         params : {
@@ -1058,7 +1058,7 @@ const Info = ({ data }) => {
                     })
                     .then((res)=>{
                                     console.log(res, "team of the week")
-
+                                      if(res.data.length > 0){
                                     setTOWT(
                                     <div className="container" style={{ width: '100vw', height: '100vh', borderRadius : "10px", background : "white" }}>
                                                <h6 className = "text-center text-dark">Team Of The Week</h6>
@@ -1066,6 +1066,26 @@ const Info = ({ data }) => {
 
                                     </div>
                                     )
+                                    }
+
+                                    else{
+                                        axios.get(Line+"/totw", {
+                        params : {
+                            season : data.details.latestSeason,
+                            id : data.details.id,
+                            round : raw.data.rounds[1].roundId   
+                        }
+                    })
+                    .then((response)=>{
+                         setTOWT(
+                                    <div className="container" style={{ width: '100vw', height: '100vh', borderRadius : "10px", background : "white" }}>
+                                               <h6 className = "text-center text-dark">Team Of The Week</h6>
+                                                <Field players={response.data} />
+
+                                    </div>
+                                    )
+                    })
+                                    }
                     })
                 }
 
