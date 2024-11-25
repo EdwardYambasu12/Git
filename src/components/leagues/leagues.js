@@ -1053,7 +1053,7 @@ const Info = ({ data }) => {
                         params : {
                             season : data.details.latestSeason,
                             id : data.details.id,
-                            round : raw.data.rounds[0].roundId - 1    
+                            round : raw.data.rounds[0].roundId   
                         }
                     })
                     .then((res)=>{
