@@ -564,7 +564,7 @@ const Info = ({props})=>{
     const navigate = useNavigate()
     useEffect(()=>{
       ////////////// Head to Head record
-      if(data.content.h2h != null){
+      if(data.content.h2h != false){
         const main = data.content.h2h
         setHeadrecord(
 
@@ -2486,8 +2486,8 @@ const homeDataH = coach_h;
     fetchAndSetData();
   }, [props, data]);
 
-  const home_formation = data.content.lineup.awayTeam.formation
-  const away_formation = data.content.lineup.homeTeam.formation
+  const home_formation = data.content.lineup.homeTeam.formation
+  const away_formation = data.content.lineup.awayTeam.formation
 
   const home_rating = data.content.lineup.homeTeam.rating
   const away_rating = data.content.lineup.awayTeam.rating
