@@ -745,9 +745,14 @@ const Info = ({props})=>{
 
             if(var_){
                 setPendingVar(
-                        <div style = {{background : "green", width : "100%", color : "white"}}><h6 className = "text-center">Var Check</h6></div>
+                        <div className = "blink-animation" style = {{background : "green", width : "100%", color : "white"}}><h6 className = "text-center">Var Check</h6></div>
                     )
             } 
+            else{
+            setPendingVar(
+                    )
+            } 
+            
 
 
             ////////////////////Information Box
@@ -1156,24 +1161,32 @@ const labels = moment.map(item => item.minute);
                 if(item.type === "Goal"){
                     if(item.isHome == true){
                         var assist
+                        var pen
 
                             if(item.assistInput != null){
                                 assist = <div>({item.assistInput})</div>
                             }
+                            if(item.suffix === "Pen"){
+                                pen = "(penalty)"
+                            }
                         return(
-                                <div style = {{width : "100%", }}> <div style = {{width : "50%", justifyContent : "space-between",  alignItems : "center", display : "flex"}}><h6 className = "text-dark">⚽</h6><h6><strong>{item.player.name}</strong></h6> <div><strong>{item.time}</strong></div></div> {assist} <hr></hr></div>
+                                <div style = {{width : "100%", }}> <div style = {{width : "50%", justifyContent : "space-between",  alignItems : "center", display : "flex"}}><h6 className = "text-dark">⚽</h6><h6><strong>{item.player.name}</strong></h6> <div><strong>{item.time}</strong></div></div> {assist} {pen}<hr></hr></div>
                             )
                     }
 
 
                     if(item.isHome == false){
                         var assist
+                        var pen
 
                             if(item.assistInput != null){
                                 assist = <div>({item.assistInput})</div>
                             }
+                              if(item.suffix === "Pen"){
+                                pen = "(penalty)"
+                            }
                         return(
-                                <div style = {{width : "100%", textAlign : "right" }}> <div style = {{width : "50%", justifyContent : "space-between",  textAlign : "right",  marginLeft : "50%",      alignItems : "center",  display : "flex"}}><div className = "text-right"><strong>{item.time}</strong></div><h6 className = "text-right"><strong>{item.player.name}</strong></h6><h6 className = "text-dark text-right">⚽</h6> </div> {assist} <hr></hr></div>
+                                <div style = {{width : "100%", textAlign : "right" }}> <div style = {{width : "50%", justifyContent : "space-between",  textAlign : "right",  marginLeft : "50%",      alignItems : "center",  display : "flex"}}><div className = "text-right"><strong>{item.time}</strong></div><h6 className = "text-right"><strong>{item.player.name}</strong></h6><h6 className = "text-dark text-right">⚽</h6> </div> {assist} {pen} <hr></hr></div>
                             )
                     }
                 }
@@ -1229,12 +1242,14 @@ const labels = moment.map(item => item.minute);
 
                      if(item.isHome === false){
 
-                        if(item.swap){
+                       
+                      
                         return(
 
-                       <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center", marginLeft : "50%" , justifyContent : "space-between", display : "flex"}}><div><strong>{item.time}</strong></div><div><h6 className = "text-success"><strong>{item.swap[0].name}</strong></h6><h6 className = "text-danger">{item.swap[1].name}</h6></div> </div> {assist} <hr></hr></div>
+                       <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center" , justifyContent : "space-between", display : "flex"}}><div><h6 className = "text-dark"><strong>❌Missed Penalty</strong></h6><h6 className = "text-dark">{item.nameStr}</h6></div> <div><strong>{item.time}</strong></div> </div> {assist} <hr></hr></div>
                           ) 
-}
+ 
+
 
                     }
 
@@ -2830,7 +2845,7 @@ tab()
             <div className = "container" style = {{background : "white", borderRadius : "10px"}}>
 
             <div style = {{width : "100%", display : "flex", height : "30px", alignItems : "center" }}>
-                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${prop.content.table.leagueId}.png`} style = {{width : "30px", height : "30px"}}></img>
+                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${prop.content.table.parentLeagueId}.png`} style = {{width : "30px", height : "30px"}}></img>
                     <h5>{prop.content.table.parentLeagueName}</h5>
             </div>
                     {composite_true}
