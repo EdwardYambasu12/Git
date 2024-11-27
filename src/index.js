@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import App from './App';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'; // Import the service worker
 
-
-// Render your app
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+// Register service worker
+serviceWorkerRegistration.register();

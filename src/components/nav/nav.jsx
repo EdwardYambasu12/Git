@@ -464,6 +464,32 @@ catch(e){
 },[alpha])
 
 
+ const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    });
+  }, []);
+
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('PWA installed successfully!');
+        } else {
+          console.log('PWA installation dismissed.');
+        }
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
+      });
+    }
+  };
+
 
     
   const [value, setValue] = React.useState(4);
@@ -1139,6 +1165,10 @@ async function fetcher(){
 {toggle}
  
            {cookie_jar}
+
+             {showInstallButton && (
+        <button onClick={handleInstall}>Install SportsUp</button>
+      )}
 
 			</body>
 		)
