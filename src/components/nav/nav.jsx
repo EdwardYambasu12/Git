@@ -490,7 +490,35 @@ catch(e){
     }
   };
 
+  function trapper(){
+  setChoice()
+}
+const [choice, setChoice] = useState(
+)
 
+
+useEffect(()=>{
+  setChoice(<div>{showInstallButton && (
+
+       <div style = {{width : "100%", position : "fixed", bottom : "0%", justifyContent : "center", alignItems : "center", backgroundColor : "midnightblue"}}> 
+       <h3 className = "text-light text-center">Sportsup App Available</h3>
+       <hr/>
+     
+       <div style = {{width : "100%", justifyContent : "center", display : "flex"}}>
+
+       <div style = {{justifyContent : "center", alignItems : "center", textAlign : "center"}}>
+         <img style = {{width : "50px", height : "50px", textAlign : "center"}} src = "https://www.sportsupd.com/icon.jpg"/>
+         <br/>
+       <button className = "btn btn-warning" onClick={handleInstall}>DOWNLOAD SPORTSUP APP</button>
+       <br/><br/>
+        <button className = "btn btn-outline-light" onClick = {()=>{trapper()}}>Continue with the website</button>
+        </div>
+        </div>
+        <br/>
+        <br/>
+       </div>
+      )}</div>)
+}, [deferredPrompt, showInstallButton])
     
   const [value, setValue] = React.useState(4);
 
@@ -1166,10 +1194,7 @@ async function fetcher(){
  
            {cookie_jar}
 
-             {showInstallButton && (
-        <button onClick={handleInstall}>Install SportsUp</button>
-      )}
-
+            <div> {choice}</div>
 			</body>
 		)
 }
