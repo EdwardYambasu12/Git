@@ -121,7 +121,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>SportsUp - Live Sports Scores and News Football</title>
+    <title>Sportsup</title>
     <style>
 
         body {
@@ -151,6 +151,14 @@
       let root = document.querySelector("#root")
       console.log(window.innerHeight)
       root.style.height = window.innerHeight
+
+      window.addEventListener("load", ()=>{
+        navigator.serviceWorker.register("./serviceworker.js")
+        .then((reg)=> console.log("success : ", reg.scope))
+        .catch((e)=>{
+          console.log(e)
+        })
+      })
     </script>
   </body>
 </html>
