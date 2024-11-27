@@ -1243,7 +1243,7 @@ const Info = ({ data }) => {
 
                     .then((res)=>{
                         console.log(res.data, "news")
-if(res.data.length > 0){
+
                           setNews(
                       <div className = "row">
 
@@ -1253,7 +1253,7 @@ if(res.data.length > 0){
 
                           res.data.data.map((item)=>{
 
-                           
+                           console.log(item, "newsfusion")
 
                             var url 
                               if(item.sourceStr === "FotMob" || item.sourceStr === "90min"){
@@ -1311,7 +1311,7 @@ if(res.data.length > 0){
                       </div>
 
                       )
-                        }  
+                        
                     })
 
 
