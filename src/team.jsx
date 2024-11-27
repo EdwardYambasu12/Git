@@ -170,7 +170,7 @@ const navigate = useNavigate()
     fetchUserFavorites();
   }, []);
 
-  if (loading) return (<div>
+  if (loading) return ( <div>
 
     <Skeleton variant="rectangular" width={"100%"} height={160} />
 
@@ -215,7 +215,7 @@ console.log(data)
   
   return(
                   <div style={{ height: "150px" }}>
-                        <div style = {{ background: data.history ? data.history.teamColor : "midnightblue",}} className =  "fixed-top">
+                        <div style = {{ background: data.history ? data.history.teamColors.lightMode : "midnightblue",}} className =  "fixed-top">
                   <br></br>
             <div style={{ display: "flex", width: '100%', justifyContent: "space-between" }}>
               <ArrowBackIcon onClick={() => navigate(-1)} style={{ color : "white", cursor: 'pointer' }} />              <Button style = {{background : "white", color : "blue"}} onClick={toggleFollowPlayer} variant={isFollowing ? "contained" : "outlined"}>
@@ -495,7 +495,7 @@ const Squad = ({data})=>{
                       <div >
                               {data.squad.map((item)=>{
                                 return(
-                                      <div style = {{marginTop: "5%", borderRadius : "5%", color : "white", background : data.history != null ? data.history.teamColor : "gray"}}>
+                                      <div style = {{marginTop: "5%", borderRadius : "5%", color : "white", background : data.history != null ? data.history.teamColors.lightMode : "gray"}}>
                                               <h6 className = "text-center">{item.title}</h6>
                                               <div>{item.members.map((it)=>{
                                                     return(
@@ -943,7 +943,7 @@ const Stats = ({data})=>{
                                         }
 
                                         return(
-                                                        <div style = {{background : data.history ? data.history.teamColor:"midnightblue", marginTop : "5%"}}>
+                                                        <div style = {{background : data.history ? data.history.teamColors.lightMode :"midnightblue", marginTop : "5%"}}>
                                                                             <h5 className = "text-center text-warning">{header}</h5>
 
                                                                             {
@@ -997,7 +997,7 @@ const Stats = ({data})=>{
                                         }
 
                                         return(
-                                                        <div style = {{background : data.history ? data.history.teamColor:"midnightblue", marginTop : "5%"}}>
+                                                        <div style = {{background : data.history ? data.history.teamColors.lightMode :"midnightblue", marginTop : "5%"}}>
                                                                             <h5 className = "text-center text-warning">{header}</h5>
 
                                                                             {
@@ -1323,7 +1323,7 @@ if(res.data.length > 0){
                         setStats(
 
                                     <div  style = {{ justifyContent : "space-between", width : "100%"}}>
-                                                <div style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                <div style = {{background : data.history.teamColors.lightMode, borderRadius : "10px"}}>
                                                             <h6 className = "text-center text-light"><strong>Top Rated</strong></h6>
                                                             {data.overview.topPlayers.byRating.players.map((item)=>{
 
@@ -1356,7 +1356,7 @@ if(res.data.length > 0){
 
                                                 {/*Goals*/}
 
-                                                 <div  style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                 <div  style = {{background : data.history.teamColors.lightMode, borderRadius : "10px"}}>
                                                            
                                                             <h6 className = "text-center text-light"><strong>Highest Scorers</strong></h6>
                                                             {data.overview.topPlayers.byGoals.players.map((item)=>{
@@ -1389,7 +1389,7 @@ if(res.data.length > 0){
 
                                                   {/*Assist*/}
 
-                                                 <div  style = {{background : data.details.leagueColor, borderRadius : "10px"}}>
+                                                 <div  style = {{background : data.history.teamColors.lightMode, borderRadius : "10px"}}>
                                                             <h6 className = "text-center text-light"><strong>Top Assists</strong></h6>
                                                             {data.overview.topPlayers.byAssists.players.map((item)=>{
 
@@ -1539,13 +1539,13 @@ if(res.data.length > 0){
                     }
 
                     if(match.status.started == true && match.status.finished == false){
-                      status = <div style = {{display : "flex", width : "100%", color : "black", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
+                      status = <div style = {{display : "flex", width : "100%", color : "white", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
                         live =  <h6 style = {{width : "20px",fontSize : "0.7em", display : "flex", justifyContent : "center", height : "20px",  alignItems : "center", color : "white", borderRadius : "50%", background : "red"}}>{match.status.liveTime.short}</h6>
                     
                     }
 
                     if(match.status.finished == true){
-                        status = <div style = {{display : "flex", color : "black", width : "100%", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
+                        status = <div style = {{display : "flex", color : "white", width : "100%", justifyContent : "spaceBetween"}}>{match.status.scoreStr}</div>
                       live =  <h6 style = {{width : "20px", height : "20px", textAlign : "center", alignItems : "center", color : "black", borderRadius : "50%", background : "#EEEEEE"}}>FT</h6>
                     
                     }
@@ -1579,7 +1579,7 @@ if(res.data.length > 0){
                     {next_match}
             </div>
 
-            <div style = {{marginTop : "5%", borderRadius : "10px", background: data.history ? data.history.teamColor : "midnightblue",}}>
+            <div style = {{marginTop : "5%", borderRadius : "10px", background: data.history ?data.history.teamColors.lightMode: "midnightblue",}}>
                 {form}
             </div>
             <div style = {{marginTop : "5%", borderRadius : "10px", background : "#EEEEEE"}}>
