@@ -91,7 +91,8 @@ function PositionedMenu() {
     setAnchorEl(null);
   };
 
-
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
 useEffect(()=>{
 
 
@@ -160,8 +161,49 @@ catch(e){
 		reload()
 
 },[alpha])
+useEffect(() => {
+  // Listen for the 'beforeinstallprompt' event
+  const handleBeforeInstallPrompt = (event) => {
+    event.preventDefault(); // Prevent automatic prompt
+    setInstallPrompt(event); // Save the event for later use
+    setIsInstallable(true); // Enable the install button
+  };
 
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
+  // Cleanup event listener on unmount
+  return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+}, []);
+const [installPrompt, setInstallPrompt] = useState(null);
+const [isInstallable, setIsInstallable] = useState(false);
+// Function to trigger the installation prompt
+const handleInstallClick = async () => {
+  if (installPrompt) {
+    installPrompt.prompt(); // Show the installation prompt
+    const choiceResult = await installPrompt.userChoice;
+    if (choiceResult.outcome === 'accepted') {
+      console.log('PWA installed');
+    } else {
+      console.log('PWA installation dismissed');
+    }
+    setInstallPrompt(null); // Clear the prompt after use
+  }
+};
+
+const handleInstall = () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('PWA installed successfully!');
+      } else {
+        console.log('PWA installation dismissed.');
+      }
+      setDeferredPrompt(null);
+      setShowInstallButton(false);
+    });
+  }
+};
   return (
     <div>
 
@@ -230,8 +272,14 @@ catch(e){
         }}
       >
         <MenuItem onClick={handleOpen}>Search</MenuItem>
+        
         <MenuItem onClick={()=>{handleClose(); navigate("/leagues")}}>Leagues</MenuItem>
         <MenuItem onClick={()=>{handleClose(); navigate("/news")}}>News</MenuItem>
+        <MenuItem onClick={handleInstall}> {isInstallable && (
+        <button className="btn btn-warning" onClick={handleInstallClick} style={{ padding: '10px 20px', fontSize: '16px' }}>
+          Install App
+        </button>
+      )}</MenuItem>
   
        
       </Menu>
