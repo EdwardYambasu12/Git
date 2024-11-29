@@ -1244,6 +1244,8 @@ const Info = ({ data }) => {
                     .then((res)=>{
                         console.log(res.data, "news")
 
+                        if(res.data.data){
+
                           setNews(
                       <div className = "row">
 
@@ -1303,16 +1305,16 @@ const Info = ({ data }) => {
                                   </Link>
                               )
                           }
-                          })
+                        })
                           : ""
                         }
 
-                
+                      
                       </div>
 
                       )
-                        
-                    })
+                          
+     } })
 
 
         ////////////////////////////////////////STATS
@@ -1551,7 +1553,7 @@ const Info = ({ data }) => {
                     }
 
                         setNm(
-                                        <div    onClick={() => {navigate(`/result/${match.id}`); window.location.reload()}}  style={{  height : "80px", marginTop: "3%", width: "100%", justifyContent: "space-between", color : "white",background: data.history ? data.history.teamColorMap.colorAway : "midnightblue", borderRadius: "10px", textDecoration: "none" }}>
+                                        <div    onClick={() => {navigate(`/result/${match.id}`); window.location.reload()}}  style={{  height : "80px", marginTop: "3%", width: "100%", justifyContent: "space-between", color : "white",background: data.history ? data.history.teamColors.lightMode : "midnightblue", borderRadius: "10px", textDecoration: "none" }}>
                                         <h6 className = "text-center text-light">Next Match</h6>
                                       <div  style={{ display: "flex", textDecoration: "none",alignItems : "center", justifyContent: "space-between", width: "100%" }}>
           <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
