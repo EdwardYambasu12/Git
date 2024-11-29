@@ -284,8 +284,8 @@ dom()
 				
 					<div className="top_nav">
 					<div className = "brand">
-           <h1 style = {{display : "none"}}> Sportsup</h1>
-						<img className = "brand_image" src = {require("../images/sportsup.png")}></img>
+           <h1 > Favorites</h1>
+				
 					
 					</div>
 

@@ -13,6 +13,7 @@ import Calendar from "./calendar"
 import Datepicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import {generateToken} from "../../Notification/firebase.js"
 import Line from "../../line.js"
 import CookieConsentPopup from "../../pop.js"
@@ -59,6 +60,7 @@ import Stack from '@mui/material/Stack';
 
 
 import Modal from '@mui/material/Modal';
+import { Search } from "@mui/icons-material"
 
 const style = {
   position: 'absolute',
@@ -271,15 +273,14 @@ const handleInstall = () => {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleOpen}>Search</MenuItem>
-        
-        <MenuItem onClick={()=>{handleClose(); navigate("/leagues")}}>Leagues</MenuItem>
-        <MenuItem onClick={()=>{handleClose(); navigate("/news")}}>News</MenuItem>
+      
         <MenuItem onClick={handleInstall}> {isInstallable && (
         <button className="btn btn-warning" onClick={handleInstallClick} style={{ padding: '10px 20px', fontSize: '16px' }}>
           Install App
         </button>
       )}</MenuItem>
+
+      <MenuItem onClick={()=>{navigate("/privacy-policy")}}>privacy-policy</MenuItem>
   
        
       </Menu>
@@ -1111,6 +1112,7 @@ async function fetcher(){
 						<button className = "btn btn-warning" onClick = {()=>{setStatement(<Live/>)}}><AccessTimeFilledIcon/></button>
 						
 					<Datepicker selected={selectedDate} onChange = {date=> setDate(date)} customInput = {<Custom_input/>}/>
+          <button className="btn btn-light" onClick={handleOpen} ><Search/> </button>
 						<PositionedMenu/>
 			</div>
 

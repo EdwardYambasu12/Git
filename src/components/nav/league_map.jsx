@@ -178,20 +178,22 @@ if(isFollowing === true){
       <nav className="fixed-top">
         <div className="top_nav">
           <div className="brand">
-            <img className="brand_image" src={require("../images/sportsup.png")} alt="Logo" />
-             <h1 style = {{display : "none"}}> Sportsup</h1>
+      
+             <h1> Sportsup Leagues</h1>
           </div>
         </div>
       </nav>
 
+      <br></br>
+      <br></br>
       <div className="state">
         {loading ? (
-          <p style = {{marginTop : "7%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
+          <p style = {{marginTop : "10%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
           <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
         </Box></p>
         ) : (
           <>
-            <div style={{ width: "98%", margin: "1%",  marginTop : "7%", borderRadius: "10px", background: "white" }}>
+            <div style={{ width: "98%", margin: "1%",  marginTop : "10%", borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>Following</strong>
               {followedLeagues.map(league => (
                 <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
@@ -205,7 +207,7 @@ if(isFollowing === true){
                 </div>
               ))}
             </div>
-            <AdComponent/>
+         
             <div style={{ width: "98%", margin: "3%", borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
               {allLeagues.map(league => (

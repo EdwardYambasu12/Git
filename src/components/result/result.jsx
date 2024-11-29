@@ -634,7 +634,7 @@ const Info = ({props})=>{
                           <img style = {{height : "50px", height : "50px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.homePlayer.playerId+".png"}  onError={(e) => { e.target.src = replacement }} />
                           <h6>{item.homePlayer.lastName}</h6>
                       </div>
-                      <div onClick={()=>navigate("/player/"+item.homePlayer.playerId)}>
+                      <div onClick={()=>navigate("/player/"+item.awayPlayer.playerId)}>
                           <img style = {{height : "50px", height : "50px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.awayPlayer.playerId+".png"}  onError={(e) => { e.target.src = replacement }} />
                           <h6>{item.awayPlayer.lastName}</h6>
                       </div>
@@ -1246,7 +1246,8 @@ const labels = moment.map(item => item.minute);
                       
                         return(
 
-                       <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center" , justifyContent : "space-between", display : "flex"}}><div><h6 className = "text-dark"><strong>❌Missed Penalty</strong></h6><h6 className = "text-dark">{item.nameStr}</h6></div> <div><strong>{item.time}</strong></div> </div> {assist} <hr></hr></div>
+                       
+                          <div style = {{width : "100%",  }}> <div style = {{width : "50%",   textAlign : "right", alignItems : "center", marginLeft : "50%" , justifyContent : "space-between", display : "flex"}}><div><h6 className = "text-dark"><strong>❌Missed Penalty</strong></h6><h6 className = "text-dark">{item.nameStr}</h6></div> <div><strong>{item.time}</strong></div> </div> {assist} <hr></hr></div>
                           ) 
  
 
@@ -2090,6 +2091,40 @@ const parser = JSON.parse(monk);
             </div>
           </div>
         );
+      }
+
+      else{
+        setData(
+          <div
+style={{
+position: 'absolute',
+left: `${verticalLayout.x * 100}%`,
+top: `${verticalLayout.y * 100}%`,
+width: 50,
+height: 50,
+backgroundColor: 'white',
+backgroundImage: `url("https://images.fotmob.com/image_resources/playerimages/${id}.png")`,
+backgroundSize: 'cover',
+color: 'white',
+fontSize: '13px',
+display: 'flex',
+justifyContent: 'center',
+alignItems: 'center',
+borderRadius: '50%',
+transform: 'translatex(-50%) translateY(-70%)',
+textAlign: 'center'
+}}
+onClick={()=>navigate("/player/"+id)}
+>
+
+
+<div 
+
+style={{ transform: 'translateY(170%)', textAlign: 'center' }}>
+<strong>{lastName}</strong>
+</div>
+</div>
+  )
       }
   }
     };
