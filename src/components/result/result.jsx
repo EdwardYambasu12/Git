@@ -6,6 +6,7 @@ import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import Lined from "../../line.js"
 import "./result.css"
 import api from "../nav/details.js"
+import AudioPlayer from "./audioplayer.jsx";
 import axios from "axios"
 import Timer from "./timer.js"
 import Trial from "./trial.jsx"
@@ -33,6 +34,18 @@ import { Chart as ChartJS, CategoryScale, LinearScale,   ScatterController, Poin
 
 ChartJS.register(CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend);
 
+
+
+const audioStreams = [
+  {
+    url: 'https://livesportradio.com/global7/foeng16/playlist.m3u8',
+    language: 'ENG'
+  },
+  {
+    url: 'https://livesportradio.com/global9/foesp1/playlist.m3u8',
+    language: 'ESP'
+  }
+];
 
 
 
@@ -319,6 +332,7 @@ if(data.header.events != null && data.header.events != null) {
                     <div style={{ width: "100%", position: "absolute", top: "0%" }}>
                         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginTop: "1.5%" }}>
                             <ArrowBackIcon onClick={() => navigate(-1)} style={{ color: "black", cursor: 'pointer' }} />
+                           
                         </div>
                         <div className="main_row">
                             <div style={{ width: "40%" }} onClick={() => { navigate("/team/" + header[0].id); const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer); }}>
@@ -533,7 +547,8 @@ const Info = ({props})=>{
     const data = props[0]
     var ticker = props[2]
   
-  const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
+    const [audio, setAudio] = useState()
+    const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
     const [pump, setPump]  = useState()
 
     const [motm, setMotm] = useState()
@@ -563,6 +578,40 @@ const Info = ({props})=>{
     const [headrecord, setHeadrecord] = useState()
     const navigate = useNavigate()
     useEffect(()=>{
+
+      ///////////////////Audio Commentary
+
+
+      setAudio(
+
+        <div style = {{borderRadius : 10, background : "white"}} >
+          
+          <h6  className="text-center">Audio Commentary</h6>
+          <div style  = {{width : "100%", height : "3px", background : "black"}}></div>
+          {data.ongoing === false ? 
+          <div><h6 className="text-center">Audio Commentary will be available when the match starts</h6></div> : 
+
+          <div>
+
+            {data.header.status.liveTime.short === "HT" ? 
+              <h6 className="text-center">Audio Commentary will be available when the match resumes</h6> : 
+
+              <div style = {{display :"flex", width : "100%", justifyContent : "space-between"}}> {audioStreams.map((stream, index) => (
+                <AudioPlayer key={index} streamUrl={stream.url} language={stream.language} />
+              ))}</div>
+          }
+
+         
+
+      </div>
+
+
+    }
+        </div>
+      )
+
+
+
       ////////////// Head to Head record
       if(data.content.h2h != false){
         const main = data.content.h2h
@@ -1383,6 +1432,8 @@ const labels = moment.map(item => item.minute);
     return(
 
             <div className = "container" style = {{background : "#EEEEEE"}} >
+
+             <div> {audio}</div>
 
                         {pending_var}
 
