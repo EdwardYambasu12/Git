@@ -581,34 +581,46 @@ const Info = ({props})=>{
 
       ///////////////////Audio Commentary
 
+       axios.get(`${Lined}/audio_commentary`, {
+        params: { id: data.id }
+    }).then((res)=>{
+  console.log(res, "audio data")
 
-      setAudio(
+if(res.data.urls.length > 0){
+  setAudio(
 
-        <div style = {{borderRadius : 10, background : "white"}} >
-          
-          <h6  className="text-center">Audio Commentary</h6>
-          <div style  = {{width : "100%", height : "3px", background : "black"}}></div>
-          {data.ongoing === false ? 
-          <div><h6 className="text-center">Audio Commentary will be available when the match starts</h6></div> : 
+    <div style = {{borderRadius : 10, background : "white"}} >
+      
+      <h6  className="text-center">Audio Commentary</h6>
+      <div style  = {{width : "100%", height : "3px", background : "black"}}></div>
+      {data.ongoing === false ? 
+      <div><h6 className="text-center">Audio Commentary will be available when the match starts</h6></div> : 
 
-          <div>
+      <div>
 
-            {data.header.status.liveTime.short === "HT" ? 
-              <h6 className="text-center">Audio Commentary will be available when the match resumes</h6> : 
+        {data.header.status.liveTime.short === "HT" ? 
+          <h6 className="text-center">Audio Commentary will be available when the match resumes</h6> : 
 
-              <div style = {{display :"flex", width : "100%", justifyContent : "space-between"}}> {audioStreams.map((stream, index) => (
-                <AudioPlayer key={index} streamUrl={stream.url} language={stream.language} />
-              ))}</div>
-          }
+          <div style = {{display :"flex", width : "100%", justifyContent : "space-between"}}> {res.data.urls.map((stream, index) => (
+            <AudioPlayer key={index} streamUrl={stream.url} language={stream.lang[0]} />
+          ))}</div>
+      }
 
-         
+     
 
-      </div>
+  </div>
 
 
-    }
-        </div>
-      )
+}
+    </div>
+  )
+}
+
+else{
+
+}
+    })
+     
 
 
 
