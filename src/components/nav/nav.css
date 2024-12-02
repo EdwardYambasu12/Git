@@ -250,6 +250,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .brand{
 	display: flex;
+	width: 40%;
 }
 .brand h2{
 	color : midnightblue;
@@ -278,7 +279,7 @@ body{
 	text-rendering: optimizeSpeed;
 }
 .brand_image{
-	width: 100%;
+	width: 70%;
 	height: 50px;
 	border-radius: 50%;
 }

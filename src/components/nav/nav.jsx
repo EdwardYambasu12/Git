@@ -274,11 +274,11 @@ const handleInstall = () => {
         }}
       >
       
-        <MenuItem onClick={handleInstall}> {isInstallable && (
+        {isInstallable && (
         <button className="btn btn-warning" onClick={handleInstallClick} style={{ padding: '10px 20px', fontSize: '16px' }}>
           Install App
         </button>
-      )}</MenuItem>
+      )}
 
       <MenuItem onClick={()=>{navigate("/privacy-policy")}}>privacy-policy</MenuItem>
   
@@ -1097,12 +1097,12 @@ async function fetcher(){
 
 						{/* Header for device less than 750px in width */}
 			<header id = "smaller_screen">
-				<nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
+				<nav className = " fixed-top" style = {{marginBottom : "0.5%,", }}>
 				
 					<div className="top_nav">
 					<div className = "brand">
           <h1 style = {{display : "none"}}> Sportsup</h1>
-						<img className = "brand_image" src = {require("../images/sportsup.png")}></img>
+						<img  className = "brand_image" src = {require("../images/sportsup.png")}></img>
 					
 					</div>
 
