@@ -176,8 +176,8 @@ if(isFollowing === true){
   return (
     <div style={{ background: "#EEEEEE", height: "100vh" }}>
       <nav className="fixed-top">
-        <div className="top_nav">
-          <div className="brand">
+        <div>
+          <div>
       
              <h1> Sportsup Leagues</h1>
           </div>
