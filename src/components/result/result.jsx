@@ -580,9 +580,9 @@ const Info = ({props})=>{
     useEffect(()=>{
 
       ///////////////////Audio Commentary
-
+      console.log(data.general.matchId, "id for the match")
        axios.get(`${Lined}/audio_commentary`, {
-        params: { id: data.id }
+        params: { id: data.general.matchId }
     }).then((res)=>{
   console.log(res, "audio data")
 
