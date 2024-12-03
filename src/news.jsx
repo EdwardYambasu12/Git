@@ -349,7 +349,7 @@ const [latest, setLatest]= useState(
       <div>
       <nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
         
-          <div >
+          <div style = {{background : "white"}}>
           <div >
           <h1> Sportsup News</h1>
           
