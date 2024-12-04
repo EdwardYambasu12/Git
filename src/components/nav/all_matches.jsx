@@ -377,7 +377,7 @@ useEffect(()=>{
 
       <div>
       {following}
-      {ads}
+      
        { renderMatches}
 
         </div>
