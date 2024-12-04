@@ -55,7 +55,7 @@ import AdSenseFluidAd from "./components/nav/adsense_fluid.jsx";
 const Theme = createTheme({
   palette: {
     primary: {
-      
+        
       main: '#FFD700',
       
     },
@@ -353,7 +353,7 @@ const [latest, setLatest]= useState(
           <div style = {{background : "white", height : "60px"}}>
           <div >
           <h1> Sportsup News</h1>
-          <AdSenseFluidAd/>
+     
           
             
           </div>
@@ -372,8 +372,8 @@ const [latest, setLatest]= useState(
         </nav>
           <div className = "container" >
 
-            <br></br>
-            <br></br>
+
+                <AdSenseFluidAd/>
             <br></br>
             {latest}
   

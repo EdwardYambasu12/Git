@@ -287,6 +287,7 @@ useEffect(()=>{
  
   const renderMatches = useMemo(() => {
     return leagues.map((item, index) => (
+      <>
       <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px' }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
@@ -364,6 +365,25 @@ useEffect(()=>{
           })}
         </AccordionDetails>
       </Accordion>
+
+       {/* Insert an ad after every 3rd item */}
+       {index % 3 === 2 && (
+            <div className="adsense-container" style={{ margin: '20px 0' }}>
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5765675396995319"
+                      crossorigin="anonymous"></script>
+              <ins className="adsbygoogle"
+                   style={{ display: 'block', textAlign: 'center' }}
+                   data-ad-layout="in-article"
+                   data-ad-format="fluid"
+                   data-ad-client="ca-pub-5765675396995319"
+                   data-ad-slot="8826635443"></ins>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </div>
+          )}
+
+      </>
     ));
   }, [leagues, matchPinnedStatus, audio]);
 
