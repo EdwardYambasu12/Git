@@ -372,9 +372,11 @@ const [latest, setLatest]= useState(
         </nav>
           <div className = "container" >
 
-
+          <br></br>
+          <br></br>
+          <br></br>
                 <AdSenseFluidAd/>
-            <br></br>
+           
             {latest}
   
           </div>
