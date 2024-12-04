@@ -14,51 +14,24 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
 
-const AdComponent = () => {
+const AdComponent = ({ adClient, adSlot }) => {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5765675396995319";
-    script.crossOrigin = "anonymous";
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      // Remove existing adsbygoogle ins elements
-      const existingAds = document.querySelectorAll('.adsbygoogle');
-      existingAds.forEach(ad => ad.remove());
-
-      // Create a new ins element
-      const newAd = document.createElement('ins');
-      newAd.className = 'adsbygoogle';
-      newAd.style.display = 'block';
-      newAd.style.width = '100%';
-      newAd.setAttribute('data-ad-format', 'fluid');
-      newAd.setAttribute('data-ad-layout-key', '-fb+5w+4e-db+86');
-      newAd.setAttribute('data-ad-client', 'ca-pub-5765675396995319');
-      newAd.setAttribute('data-ad-slot', '9599407082');
-
-      // Append the new ins element
-      document.body.appendChild(newAd);
-
-      // Push the ad
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-
-        console.log({
-        adClient: newAd.getAttribute('data-ad-client'),
-        adSlot: newAd.getAttribute('data-ad-slot'),
-        adFormat: newAd.getAttribute('data-ad-format'),
-        adLayoutKey: newAd.getAttribute('data-ad-layout-key')
-      });
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    if (window.adsbygoogle && typeof window.adsbygoogle.push === "function") {
+      window.adsbygoogle.push({});
+    }
   }, []);
 
-  return null; // or return a loading indicator if necessary
+  return (
+    <ins
+      className="adsbygoogle"
+      style={{ display: "block" }}
+      data-ad-client={adClient}
+      data-ad-slot={adSlot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+  );
 };
-
 
 const All_Matches = () => {
   const [leagues, setLeagues] = useState([]);
@@ -228,7 +201,7 @@ const All_Matches = () => {
     if(involved.length > 0){
 
       setAds(
-            <AdComponent/>
+            <AdComponent adClient="ca-pub-5765675396995319" adSlot="1346766526"/>
         )
 
 
