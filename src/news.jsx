@@ -50,6 +50,7 @@ import Stack from '@mui/material/Stack';
 import {ThemeProvider} from '@mui/material/styles'
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
+import AdSenseFluidAd from "./components/nav/adsense_fluid.jsx";
 
 const Theme = createTheme({
   palette: {
@@ -349,9 +350,10 @@ const [latest, setLatest]= useState(
       <div>
       <nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
         
-          <div style = {{background : "white"}}>
+          <div style = {{background : "white", height : "60px"}}>
           <div >
           <h1> Sportsup News</h1>
+          <AdSenseFluidAd/>
           
             
           </div>

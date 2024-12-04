@@ -11,6 +11,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import Line from "../../line.js";
 import Box from '@mui/material/Box';
 import { Tabs, Tab,  CircularProgress,  } from '@mui/material';
+import AdSenseFluidAd from "./adsense_fluid.jsx";
 
 const AdComponent = () => {
   const [adData, setAdData] = useState(null);
@@ -176,9 +177,10 @@ if(isFollowing === true){
   return (
     <div style={{ background: "#EEEEEE", height: "100vh" }}>
       <nav className="fixed-top">
-        <div style = {{background : "white"}}>
+        <div style = {{background : "white", height : "60px"}}>
           <div>
       
+
              <h1> Sportsup Leagues</h1>
           </div>
         </div>
@@ -186,6 +188,7 @@ if(isFollowing === true){
 
       <br></br>
       <br></br>
+    
       <div className="state">
         {loading ? (
           <p style = {{marginTop : "10%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
@@ -207,6 +210,7 @@ if(isFollowing === true){
                 </div>
               ))}
             </div>
+            <AdSenseFluidAd/>
          
             <div style={{ width: "98%", margin: "3%", borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>All Competitions</strong>

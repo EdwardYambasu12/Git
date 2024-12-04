@@ -31,6 +31,7 @@ import {Fade} from "@mui/material"
 import { Line } from 'react-chartjs-2';
 import { Scatter } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import AdSenseFluidAd from "../nav/adsense_fluid.jsx";
 
 ChartJS.register(CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -1493,6 +1494,7 @@ const labels = moment.map(item => item.minute);
                
               <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
                 <div style = {{marginTop : "5%"}}>{headrecord}</div>
+                <AdSenseFluidAd/>
                    <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
                 <h6 className =   "text-center text-secondary">Team Form</h6>
                 {teamform}
@@ -1862,6 +1864,7 @@ setBottom(
             
                 {top}
                 <br></br>
+                <AdSenseFluidAd/>
                 {bottom}
             </div>
         )

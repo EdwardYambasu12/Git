@@ -1201,7 +1201,7 @@ async function fetcher(){
 
 			</div>
 
-			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}>{statement}
+			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}><AdSenseFluidAd/>{statement}
   <footer style = {{position : "absolute", bottom : "0%", left : "40%"}}>
       <div className="footer-content" >
         <p>© 2024 SportsUp. All rights reserved.</p>
