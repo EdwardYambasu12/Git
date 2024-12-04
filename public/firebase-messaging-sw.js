@@ -25,7 +25,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.icon || 'https://www.sportsupd.com/sportsup.png', // Production icon URL
+    icon: payload.notification.icon || 'https://www.sportsupd.com/src/images/icon.jpg', // Production icon URL
     data: { link: payload.fcmOptions ? payload.fcmOptions.link : "https://www.sportsupd.com" }, // Store the link in the notification data
   };
 

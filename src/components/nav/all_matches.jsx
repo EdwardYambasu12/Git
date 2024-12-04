@@ -13,6 +13,8 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
+import AdSenseFluidAd from "./adsense_fluid.jsx";
+
 
 const AdComponent = ({ adClient, adSlot }) => {
   useEffect(() => {
@@ -366,22 +368,6 @@ useEffect(()=>{
         </AccordionDetails>
       </Accordion>
 
-       {/* Insert an ad after every 3rd item */}
-       {index % 3 === 2 && (
-            <div className="adsense-container" style={{ margin: '20px 0' }}>
-              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5765675396995319"
-                      crossorigin="anonymous"></script>
-              <ins className="adsbygoogle"
-                   style={{ display: 'block', textAlign: 'center' }}
-                   data-ad-layout="in-article"
-                   data-ad-format="fluid"
-                   data-ad-client="ca-pub-5765675396995319"
-                   data-ad-slot="8826635443"></ins>
-              <script>
-                   (adsbygoogle = window.adsbygoogle || []).push({});
-              </script>
-            </div>
-          )}
 
       </>
     ));
@@ -397,6 +383,7 @@ useEffect(()=>{
 
       <div>
       {following}
+      <AdSenseFluidAd/>
       
        { renderMatches}
 
