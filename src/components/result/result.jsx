@@ -1469,7 +1469,7 @@ const labels = moment.map(item => item.minute);
                   <div style = {{marginTop : "5%"}}>
                {motm}
                </div>
-
+               <AdSenseFluidAd/>
                 <div style = {{marginTop : "5%"}}>
 
                 {topplayers}
