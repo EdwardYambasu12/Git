@@ -10,6 +10,7 @@ import {Link, useNavigate} from "react-router-dom"
 import Favorites from "./favorites"
 import axios from "axios"
 import Calendar from "./calendar"
+
 import Datepicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -62,6 +63,8 @@ import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
 import { Search } from "@mui/icons-material"
 
+
+import AdSenseFluidAd from "./adsense_fluid.jsx"
 const style = {
   position: 'absolute',
   top: '50%',
@@ -1146,7 +1149,7 @@ async function fetcher(){
 				<br></br>
 				<div className = "state" >
 				<Drawer/>
-   
+          <AdSenseFluidAd/>
 			{statement}
 				  <footer  >
       <div className="footer-content" >
