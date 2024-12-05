@@ -203,7 +203,7 @@ const All_Matches = () => {
     if(involved.length > 0){
 
       setAds(
-            <AdComponent adClient="ca-pub-5765675396995319" adSlot="1346766526"/>
+        <AdSenseFluidAd/>
         )
 
 
@@ -383,7 +383,7 @@ useEffect(()=>{
 
       <div>
       {following}
-      <AdSenseFluidAd/>
+     {ads}
       
        { renderMatches}
 
