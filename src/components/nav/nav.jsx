@@ -1112,7 +1112,7 @@ async function fetcher(){
 			<div className = "icons">
 					
 						
-						<button className = "btn btn-warning" onClick = {()=>{setStatement(<Live/>)}}><AccessTimeFilledIcon/></button>
+						<button className = "btn btn-danger text-light" onClick = {()=>{setStatement(<Live/>)}}>Live</button>
 						
 					<Datepicker selected={selectedDate} onChange = {date=> setDate(date)} customInput = {<Custom_input/>}/>
           <button className="btn btn-light" onClick={handleOpen} ><Search/> </button>
