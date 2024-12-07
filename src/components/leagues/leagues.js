@@ -28,6 +28,7 @@ import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Line from "../../line.js"; // Make sure this path is correct
+import AdSenseAd from "../nav/adsensead.jsx";
 
 const theme = createTheme({
   palette: {
@@ -1284,7 +1285,7 @@ const Info = ({ data }) => {
     {tabled}
 
     </div>
-
+<AdSenseAd/>
     <div style = {{marginTop : "8%", height : "630px"}}>
         {towt}
     </div>

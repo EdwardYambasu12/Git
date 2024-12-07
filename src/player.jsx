@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Line from "./line.js";
+import AdSenseAd from "./components/nav/adsensead.jsx";
 
 const Player = () => {
   const { id } = useParams();
@@ -197,7 +198,7 @@ console.log(data)
           </RadarChart>
         </ResponsiveContainer>
         : ""}
-
+<AdSenseAd/>
        <div style = {{color : "white", background : data.primaryTeam ? data.primaryTeam.teamColors.color : "midnightblue", }}>
           {data.mainLeague ? 
           <div>
