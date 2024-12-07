@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-const AdsenseAd = () => {
+const AdSenseAd = () => {
   useEffect(() => {
-    // Dynamically add AdSense script
+    // Dynamically load AdSense script
     const script = document.createElement("script");
     script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
     script.async = true;
@@ -19,24 +19,24 @@ const AdsenseAd = () => {
       }
     };
 
+    // Clean up script on unmount
     return () => {
-      // Cleanup script when component unmounts
       document.body.removeChild(script);
     };
   }, []);
 
   return (
-    <div style={{ width: "100%", minWidth: "250px", margin: "20px 0", display: "flex", justifyContent: "center" }}>
+    <div style={{ textAlign: "center", margin: "20px 0" }}>
       <ins
         className="adsbygoogle"
-        style={{ display: "block", width: "100%" }}
+        style={{ display: "block", textAlign: "center" }}
+        data-ad-layout="in-article"
         data-ad-format="fluid"
-        data-ad-layout-key="-6t+ed+2i-1n-4w"
         data-ad-client="ca-pub-5765675396995319"
-        data-ad-slot="9218351831"
+        data-ad-slot="5013914339"
       ></ins>
     </div>
   );
 };
 
-export default AdsenseAd;
+export default AdSenseAd;

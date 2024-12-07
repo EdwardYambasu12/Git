@@ -28,6 +28,8 @@ import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Line from "./line.js"; // Make sure this path is correct
+import AdSenseAd from "./components/nav/adsensead.jsx";
+
 
 const theme = createTheme({
   palette: {
@@ -1580,14 +1582,14 @@ const Info = ({ data }) => {
             <div>
                     {next_match}
             </div>
-
+          <AdSenseAd/>
             <div style = {{marginTop : "5%", borderRadius : "10px", background: data.history ?data.history.teamColors.lightMode: "midnightblue",}}>
                 {form}
             </div>
             <div style = {{marginTop : "5%", borderRadius : "10px", background : "#EEEEEE"}}>
                 {venue}
             </div>
-
+  
             <div style = {{marginTop : "5%", borderRadius : "10px", background: data.history ? data.history.teamColor : "midnightblue",}}>
                 {stats}
             </div>
