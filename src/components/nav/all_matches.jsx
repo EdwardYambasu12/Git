@@ -396,7 +396,7 @@ useEffect(()=>{
 
   useEffect(()=>{
           setMuch(
-            <div className="container">
+            <div className="container" style={{ background: "#EEEEEE" }}>
       {loading && leagues.length === 0 ? (  // Show spinner only if loading and no leagues are present
         <Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
           <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
