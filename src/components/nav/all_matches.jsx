@@ -35,7 +35,10 @@ const AdComponent = ({ adClient, adSlot }) => {
   );
 };
 
-const All_Matches = () => {
+const All_Matches = ({props}) => {
+
+  console.log(props, "props")
+
   const [leagues, setLeagues] = useState([]);
   const [matchPinnedStatus, setMatchPinnedStatus] = useState({});
   const [loading, setLoading] = useState(true);
@@ -43,14 +46,21 @@ const All_Matches = () => {
   const [following, setFollowing] = useState()
   const navigate = useNavigate();
   const [audio, setAudio]= useState([])
+  const [much, setMuch] = useState()
+  var renderMatches
 
   const fetchData = async () => {
+   
     try {
-      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+       const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const userCode = "INT"
+      var formatted_date
+      var notch_date = props.replace(/-/g, '')
+    
       const date = new Date();
-      const formatted_date = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
-
+       var mate = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
+      props === "today" ? formatted_date = mate :formatted_date = notch_date 
+      console.log(formatted_date, "props date")
       const raw_data = await axios.get(`${Line}/match`, {
         params: { timeZone: userTimeZone, code: userCode, date: formatted_date },
       });
@@ -211,6 +221,7 @@ const All_Matches = () => {
     }
       console.log(raw_data.data);
     } catch (e) {
+      console.log(e)
       console.error(e);
        setFollowing(<Alert severity="error">Fail to load data Try checking Network Connection</Alert>)
     } finally {
@@ -219,6 +230,9 @@ const All_Matches = () => {
   };
 
   useEffect(() => {
+  setMuch(<Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
+    <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
+  </Box>)
     fetchData(); // Initial fetch
 
     const intervalId = setInterval(() => {
@@ -226,7 +240,7 @@ const All_Matches = () => {
     }, 10000); // Fetch every 5 seconds
 
     return () => clearInterval(intervalId); // Cleanup on unmount
-  }, []);
+  }, [props]);
 
   // Fetch user favorites as before
   const [userFavorites, setUserFavorites] = useState(null);
@@ -287,7 +301,7 @@ useEffect(()=>{
     setMatchPinnedStatus(prev => ({ ...prev, [match.id]: !isPinned }));
   };
  
-  const renderMatches = useMemo(() => {
+   renderMatches = useMemo(() => {
     return leagues.map((item, index) => (
       <>
       <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px' }}>
@@ -327,7 +341,7 @@ useEffect(()=>{
          
 
 
-            if (!match.status.started) {
+            if (!match.status.started && !match.status.cancelled) {
               status = timeString;
               live = <div onClick={() => togglePin(match)} style={{ cursor: 'pointer' }}>
                 {isPinned ? <BookmarkIcon /> : <BookmarkBorderIcon />}
@@ -335,7 +349,12 @@ useEffect(()=>{
             } else if (match.status.started && !match.status.finished) {
               status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6></div>;
               live = <h6 style={{ width: "20px", fontSize: "0.7em", display: "flex", justifyContent: "center", height: "20px", alignItems: "center", color: "white", borderRadius: "50%", background: "red" }}>{match.status.liveTime.short}</h6>;
-            } else {
+            }
+            else if(match.status.cancelled == true){
+              live = <h6 style={{ width: "20px", fontSize: "0.7em", display: "flex", justifyContent: "center", height: "20px", alignItems: "center", color: "white", borderRadius: "50%", background: "black" }}>pp</h6>
+              status = <div style = {{textDecoration : "line-through"}}>{timeString}</div>;
+            }
+            else {
               status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6> </div>;
               live = <h6 style={{ width: "20px", height: "20px", textAlign: "center", alignItems: "center", color: "black", borderRadius: "50%", background: "#EEEEEE" }}>FT</h6>;
             }
@@ -373,8 +392,11 @@ useEffect(()=>{
     ));
   }, [leagues, matchPinnedStatus, audio]);
 
-  return (
-    <div className="container">
+ 
+
+  useEffect(()=>{
+          setMuch(
+            <div className="container">
       {loading && leagues.length === 0 ? (  // Show spinner only if loading and no leagues are present
         <Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
           <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
@@ -390,6 +412,13 @@ useEffect(()=>{
         </div>
       )}
     </div>
+          )
+  }, [leagues,])
+
+  return (
+    <>
+        {much}
+    </>
   );
 };
 

@@ -50,7 +50,7 @@ self.addEventListener('notificationclick', (event) => {
       }
 
       // If the link is not open, open a new tab with the link
-      if (clients.openWindow) {
+      if (clients.openWindow) { 
         return clients.openWindow(notificationLink); // Open a new window/tab with the link
       }
     })

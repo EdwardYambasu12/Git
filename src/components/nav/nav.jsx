@@ -10,7 +10,7 @@ import {Link, useNavigate} from "react-router-dom"
 import Favorites from "./favorites"
 import axios from "axios"
 import Calendar from "./calendar"
-
+import { format, addDays } from "date-fns";
 import Datepicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -572,7 +572,7 @@ useEffect(()=>{
       )}</div>)
 }, [deferredPrompt, showInstallButton])
     
-  const [value, setValue] = React.useState(4);
+  const [value, setValue] = React.useState(5);
 
   const handleChange = (event, newValue) => {
     // event.type can be equal to focus with selectionFollowsFocus.
@@ -585,9 +585,10 @@ useEffect(()=>{
   };
 
 
-  
-
-
+  const today = new Date();
+  const dates = Array.from({ length: 11 }, (_, i) => addDays(today, i - 5));
+  const [activeDate, setActiveDate] = useState(format(today, "yyyy-MM-dd"));
+  const [mainContent, setMainContent] = useState(null);
 	const [selectedDate, setDate] = useState(null);
 	const [list, setListd] = useState()
 
@@ -672,7 +673,7 @@ const [side_news, setSidenews] = useState()
 
 
 		if (selectedDate === null){
-			setStatement(<All_Matches/>)
+			setStatement(<All_Matches props= "today"/>)
 		}
 		else if(selectedDate != g){
 			setStatement("")
@@ -696,8 +697,8 @@ const [side_news, setSidenews] = useState()
 	}, [selectedDate])
 
 	const [leagues, setLeagues] = useState()
-	const [tab_state, setTabstate] = useState(3)
-	const [statement, setStatement] = useState(<All_Matches/>)
+	const [tab_state, setTabstate] = useState(4)
+	const [statement, setStatement] = useState(<All_Matches props = "today"/>)
 	const [toggle, setToggle] = useState("")
 	const [situp, setSitup] = useState(1)
 
@@ -959,30 +960,16 @@ async function fetcher(){
 	}
 
 
-	function tab_change(id){
+	function tab_change(id, date){
 		setTabstate(id)
+    const formattedDate = format(date, "yyyy-MM-dd");
 
 
-		if (id === 2){
-			setStatement(<All_Matches/>)
-		}
+			setStatement(<All_Matches props = {formattedDate}/>)
 
-		else if (id === 3){
-			setStatement(<Tomorrow/>)
-		}
-		else if (id === 5){
-			setStatement(<Live/>)
-		}
-		else if (id === 1){
-			setStatement(<Yesterday/>)
-		}
-		else if (id === 1){
-			setStatement(<Favorites/>)
-		}
-		else if (id === 6){
-			setStatement(<Calendar/>)
-		}
 
+
+	
 	}
 
 	return(
@@ -1131,11 +1118,25 @@ async function fetcher(){
       	id = "idl"
       >
       
-       {listm}
-        <LinkTab label="Yesterday" onClick = {()=>{tab_change(1)}} />
-          <LinkTab label="Today" onClick = {()=>{tab_change(2)}}/>
-            <LinkTab label="Tomorrow" onClick = {()=>{tab_change(3)}}/>
-            {list}
+       
+            {dates.map((date, index) => {
+          const formattedDate = format(date, "yyyy-MM-dd");
+          const isToday = formattedDate === format(today, "yyyy-MM-dd");
+          const isActive = formattedDate === activeDate;
+          const info = <div><div>
+          {isToday ? "Today" : format(date, "EEE")}
+        </div>
+        <div>
+          {format(date, "dd MMM")}
+        </div></div>
+
+          return (
+     
+              <LinkTab label = {info}  onClick = {()=>{tab_change(index, date)}}>
+              
+            </LinkTab>
+          );
+        })}
      
 
       </Tabs>
