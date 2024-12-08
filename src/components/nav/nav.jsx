@@ -1062,24 +1062,39 @@ async function fetcher(){
 
       <div className="nav-scroller py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">
-         <Tabs
+        <Tabs
         value={value}
         onChange={handleChange}
         TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"
-        sx = {{background : "white", }}
+      	sx = {{background : "white", }}
 
-        className = "mid_tab"
-        id = "idl"
+      	className = "mid_tab"
+      	id = "idl"
       >
       
-       {listm}
-        <LinkTab label="Yesterday" onClick = {()=>{tab_change(1)}} />
-          <LinkTab label="Today" onClick = {()=>{tab_change(2)}}/>
-            <LinkTab label="Tomorrow" onClick = {()=>{tab_change(3)}}/>
-            {list}
+       
+            {dates.map((date, index) => {
+          const formattedDate = format(date, "yyyy-MM-dd");
+          const isToday = formattedDate === format(today, "yyyy-MM-dd");
+          const isActive = formattedDate === activeDate;
+          const info = <div><div>
+          {isToday ? "Today" : format(date, "EEE")}
+        </div>
+        <div>
+          {format(date, "dd MMM")}
+        </div></div>
+
+          return (
+     
+              <LinkTab style ={{fontSize : "0.7em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
+              
+            </LinkTab>
+          );
+        })}
      
 
       </Tabs>
+
         </nav>
       </div>
     </div>
@@ -1132,7 +1147,7 @@ async function fetcher(){
 
           return (
      
-              <LinkTab label = {info}  onClick = {()=>{tab_change(index, date)}}>
+              <LinkTab style ={{fontSize : "0.7em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
               
             </LinkTab>
           );
