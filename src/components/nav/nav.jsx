@@ -1165,7 +1165,9 @@ async function fetcher(){
 				<br></br>
 				<div className = "state" >
 				<Drawer/>
+        <div className="container">
           <AdSenseFluidAd/>
+          </div>
 			{statement}
 				
 </div>

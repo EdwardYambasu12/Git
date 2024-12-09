@@ -395,6 +395,7 @@ useEffect(()=>{
  
 
   useEffect(()=>{
+          setFollowing()
           setMuch(
             <div className="container" style={{ background: "#EEEEEE" }}>
       {loading && leagues.length === 0 ? (  // Show spinner only if loading and no leagues are present
