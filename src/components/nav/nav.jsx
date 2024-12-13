@@ -1168,7 +1168,8 @@ async function fetcher(){
         <div className="container">
           <AdSenseFluidAd/>
           </div>
-			{statement}
+          
+			<div style={{marginTop : "3%"}}>{statement}</div>
 				
 </div>
 <br></br>
