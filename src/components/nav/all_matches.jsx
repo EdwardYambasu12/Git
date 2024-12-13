@@ -49,6 +49,10 @@ const All_Matches = ({props}) => {
   const [much, setMuch] = useState()
   var renderMatches
 
+  useEffect(()=>{
+      setFollowing(<div></div>)
+  }, [props])
+
   const fetchData = async () => {
    
     try {
