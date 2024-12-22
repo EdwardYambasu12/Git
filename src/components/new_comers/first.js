@@ -6,6 +6,7 @@ const PWAWelcomingPopup = () => {
   const [isPWA, setIsPWA] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
+
   useEffect(() => {
     // Check if the app is installed as PWA
     const checkIfPWA = () => {
@@ -24,6 +25,9 @@ const PWAWelcomingPopup = () => {
 
   return (
     <>
+      {
+      automain === null ?  
+      <>
       {isPWA && showPopup && (
         <div
           style={{
@@ -98,7 +102,13 @@ const PWAWelcomingPopup = () => {
           </div>
         </div>
       )}
+</>
+   :
+   <></>
+}
+      
     </>
+
   );
 };
 
