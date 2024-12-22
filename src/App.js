@@ -24,6 +24,7 @@ import Inner_News from "./inner_news.js"
 import { Analytics } from '@vercel/analytics/react';
 import CookieConsentPopup from "./pop.js"
 import "./components/result/result.css"
+import FollowPage from "./components/new_comers/second.js";
 
 function App(){
 
@@ -55,7 +56,7 @@ function App(){
         <Route path = "/player/:id" element = {<Player/>}></Route>
         <Route path = "/leagues/leauges_mall" element = {<Leagues/>}></Route>
  
-     
+     <Route path = "/follow_up" element = {<FollowPage/>}/>
         <Route path = "/leauges/:id" element = {<Leagues/>}></Route>
         <Route path = "/leagues" element = {<League_Map/>}></Route>
         <Route path = "/news" element = {<News/>}></Route>

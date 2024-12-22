@@ -26,8 +26,17 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.notification.body,
     icon: payload.notification.icon || 'https://www.sportsupd.com/src/images/icon.jpg', // Production icon URL
-    data: { link: payload.fcmOptions ? payload.fcmOptions.link : "https://www.sportsupd.com" }, // Store the link in the notification data
+    data: { 
+      link: payload.fcmOptions ? payload.fcmOptions.link : "https://www.sportsupd.com" // Store the link in the notification data
+    },
   };
+
+  // Play custom sound if specified in payload
+  const sound = payload.notification.sound || '/sounds/example_sound.mp3'; // Replace with your sound file path
+  if (sound) {
+    const audio = new Audio(sound);
+    audio.play().catch((error) => console.error('Sound playback failed:', error));
+  }
 
   // Display the notification
   self.registration.showNotification(notificationTitle, notificationOptions);

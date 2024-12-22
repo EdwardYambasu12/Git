@@ -65,6 +65,7 @@ import { Search } from "@mui/icons-material"
 
 
 import AdSenseFluidAd from "./adsense_fluid.jsx"
+import PWAWelcomingPopup from "../new_comers/first.js"
 const style = {
   position: 'absolute',
   top: '50%',
@@ -1170,7 +1171,7 @@ async function fetcher(){
           </div>
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
-				
+				<PWAWelcomingPopup/>
 </div>
 <br></br>
 <br></br>

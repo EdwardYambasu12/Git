@@ -12,11 +12,111 @@ import Line from "../../line.js";
 import Box from '@mui/material/Box';
 import { Tabs, Tab,  CircularProgress,  } from '@mui/material';
 import AdSenseFluidAd from "./adsense_fluid.jsx";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import PWAWelcomingPopup from "../new_comers/first.js"
+import { Search } from "@mui/icons-material";
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "100%",
+  bgcolor: 'background.paper',
+borderRadius : "10px",
+  boxShadow: 24,
+  p: 4,
+};
 
 const AdComponent = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [tack, setTack] = React.useState()
   const [adData, setAdData] = useState(null);
   const placementId = '3118'; // Your Mobfox placement ID
+  const navigate = useNavigate()
+  const [opend, setOpen] = React.useState(false);
 
+  const handleOpen = () => setOpen(true);
+  const handleClosed = () => setOpen(false);
+  const [alpha, setAlpha] = useState()
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+useEffect(()=>{
+
+
+
+
+		async function reload(){
+			try{
+				const fetcher = await sessionStorage.getItem("league_data")
+					const parser = await JSON.parse(fetcher)
+					
+
+
+			
+
+
+					const searcher_raw = await axios.get(Line+"/search", {
+						params : {
+							term : alpha
+						}
+					})
+					const searcher = searcher_raw.data
+					console.log(searcher, "search_return")
+
+
+
+					setTack(
+									searcher[0].suggestions.map((item)=>{
+
+										var stat 
+
+                    if(item.type == "player"){
+                      var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+                    else if(item.type == "team"){
+                      var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+                    else if(item.type == "league"){
+                      var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+
+													return(
+																<div>{stat}</div>			
+														)
+									}
+						)
+
+
+									)
+			}
+catch(e){
+	console.log(e)
+}
+					
+
+		}
+
+		reload()
+
+},[alpha])
   useEffect(() => {
     const fetchAd = async () => {
       // Replace placeholders with actual values
@@ -84,6 +184,93 @@ export default function League_Map() {
   const [followedLeagues, setFollowedLeagues] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [tack, setTack] = React.useState()
+  const [adData, setAdData] = useState(null);
+  const placementId = '3118'; // Your Mobfox placement ID
+
+  const [opend, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClosed = () => setOpen(false);
+  const [alpha, setAlpha] = useState()
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+useEffect(()=>{
+
+
+
+
+		async function reload(){
+			try{
+				const fetcher = await sessionStorage.getItem("league_data")
+					const parser = await JSON.parse(fetcher)
+					
+
+
+			
+
+
+					const searcher_raw = await axios.get(Line+"/search", {
+						params : {
+							term : alpha
+						}
+					})
+					const searcher = searcher_raw.data
+					console.log(searcher, "search_return")
+
+
+
+					setTack(
+									searcher[0].suggestions.map((item)=>{
+
+										var stat 
+
+                    if(item.type == "player"){
+                      var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+                    else if(item.type == "team"){
+                      var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+                    else if(item.type == "league"){
+                      var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
+                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
+                                </div>
+                    }
+
+
+													return(
+																<div>{stat}</div>			
+														)
+									}
+						)
+
+
+									)
+			}
+catch(e){
+	console.log(e)
+}
+					
+
+		}
+
+		reload()
+
+},[alpha])
   const [users, setUser] = useState()
 
   useEffect(() => {
@@ -181,15 +368,45 @@ if(isFollowing === true){
           <div>
       
 
-             <h1> Sportsup Leagues</h1>
+             <h1>  Leagues</h1>
           </div>
         </div>
       </nav>
 
       <br></br>
       <br></br>
-    
-      <div className="state">
+
+    <br></br>
+      <div className="container">
+        <div style = {{background : "white", display : "flex", justifyContent : "space-around", alignItems : "center", borderRadius : "10px"}}>
+          <h6>SEARCH LEAGUES</h6>
+      <button className="btn btn-warning" onClick={handleOpen} ><Search/></button>
+      </div>
+      <Modal
+        open={opend}
+        onClose={handleClosed}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+
+        <ArrowBackIcon onClick={()=> navigate(window.location.reload())}/>
+
+           <TextField
+          id="filled-search"
+          label="Search field"
+          type="search"
+          variant="filled"
+          sx = {{width : "90%"}}
+          onChange = {(val)=>{
+          				setAlpha(val.target.value)
+          }}
+        />
+        <div style = {{height : window.innerHeight-200, overflowX : "hidden", overflowY : "auto"}}>{tack}</div>
+      
+
+        </Box>
+      </Modal>
         {loading ? (
           <p style = {{marginTop : "10%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
           <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
