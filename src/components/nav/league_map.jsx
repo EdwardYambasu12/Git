@@ -378,9 +378,9 @@ if(isFollowing === true){
 
     <br></br>
       <div className="container">
-        <div style = {{background : "white", display : "flex", justifyContent : "space-around", alignItems : "center", borderRadius : "10px"}}>
+        <div onClick={handleOpen} style = {{background : "white", display : "flex", justifyContent : "space-around", alignItems : "center", borderRadius : "10px"}}>
           <h6>SEARCH LEAGUES</h6>
-      <button className="btn btn-warning" onClick={handleOpen} ><Search/></button>
+      <button className="btn btn-warning"  ><Search/></button>
       </div>
       <Modal
         open={opend}
@@ -413,7 +413,7 @@ if(isFollowing === true){
         </Box></p>
         ) : (
           <>
-            <div style={{ width: "98%", margin: "1%",  marginTop : "10%", borderRadius: "10px", background: "white" }}>
+            <div style={{ width: "100%",   marginTop : "10%", borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>Following</strong>
               {followedLeagues.map(league => (
                 <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
@@ -429,7 +429,7 @@ if(isFollowing === true){
             </div>
             <AdSenseFluidAd/>
          
-            <div style={{ width: "98%", margin: "3%", borderRadius: "10px", background: "white" }}>
+            <div style={{ width: "100%",  borderRadius: "10px", background: "white" }}>
               <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
               {allLeagues.map(league => (
                 <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
