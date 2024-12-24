@@ -173,6 +173,7 @@ const Ayyah = ()=>{
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(place),
     });
+    console.log(place, "place")
     setIsFollowing(!isFollowing);
   };
 

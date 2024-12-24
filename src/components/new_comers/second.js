@@ -84,13 +84,13 @@ const FollowFavoritesPage = () => {
 
       const place = {
         id_: user_id._id,
-        league_id: item,
+        league_id: JSON.stringify(item),
       };
       const data = JSON.stringify(place)
       await fetch(`${Line}/favorite_team`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data),
+        body: new URLSearchParams(place),
       });
     }
     else if(category === "league"){
@@ -98,7 +98,7 @@ const FollowFavoritesPage = () => {
 
       const place = {
         id_: user_id._id,
-        league_id: item,
+        league_id: JSON.stringify(item),
       };
 
       const data = JSON.stringify(place)
@@ -106,8 +106,10 @@ const FollowFavoritesPage = () => {
       await fetch(`${Line}/favorite_league`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data),
+        body: new URLSearchParams(place),
       });
+
+      console.log(data)
     }
   
     else {
@@ -115,14 +117,16 @@ const FollowFavoritesPage = () => {
 
       const place = {
         id_: user_id._id,
-        league_id: item,
+        player_id: JSON.stringify(item),
       };
       const data = JSON.stringify(place)
       await fetch(`${Line}/favorite_player`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data),
+        body: new URLSearchParams(place),
       });
+
+      console.log(data, "data")
     }
 
   };
