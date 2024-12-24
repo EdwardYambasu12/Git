@@ -335,6 +335,7 @@ if(data.header.events != null && data.header.events != null) {
                             <ArrowBackIcon onClick={() => navigate(-1)} style={{ color: "black", cursor: 'pointer' }} />
                            
                         </div>
+                        <br></br>
                         <div className="main_row">
                             <div style={{ width: "40%" }} onClick={() => { navigate("/team/" + header[0].id); const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer); }}>
                                 <img src={header[0].imageUrl} className="team_logos" alt="Home Team Logo" />
@@ -366,8 +367,9 @@ if(data.header.events != null && data.header.events != null) {
                 </div>
             </div>
         </div>
+        
 
-        <div className="sticky-tabs">
+        <div className="sticky-tabs" >
             <ThemeProvider theme={Theme}>
                 <Tabs
                     textColor="primary"
