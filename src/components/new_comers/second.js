@@ -9,7 +9,7 @@ const FollowFavoritesPage = () => {
   const navigate = useNavigate()
 
 
-  const automain = localStorage.getItem("counter_first")
+
   const Line = link
   // Sample data for leagues, teams, and players
   const favoriteLeagues = [
@@ -130,14 +130,13 @@ const FollowFavoritesPage = () => {
   const isContinueDisabled = selectedFavorites.length === 0;
 
   const handleContinue = async() => {
-      await localStorage.setItem("counter_first", "on")
+      await localStorage.setItem("counter_part", "true")
   };
 
   return (
 
     <>
-    {
-      automain === null ?   
+  
 
     <div
       style={{
@@ -208,9 +207,7 @@ const FollowFavoritesPage = () => {
         Continue
       </button>
     </div>
-    :
-    <></>
-}
+    
     </>
   );
 };

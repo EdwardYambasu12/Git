@@ -3,23 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 const PWAWelcomingPopup = () => {
   const navigate = useNavigate()
-  const [isPWA, setIsPWA] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [isPWA, setIsPWA] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
+  
 
+  const automain = localStorage.getItem("counter_part")
 
-  useEffect(() => {
-    // Check if the app is installed as PWA
-    const checkIfPWA = () => {
-      const standalone = window.navigator.standalone; // iOS PWA detection
-      const mediaQuery = window.matchMedia("(display-mode: standalone)").matches; // Other devices
-      return standalone || mediaQuery;
-    };
-
-    if (checkIfPWA()) {
-      setIsPWA(true);
-      setShowPopup(true); // Show the popup for PWA users
-    }
-  }, []);
+console.log(automain, "this is the counterpart")
 
   const closePopup = () => setShowPopup(false);
 
