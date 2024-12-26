@@ -682,10 +682,10 @@ const [side_news, setSidenews] = useState()
 			if(true){
 					const date = new Date(selectedDate)
 
-	    const select = date.toISOString().split('T')[0]
+	    
 	   
 
-		setStatement(<Calendar date = {select}/>
+		setStatement(<All_Matches props = {date}/>
 			
 			)
 		sessionStorage.setItem("date",date)
