@@ -156,7 +156,7 @@ const All_Matches = ({props}) => {
         if(involved.length > 0){
     setFollowing(
         <Accordion  defaultExpanded sx={{ borderRadius: '15px' }}>
-        <AccordionSummary  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary  sx={{background : "ivory", height : "20px", borderRadius : "15px"}}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
             <h6 id="break-down1">Following</h6>
@@ -186,12 +186,12 @@ const All_Matches = ({props}) => {
             }
 
             return (
-              <div key={matchIndex} style={{ display: "flex", marginTop: "3%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
+              <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
                   <Link to={`result/${match.id}`} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
-                      <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.home.name}</h6>
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
                      {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                     </div>
@@ -202,7 +202,7 @@ const All_Matches = ({props}) => {
                        {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                      
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
-                      <h6 className="text-dark" style={{ fontSize: "0.8em" }}>{match.away.name}</h6>
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
                     </div>
                   </Link>
                 </div>
