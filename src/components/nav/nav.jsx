@@ -1148,7 +1148,7 @@ async function fetcher(){
 
           return (
      
-              <LinkTab style ={{fontSize : "0.7em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
+              <LinkTab style ={{fontSize : "0.5em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
               
             </LinkTab>
           );

@@ -162,6 +162,7 @@ const All_Matches = ({props}) => {
             <h6 id="break-down1">Following</h6>
           </div>
         </AccordionSummary>
+        <div style= {{width : "100%", background : "lightgrey", height : "1px"}}></div>
         <AccordionDetails>
           {involved.map((match, matchIndex) => {
             const dateTimeString = match.status.utcTime;
