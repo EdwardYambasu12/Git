@@ -684,8 +684,8 @@ const [side_news, setSidenews] = useState()
 
 	    
 	   
-
-		setStatement(<All_Matches props = {date}/>
+          const formattedDate = format(date, "yyyy-MM-dd");
+		setStatement(<All_Matches props = {formattedDate}/>
 			
 			)
 		sessionStorage.setItem("date",date)
