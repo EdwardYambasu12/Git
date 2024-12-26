@@ -94,8 +94,9 @@ text-decoration: none;
 
 .league_description{
 	align-items: center;
-	height: 30px;
+	height: 10px;
 	display: flex;
+	
 	justify-content : space-between;
 	
 	width: 100%;
