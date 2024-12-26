@@ -156,7 +156,7 @@ const All_Matches = ({props}) => {
         if(involved.length > 0){
     setFollowing(
         <Accordion  defaultExpanded sx={{ borderRadius: '15px' }}>
-        <AccordionSummary  sx={{background : "ivory", height : "20px", borderRadius : "15px"}}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary  sx={{background : "ivory", height : "20px", }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
             <h6 id="break-down1">Following</h6>
@@ -310,7 +310,7 @@ useEffect(()=>{
     return leagues.map((item, index) => (
       <>
       <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px' }}>
-        <AccordionSummary sx={{background : "#F3FFFF", height : "20px", borderRadius : "15px"}} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary sx={{background : "#F3FFFF", height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
 />
