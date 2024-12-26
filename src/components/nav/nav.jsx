@@ -1148,7 +1148,7 @@ async function fetcher(){
 
           return (
      
-              <LinkTab style ={{fontSize : "0.5em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
+              <LinkTab style ={{fontSize : "0.6em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
               
             </LinkTab>
           );
@@ -1166,9 +1166,7 @@ async function fetcher(){
 				<br></br>
 				<div className = "state" >
 				<Drawer/>
-        <div className="container">
-          <AdSenseFluidAd/>
-          </div>
+        
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
 				<PWAWelcomingPopup/>
