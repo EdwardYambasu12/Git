@@ -341,7 +341,7 @@ if(data.header.events != null && data.header.events != null) {
                                 <img src={header[0].imageUrl} className="team_logos" alt="Home Team Logo" />
                                 <br />
                                 <br />
-                                <h6 className="text-dark" id="break-down">{header[0].name}</h6>
+                                <h6 style = {{fontSize : "0.8em"}} className="text-dark" id="break-down">{header[0].name}</h6>
                             </div>
                             <div>
                                 <div style={{ display: "flex", transform: `translateX(25%)`, justifyContent: "space-between", width: "100%" }}>
@@ -355,7 +355,7 @@ if(data.header.events != null && data.header.events != null) {
                                 <img src={header[1].imageUrl} className="team_logos" alt="Away Team Logo" />
                                 <br />
                                 <br />
-                                <h6 className="text-dark" id="break-down">{header[1].name}</h6>
+                                <h6 className="text-dark" style = {{fontSize : "0.8em"}} id="break-down">{header[1].name}</h6>
                             </div>
                         </div>
                     </div>
@@ -381,7 +381,7 @@ if(data.header.events != null && data.header.events != null) {
                     aria-label="nav tabs"
                 >
                     {data.nav.map((item, index) => (
-                        <Tab key={index} label={{ matchfacts: "Info", liveticker: "Commentary", lineup: "Lineup" }[item] || item} />
+                        <Tab sx = {{fontSize : "0.8em"}} key={index} label={{ matchfacts: "Info", liveticker: "Commentary", lineup: "Lineup" }[item] || item} />
                     ))}
                 </Tabs>
             </ThemeProvider>
@@ -1235,7 +1235,7 @@ const labels = moment.map(item => item.minute);
                                 pen = "(penalty)"
                             }
                         return(
-                                <div style = {{width : "100%", }}> <div style = {{width : "50%", justifyContent : "space-between",  alignItems : "center", display : "flex"}}><h6 className = "text-dark">⚽</h6><h6><strong>{item.player.name}</strong></h6> <div><strong>{item.time}</strong></div></div> {assist} {pen}<hr></hr></div>
+                        <div>  <div style = {{display : "flex"}}><img style = {{width : "35px", height : "35px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.playerId+".png"}></img>   <div style = {{width : "100%", }}> <div style = {{width : "50%", justifyContent : "space-between",  alignItems : "center", display : "flex"}}><h6><strong>⚽{item.lastName}</strong></h6> <div><strong>{item.time}</strong></div></div> {assist} {pen}</div></div><hr/></div>
                             )
                     }
 
@@ -1251,7 +1251,7 @@ const labels = moment.map(item => item.minute);
                                 pen = "(penalty)"
                             }
                         return(
-                                <div style = {{width : "100%", textAlign : "right" }}> <div style = {{width : "50%", justifyContent : "space-between",  textAlign : "right",  marginLeft : "50%",      alignItems : "center",  display : "flex"}}><div className = "text-right"><strong>{item.time}</strong></div><h6 className = "text-right"><strong>{item.player.name}</strong></h6><h6 className = "text-dark text-right">⚽</h6> </div> {assist} {pen} <hr></hr></div>
+                        <div>  <div style = {{display : "flex"}}><div style = {{width : "100%", textAlign : "right" }}> <div style = {{width : "50%", justifyContent : "space-between",  textAlign : "right",  marginLeft : "50%",      alignItems : "center",  display : "flex"}}><div className = "text-right"><strong>{item.time}</strong></div><h6 className = "text-right"><strong>{item.lastName}⚽</strong></h6></div> {assist} {pen} </div><img style = {{width : "35px", height : "35px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+item.playerId+".png"}/> </div><hr></hr></div>
                             )
                     }
                 }
@@ -1447,7 +1447,7 @@ const labels = moment.map(item => item.minute);
 
     return(
 
-            <div className = "container" style = {{background : "#EEEEEE"}} >
+            <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
 
              <div> {audio}</div>
 
@@ -1554,7 +1554,7 @@ const Commentary = ({props})=>{
             const main = comment.events
             console.log(main, "main comments")
                 setComments(
-                            <div style = {{width : "100%", background : "white", borderRadius : "10px"}}>
+                            <div >
 
                                 {main.map((item)=>{
                                     var timer
@@ -1576,11 +1576,25 @@ const Commentary = ({props})=>{
                                     }
                                 }
 
-                                    return(<>
+                                    return(<div style = {{width : "100%", background : "white", borderRadius : "10px"}}>
+                                    <div >{item.title ? <h6 className="text-center text-success"><strong>{item.title.value}</strong> </h6> : ""}</div>
                                             <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
                                             <div style = {{fontFamily : "monospace"}}><h6><strong>{item.text}</strong></h6></div>
-                                            <hr></hr>
-                                            </>
+                                          {item.isSubstitution == true ?
+                                            <div className="container">
+                                              <h6 className="text-center">Player OUT</h6>
+                                                <div style = {{borderRadius : "15px", marginTop: "2%", background : "red", color : "white", display : "flex", justifyContent : "space-around", width : "100%"}}>
+                                                    <img style = {{width : "30px", height : "30px"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.players[1].id}.png`}></img>
+                                                    <h6 style = {{fontSize : "0.8em"}}><strong>{item.players[1].name}</strong></h6>
+                                                </div>
+                                                <h6 className="text-center">Player IN</h6>
+                                                <div style = {{borderRadius : "15px", marginTop: "2%", marginBottom : "4%", background : "green", color : "white", display : "flex", justifyContent : "space-around", width : "100%"}}>
+                                                    <img style = {{width : "30px", height : "30px"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.players[0].id}.png`}></img>
+                                                    <h6 style = {{fontSize : "0.8em"}}><strong>{item.players[0].name}</strong></h6>
+                                                </div>
+                                            </div>
+                                          :<></>}
+                                            </div>
                                         )
 
                                 })}
