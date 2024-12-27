@@ -593,15 +593,17 @@ const Info = ({props, news})=>{
 
       ////////////////// MATCH NEWS //////////
       setmatchNews(
-        <div>
-          <h6 className = "text-center">Match News</h6>
+        <div style = {{borderRadius : "10px", background : "white"}}>
+          {news.length > 0? <h6 className = "text-center">Match News</h6> : <></>}
+          
           {news.map((item)=>{
 
             console.log(item)
             return(
-              <Link to={item.page.url} >
+              <Link to={item.page.url} ><div className="container">
                   <img style = {{width : "100%", height : "200px", borderRadius : "0"}} src = {item.imageUrl}></img>
                   <p><strong>{item.title}</strong></p>
+                  </div>
               </Link>
             )
           })}
