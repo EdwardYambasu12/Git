@@ -289,8 +289,8 @@ const [latest, setLatest]= useState(
 
                                 window.open(url, '_blank', 'noopener,noreferrer');
  
-                                  }} state = {{l : url, m : 1}}   className = "col-md-4" style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
-                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "80%", borderRadius : 0, height : "160px"}}></img></div>
+                                  }} state = {{l : url, m : 1}}   className = "col-md-4" style = {{textDecoration : "none", color : "black",  borderRadius: "10px", marginTop : "5%"}}>
+                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "100%", borderRadius : 0, height : "230px"}}></img></div>
                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}>  <h6 className = "text-center" style = {{width : "80%"}}>{item.title}</h6></div>
                                        <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}> <div style = {{width : "80%", display : "flex"}}>
 
@@ -375,7 +375,7 @@ const [latest, setLatest]= useState(
           <br></br>
           <br></br>
           <br></br>
-                <AdSenseFluidAd/>
+              
            
             {latest}
   
