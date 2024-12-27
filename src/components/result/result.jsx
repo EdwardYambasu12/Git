@@ -155,6 +155,7 @@ const Rest_assure = ({ props }) => {
     const navigate = useNavigate();
 
     const data = props[0];
+    const match_news = props[4]
     const league = props[3];
     const homeTeam = data.general.homeTeam;
     const awayTeam = data.general.awayTeam;
@@ -239,7 +240,7 @@ const Rest_assure = ({ props }) => {
 
     // Content tabs based on available navigation data
     const renderTabContent = (item, index) => {
-        if (item === "matchfacts") return <Info props={props} />;
+        if (item === "matchfacts") return <Info props={props} news = {match_news}/>;
         if (item === "liveticker") return <Commentary props={props} />;
         if (item === "lineup" && data.content.lineup) return <Lineup props={props} />;
         if (item === "injured") return <Injured props={data} />;
@@ -474,17 +475,23 @@ useEffect(()=>{
         let comment_data;
         let trick;
         var league_data;
+        var match_news
 
-        
+        const news_data = await axios.get(`${Lined}/match_news`,
+          {
+            params : {id : id}
+          }
+        )
 
-
+        console.log(news_data.data, "This is the news data")
         // Fetch additional data if URL is present
         if (datam.content.table?.url) {
             const rd = await axios.get(datam.content.table.url);
             trick = rd.data;
         }
 
-        const multi = [datam, comment_data, trick, league_data];
+        match_news = news_data.data
+        const multi = [datam, comment_data, trick, league_data, match_news];
 
         // Update state
         setD(<Rest_assure props={multi} />);
@@ -492,7 +499,7 @@ useEffect(()=>{
         // Check if the match is ongoing
         if (datam.ongoing) { 
             // Notify the user that the match is live
-            setTimeout(reloader, 10000);  // Reload the function after 10 seconds
+            setTimeout(reloader, 5000);  // Reload the function after 10 seconds
         }
 
     } catch (error) {
@@ -545,10 +552,11 @@ export default Result
 
 
 
-const Info = ({props})=>{
+const Info = ({props, news})=>{
 
     const data = props[0]
     var ticker = props[2]
+    
   
     const [audio, setAudio] = useState()
     const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
@@ -579,9 +587,26 @@ const Info = ({props})=>{
 
     const [fifa_ranking, setFifaRanking] = useState()
     const [headrecord, setHeadrecord] = useState()
+    const [match_news, setmatchNews] = useState()
     const navigate = useNavigate()
     useEffect(()=>{
 
+      ////////////////// MATCH NEWS //////////
+      setmatchNews(
+        <div>
+          <h6 className = "text-center">Match News</h6>
+          {news.map((item)=>{
+
+            console.log(item)
+            return(
+              <Link to={item.page.url} >
+                  <img style = {{width : "100%", height : "200px", borderRadius : "0"}} src = {item.imageUrl}></img>
+                  <p><strong>{item.title}</strong></p>
+              </Link>
+            )
+          })}
+        </div>
+      )
       ///////////////////Audio Commentary
       console.log(data.general.matchId, "id for the match")
        axios.get(`${Lined}/audio_commentary`, {
@@ -1512,6 +1537,12 @@ const labels = moment.map(item => item.minute);
                 <div style = {{marginTop : "5%"}}>
 
                 {info}
+
+                </div>
+
+                <div style = {{marginTop : "5%"}}>
+
+                {match_news}
 
                 </div>
                 
