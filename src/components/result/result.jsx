@@ -507,7 +507,7 @@ useEffect(()=>{
         // Check if the match is ongoing
         if (datam.ongoing) { 
             // Notify the user that the match is live
-            setTimeout(reloader, 5000);  // Reload the function after 10 seconds
+            setTimeout(reloader, 10000);  // Reload the function after 10 seconds
         }
 
     } catch (error) {
@@ -1564,6 +1564,7 @@ const labels = moment.map(item => item.minute);
 
                 </div>
                 
+           
             </div>
         )
 }
@@ -1626,7 +1627,7 @@ const Commentary = ({props})=>{
                                 }
 
                                     return(<div style = {{width : "100%", background : "white", borderRadius : "10px"}}>
-                                    <div >{item.title ? <h6 className="text-center text-success"><strong>{item.title.value}</strong> </h6> : ""}</div>
+                                    <div style = {{marginTop : "2%", marginBottom : "2%"}}>{item.title ? <h6 className="text-center text-success"><strong>{item.title.value}</strong> </h6> : ""}</div>
                                             <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
                                             <div style = {{fontFamily : "monospace"}}><h6 style = {{fontSize : "0.8em"}}><strong>{item.text}</strong></h6></div>
                                           {item.isSubstitution == true ?
@@ -1763,8 +1764,8 @@ const Stats = ({props})=>{
 
         setRegular(
                 <div>
-                     <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
-                <ShotMap data = {data.content.shotmap.shots} />
+                     <div style = {{background : "white", width : "100%", display : "flex", justifyContent : "center", borderRadius : "10px", marginTop : "5%"}}>
+                <ShotMapped data = {data.content.shotmap.shots} />
                 </div>
                     {sm_stats.map((item)=>{
                             return(
@@ -1871,6 +1872,8 @@ setBottom(
         const fragmentIdentifier = urlObject.hash.replace(/^#/, '');
 
         return (
+          <div>
+            <p style = {{textAlign : "right", fontSize : "0.7em"}}>{match.league.name}</p>
           <div
             key={fragmentIdentifier}
             onClick={() => {navigate(`/result/${fragmentIdentifier}`); window.location.reload()}} // Navigate without reloading
@@ -1886,6 +1889,7 @@ setBottom(
               borderRadius: '8px' // Optional: Slightly rounded corners
             }}
           >
+            
             <div style={{ display: 'flex', width: '33%', justifyContent: 'space-between', alignItems: 'center' }}>
               <h6 className="text-dark" style={{ fontSize: '0.8em' }}>{match.home.name}</h6>
               <img
@@ -1917,9 +1921,10 @@ setBottom(
               <h6 className="text-dark" style={{ fontSize: '0.8em' }}>{match.away.name}</h6>
             </div>
           </div>
-        );
+        </div>);
       })}
     </div>
+    
     )
     }
     }, [])
@@ -2817,6 +2822,115 @@ if("unavailable" in data.content.lineup.awayTeam){
 
 
 
+const ShotMapped = ({data}) => {
+   // Example shot data
+   const shots = data;
+  const [selectedShot, setSelectedShot] = useState(null);
+
+  // Convert percentage coordinates to SVG scale
+  const toSVGCoordinates = (x, y) => ({
+    x: (x / 100) * 350, // Scale to 350px width
+    y: (y / 100) * 200, // Scale to 200px height
+  });
+
+  // Function to close popup
+  const closePopup = () => setSelectedShot(null);
+
+  return (
+    <div style={{ position: "relative" }}>
+      <svg
+        width="350"
+        height="200"
+        viewBox="0 0 350 200"
+        style={{ backgroundColor: "#e0f7fa", border: "1px solid black" }}
+      >
+        {/* Draw pitch */}
+        <rect x="0" y="0" width="350" height="200" fill="white" />
+        <line x1="175" y1="0" x2="175" y2="200" stroke="black" strokeWidth="2" />
+        <rect x="0" y="60" width="20" height="80" stroke="black" fill="none" strokeWidth="2" />
+        <rect x="330" y="60" width="20" height="80" stroke="black" fill="none" strokeWidth="2" />
+        <circle cx="175" cy="100" r="30" stroke="black" fill="none" strokeWidth="2" />
+        <circle cx="175" cy="100" r="3" fill="black" />
+
+        {/* Plot shots */}
+        {shots.map((shot, index) => {
+          const coords = toSVGCoordinates(shot.x, shot.y);
+          return shot.eventType === "Goal" ? (
+            <text
+              key={index}
+              x={coords.x}
+              y={coords.y}
+              fontSize="14"
+              fill="black"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              style={{ cursor: "pointer" }}
+              onClick={() => setSelectedShot(shot)}
+            >
+              ⚽
+            </text>
+          ) : (
+            <circle
+              key={index}
+              cx={coords.x}
+              cy={coords.y}
+              r="5"
+              fill={shot.teamColor}
+              stroke="black"
+              strokeWidth="1"
+              style={{ cursor: "pointer" }}
+              onClick={() => setSelectedShot(shot)}
+            >
+              <title>{shot.eventType}</title>
+            </circle>
+          );
+        })}
+      </svg>
+
+      {/* Popup for shot details */}
+      {selectedShot && (
+        <div
+          style={{
+            position: "absolute",
+            top: "70%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            border: "1px solid black",
+            padding: "20px",
+            zIndex: 1000,
+            boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+          }}
+        >
+          <h3>Shot Details</h3>
+          <p><b>Player:</b> {selectedShot.playerName}</p>
+          <p><b>Event Type:</b> {selectedShot.eventType}</p>
+          <p><b>Team ID:</b> {selectedShot.teamId}</p>
+          <p><b>Situation:</b> {selectedShot.situation}</p>
+          <button onClick={closePopup}>Close</button>
+        </div>
+      )}
+
+      {/* Background overlay for popup */}
+      {selectedShot && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            zIndex: 999,
+          }}
+          onClick={closePopup}
+        ></div>
+      )}
+    </div>
+  );
+
+};
+
 const Table = ({props, league})=>{
 
     const prop = props
@@ -3010,6 +3124,9 @@ tab()
   function selectOptions(value){
 
     const table_data = props
+
+    
+    if(league.overview.table[0].data.composite === false){
     console.log("the user selected", value, league)
 
     if(text == "see more"){
@@ -3070,7 +3187,7 @@ tab()
           <table>
             <thead>
 
-              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+              <tr style = {{width : "100%", fontSize : "0.6em"}}   >
                 <td style = {{width : "5%"}}>#</td>
                 <td style = {{width : "45%"}}>Team</td>
                 <td style = {{width : "5%"}}>Pl</td>
@@ -3522,6 +3639,8 @@ tab()
             </tbody>
           </table>
         )
+
+      }
       }
 
 
@@ -3569,10 +3688,14 @@ useEffect(()=>{
                     <h5>{prop.content.table.parentLeagueName}</h5>
             </div>
                     {slated}
+                    {composite_true}
             </div>
     )
 
 };
+
+
+
 
 
 
