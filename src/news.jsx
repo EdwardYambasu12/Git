@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from "react"
 import "./components/nav/nav.css"
 
+
+import "./news.css"
+
 import {Link, useNavigate} from "react-router-dom"
 
 import axios from "axios"
@@ -211,176 +214,97 @@ const TimeDifference = ({ pastTimeString }) => {
 
 
 
-  
-export default function News(){
-const [value, setValue] = useState(0);
+// Helper function to calculate relative time
+function timeAgo(date) {
+    const now = new Date();
+    const seconds = Math.floor((now - new Date(date)) / 1000);
+    let interval = Math.floor(seconds / 31536000);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-const [status, setStatus] = useState()
-
-
-const [statement, setStatement] = useState()
-
-const [page_value, setPage_value] = useState(1)
-const [latest, setLatest]= useState(
-<div>
-
-    <Skeleton variant="rectangular" width={"100%"} height={160} />
-
-    <br></br>
-
-    <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
-
-    </div>
-  )
-
-
-  useEffect(()=>{
-
-    
-            axios.get(link+"/sportsup_news",
-
-                {params : {
-                  page : page_value,
-                }}
-              )
-            .then((res)=>{
-              console.log(res)
-            const handlePageChange = (event, page) => {
-            // `page` is the clicked page number
-            setPage_value(page);
-                      window.scrollTo({
-                  top: 0, // Vertical position in pixels
-                  left: 0, // Horizontal position in pixels
-                  behavior: 'smooth' // Smooth scrolling
-              });
-      
-            // Call your function with the clicked page number
-          };
-
-              const data = res.data
-
-              console.log(data,"news data")
-
-                
-                setLatest(
-                      <div className = "row">
-
-                          {data.map((item)=>{
-
-                            var url 
-                              if(item.sourceStr === "FotMob" || item.sourceStr === "90min"){
-
-                               const baseUrl = "https://www.fotmob.com";
-                                const itemPageUrl = item.page.url; // Assuming item.page.url is a variable with the dynamic path
-
-                                url = `${baseUrl}${itemPageUrl}`;
-                                console.log(url)
-                                  return(
-
-
-                                  <Link onClick  = {()=>{
-
-                                window.open(url, '_blank', 'noopener,noreferrer');
- 
-                                  }} state = {{l : url, m : 1}}   className = "col-md-4" style = {{textDecoration : "none", color : "black",  borderRadius: "10px", marginTop : "5%"}}>
-                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "100%", borderRadius : 0, height : "230px"}}></img></div>
-                                      <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}>  <h6 className = "text-center" style = {{width : "80%"}}>{item.title}</h6></div>
-                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}> <div style = {{width : "80%", display : "flex"}}>
-
-                                        <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
-                                        <div style = {{display : "flex", width : "50%"}}><img style = {{width : "25px", height : "25px"}} src = {item.sourceIconUrl}></img> <p>{item.sourceStr}</p></div> 
-                                        </div>
-                                       <div className = "text-secondary" style = {{width : "50%"}}><TimeDifference pastTimeString={item.gmtTime} />
-                                       </div></div></div>
-                                  </Link>
-                              )
-                              }
-                              else{
-                                url = item.page.url
-                            return(
-                                  <Link onClick  = {()=>{
-
-                                window.open(url, '_blank', 'noopener,noreferrer');
- 
-                                  }}  state = {{l : url, m : 0}}  className = "col-md-4"  style = {{textDecoration : "none", color : "black", background : "white", borderRadius: "10px", marginTop : "5%"}}>
-                                        <div style = {{width : "100%", display : "flex", justifyContent : "center"}}><img src = {item.imageUrl} style = {{width : "80%", borderRadius : 0, height : "160px"}}></img></div>
-                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}>  <h6 className = "text-center" style = {{width : "80%"}}>{item.title}</h6></div>
-                                       <div style = {{width : "100%", display : "flex", justifyContent : "center", marginTop : "3%"}}> <div style = {{width : "80%", display : "flex"}}>
-
-                                        <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
-                                        <div style = {{display : "flex", width : "50%"}}><img style = {{width : "25px", height : "25px"}} src = {item.sourceIconUrl}></img> <p>{item.sourceStr}</p></div> 
-                                        </div>
-                                       <div className = "text-secondary" style = {{width : "50%"}}><TimeDifference pastTimeString={item.gmtTime} />
-                                       </div></div></div>
-                                  </Link>
-                              )
-                          }
-                          })}
-
-                         <Pagination 
-      count={10} 
-      onChange={handlePageChange} // Use `onChange` instead of `onClick`
-      color="primary" 
-    />
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <br></br>
-                            <hr></hr>
-                      </div>
-                          
-                  )
-
-
-
-
-           })
-
-          },[page_value])
-
-    return(
-
-      <div>
-      <nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
-        
-          <div style = {{background : "white", height : "60px"}}>
-          <div >
-          <h1> Sportsup News</h1>
-     
-          
-            
-          </div>
-
-      <div className = "icons">
-          
-          
-            
-      </div>
-
-          </div>
-  
-
-
-
-        </nav>
-          <div className = "container" >
-
-          <br></br>
-          <br></br>
-          <br></br>
-              
-           
-            {latest}
-  
-          </div>
-          <LabelBottomNavigation/>
-      </div>
-    )
+    if (interval >= 1) return interval + " years ago";
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) return interval + " months ago";
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) return interval + (interval === 1 ? " day ago" : " days ago");
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) return interval + (interval === 1 ? " hour ago" : " hours ago");
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) return interval + " minutes ago";
+    return Math.floor(seconds) + " seconds ago";
 }
+
+const News = () => {
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch articles from the API when the component mounts
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await fetch('https://remember-1.onrender.com/sportsup_news');
+                const data = await response.json();
+                setArticles(data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching articles:', error);
+                setLoading(false);
+            }
+        };
+        fetchArticles();
+    }, []);
+
+    return (
+        <div>
+            {/* Loader */}
+            {loading && (
+                <div className="loader-container">
+                    <div className="loader"></div>
+                </div>
+            )}
+
+            {/* Header */}
+            <header>
+                <h1>SportsUp News</h1>
+                <p>Discover the latest football news around the globe.</p>
+            </header>
+
+            {/* Main Content */}
+            <div className="container">
+                <div className="blogs">
+                    {articles.length > 0 ? (
+                        articles.map((article, index) => (
+                            <a
+                                key={index}
+                                href={article.page.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="blog-card"
+                            >
+                                <img src={article.imageUrl} alt={article.title} />
+                                <div className="content">
+                                    <h2>{article.title}</h2>
+                                    <p>{article.lead || 'Click to read more.'}</p>
+                                    <div className="source">
+                                        <img src={article.sourceIconUrl} alt={article.sourceStr} />
+                                        <span>|</span>
+                                        <span>{article.sourceStr}</span>
+                                        <span>|</span>
+                                        <p>{timeAgo(article.gmtTime)}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        ))
+                    ) : (
+                        <p>No articles available.</p>
+                    )}
+                </div>
+            </div>
+                    <LabelBottomNavigation/>
+            {/* Footer */}
+            <footer>
+                <p>&copy; 2025 SportsUp News</p>
+            </footer>
+        </div>
+    );
+};
+
+export default News;

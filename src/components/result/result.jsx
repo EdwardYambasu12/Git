@@ -2847,8 +2847,8 @@ const ShotMapped = ({data}) => {
         {/* Draw pitch */}
         <rect x="0" y="0" width="350" height="200" fill="white" />
         <line x1="175" y1="0" x2="175" y2="200" stroke="black" strokeWidth="2" />
-        <rect x="0" y="60" width="20" height="80" stroke="black" fill="none" strokeWidth="2" />
-        <rect x="330" y="60" width="20" height="80" stroke="black" fill="none" strokeWidth="2" />
+        <rect x="0" y="60" width="50" height="80" stroke="black" fill="none" strokeWidth="2" />
+        <rect x="300" y="60" width="50" height="80" stroke="black" fill="none" strokeWidth="2" />
         <circle cx="175" cy="100" r="30" stroke="black" fill="none" strokeWidth="2" />
         <circle cx="175" cy="100" r="3" fill="black" />
 
@@ -2860,7 +2860,7 @@ const ShotMapped = ({data}) => {
               key={index}
               x={coords.x}
               y={coords.y}
-              fontSize="14"
+              fontSize="8"
               fill="black"
               textAnchor="middle"
               dominantBaseline="middle"
