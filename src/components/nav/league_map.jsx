@@ -47,7 +47,7 @@ const League_Map = () => {
         const user_data = JSON.parse(localStorage.getItem("data"));
         const usersResponse = await axios.get(`${Line}/users`);
         const user = usersResponse.data.find(u => u.email === user_data.email);
-
+        console.log(user, "this is user")
         if (user) {
           setFollowedLeagues(user.favorite_league.map(item => JSON.parse(item)));
           setUser(user); // Set the logged-in user data
@@ -132,10 +132,6 @@ const League_Map = () => {
 
   // Handle following/unfollowing leagues
   const toggleFollowLeague = async (leagueId, leagueName) => {
-    if (!users) {
-      console.error('User data is not available.');
-      return; // Don't proceed if there is no user data
-    }
 
     const isFollowing = followedLeagues.some((league) => league.id === leagueId);
     const updatedFollowedLeagues = isFollowing
