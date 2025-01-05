@@ -31,20 +31,20 @@
     }
 }
 
-header {
+.headerd {
     text-align: center;
     padding: 1px 1px;
     background: linear-gradient(to right, #696969, #a9a9a9);
     color: white;
 }
 
-header h1 {
+.headerd h1 {
     font-size: 2.5rem;
     letter-spacing: 2px;
     margin: 0px;
 }
 
-header p {
+.headerd p {
     font-size: 0.9rem;
     margin-top: 1px;
 }

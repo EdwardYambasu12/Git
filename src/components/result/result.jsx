@@ -474,6 +474,7 @@ useEffect(()=>{
         let comment_data;
         let trick;
         var league_data;
+        var odds;
         var match_news
 
         const news_data = await axios.get(`${Lined}/match_news`,
@@ -481,6 +482,14 @@ useEffect(()=>{
             params : {id : id}
           }
         )
+
+        const match_odds = await axios.get(`${Lined}/match_odds`,
+          {
+            params : {id : id}
+          }
+        )
+        console.log(match_odds.data, "match odds value")
+        odds = match_odds.data
 
         const response = await axios.get(`${Lined}/league`, {
           params: {
@@ -499,7 +508,7 @@ useEffect(()=>{
         }
 
         match_news = news_data.data
-        const multi = [datam, comment_data, trick, league_data, match_news];
+        const multi = [datam, comment_data, trick, league_data, match_news, odds];
 
         // Update state
         setD(<Rest_assure props={multi} />);
@@ -512,7 +521,7 @@ useEffect(()=>{
 
     } catch (error) {
         console.error('Error in reloader:', error);
-        setD(<Alert severity="error">Fail to load data Try checking Network Connection</Alert>)
+        setD(<div><Alert severity="error">Fail to load data Try checking Network Connection</Alert></div>)
     }
 };
 
@@ -564,7 +573,7 @@ const Info = ({props, news})=>{
 
     const data = props[0]
     var ticker = props[2]
-    
+    var odds = props[5]
   
     const [audio, setAudio] = useState()
     const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
@@ -596,9 +605,25 @@ const Info = ({props, news})=>{
     const [fifa_ranking, setFifaRanking] = useState()
     const [headrecord, setHeadrecord] = useState()
     const [match_news, setmatchNews] = useState()
+    const [match_odds, setMatch_odds] = useState()
     const navigate = useNavigate()
     useEffect(()=>{
 
+/*
+      //////////////////////////////////////////////
+      setMatch_odds(
+
+        <div  style = {{display : "flex", width : "100%", justifyContent : "space-between", borderRadius : "10px  ", marginTop : "3%", height : "60px", alignItems : "center", background : "white"}}>
+          <img style = {{width : "70px", height : "30px", borderRadius : "10%"}} src = {odds.logoUrl}></img>
+          <div  style = {{display : "flex", width : "100%",  alignItems : "center", height : "60px", justifyContent : "space-around"}}>
+          <div ><p>{odds.odds.resolvedOddsMarket.selections[0].name} <strong>{odds.odds.resolvedOddsMarket.selections[0].oddsDecimal}</strong></p></div>
+          <div><p>{odds.odds.resolvedOddsMarket.selections[1].name}  <strong> {odds.odds.resolvedOddsMarket.selections[1].oddsDecimal} </strong></p></div>
+          <div><p>{odds.odds.resolvedOddsMarket.selections[2].name}  <strong> {odds.odds.resolvedOddsMarket.selections[2].oddsDecimal}</strong></p></div>
+          </div>
+        </div>
+      )
+
+*/
       ////////////////// MATCH NEWS //////////
       setmatchNews(
         <div style = {{borderRadius : "10px", background : "white"}}>
@@ -632,7 +657,7 @@ if(res.data.urls.length > 0){
       <h6  className="text-center">Audio Commentary</h6>
       <div style  = {{width : "100%", height : "3px", background : "black"}}></div>
       {data.ongoing === false ? 
-      <div><h6 className="text-center">Audio Commentary will be available when the match starts</h6></div> : 
+      <div><h6 className="text-center">Audio Commentary not available now</h6></div> : 
 
       <div>
 
@@ -1493,6 +1518,7 @@ const labels = moment.map(item => item.minute);
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
 
              <div> {audio}</div>
+             <br></br>
 
                         {pending_var}
 
@@ -1509,12 +1535,16 @@ const labels = moment.map(item => item.minute);
 
 
                         {highlight}
+
+                        <div>
+                          {match_odds}
+                        </div>
     
                    
                   <div style = {{marginTop : "5%"}}>
                {motm}
                </div>
-               <AdSenseFluidAd/>
+              
                 <div style = {{marginTop : "5%"}}>
 
                 {topplayers}
@@ -1539,7 +1569,7 @@ const labels = moment.map(item => item.minute);
                
               <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
                 <div style = {{marginTop : "5%"}}>{headrecord}</div>
-                <AdSenseFluidAd/>
+     
                    <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
                 <h6 className =   "text-center text-secondary">Team Form</h6>
                 {teamform}

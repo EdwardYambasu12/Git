@@ -1,454 +1,233 @@
-import React, { useState, useEffect } from "react";
-import "./nav.css";
+import React, { useState, useEffect } from 'react';
+import '../../App.css'; // Assuming you use the same CSS file
+import '../../news.css'; 
+import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import SportsIcon from '@mui/icons-material/Sports';
 import FeedIcon from '@mui/icons-material/Feed';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import Line from "../../line.js";
 import Box from '@mui/material/Box';
-import { Tabs, Tab,  CircularProgress,  } from '@mui/material';
-import AdSenseFluidAd from "./adsense_fluid.jsx";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import PWAWelcomingPopup from "../new_comers/first.js"
-import { Search } from "@mui/icons-material";
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: "100%",
-  bgcolor: 'background.paper',
-borderRadius : "10px",
-  boxShadow: 24,
-  p: 4,
-};
+import { CircularProgress, Tabs, Tab } from '@mui/material';
+import LabelBottomNavigation from './LabelBottomNavigation'; // Assuming it's your component
 
-const AdComponent = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [tack, setTack] = React.useState()
-  const [adData, setAdData] = useState(null);
-  const placementId = '3118'; // Your Mobfox placement ID
-  const navigate = useNavigate()
-  const [opend, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClosed = () => setOpen(false);
-  const [alpha, setAlpha] = useState()
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-
-useEffect(()=>{
-
-
-
-
-		async function reload(){
-			try{
-				const fetcher = await sessionStorage.getItem("league_data")
-					const parser = await JSON.parse(fetcher)
-					
-
-
-			
-
-
-					const searcher_raw = await axios.get(Line+"/search", {
-						params : {
-							term : alpha
-						}
-					})
-					const searcher = searcher_raw.data
-					console.log(searcher, "search_return")
-
-
-
-					setTack(
-									searcher[0].suggestions.map((item)=>{
-
-										var stat 
-
-                    if(item.type == "player"){
-                      var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-                    else if(item.type == "team"){
-                      var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-                    else if(item.type == "league"){
-                      var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-
-													return(
-																<div>{stat}</div>			
-														)
-									}
-						)
-
-
-									)
-			}
-catch(e){
-	console.log(e)
-}
-					
-
-		}
-
-		reload()
-
-},[alpha])
-  useEffect(() => {
-    const fetchAd = async () => {
-      // Replace placeholders with actual values
-      const adRequestUrl = `https://bes.mobfox.com/?c=n&m=tag&placementId=${placementId}&ip=YOUR_IP&ua=YOUR_UA&domain=YOUR_DOMAIN&page=YOUR_PAGE&secure=1&language=en-US&bidfloor=0.01&gdpr_consent=1&coppa=0&gpp=&gpp_sid=`;
-
-      try {
-        const response = await fetch(adRequestUrl);
-        const data = await response.json();
-        
-        // Check if the ad data is valid
-        if (data && data.adContent) {
-          setAdData(data.adContent); // Assume adContent contains the ad HTML
-        } else {
-          console.error('No ad data returned');
-        }
-      } catch (error) {
-        console.error('Error fetching ad:', error);
-      }
-    };
-
-    fetchAd();
-  }, [placementId]);
-
-  return (
-    <div>
-     
-    </div>
-  );
-};
-function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('Leagues');
-  const navigate = useNavigate()
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <BottomNavigation sx={{  position: 'fixed', bottom: 0, left: 0, right: 0 }} value={value} onChange={handleChange}>
-     <BottomNavigationAction
-        label="Matches"
-        value="matches"
-        onClick={()=>{navigate("/")}}
-        icon={<SportsIcon />}
-      />
-      <BottomNavigationAction
-        label="News"
-        value="News"
-         onClick={()=>{navigate("/news")}}
-        icon={<FeedIcon />}
-      />
-      <BottomNavigationAction
-        label="Leagues"
-        value="Leagues"
-         onClick={()=>{navigate("/leagues")}}
-        icon={<EmojiEventsIcon />}
-      />
-      <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
-    </BottomNavigation>
-  );
-}
-
-export default function League_Map() {
-  const [allLeagues, setAllLeagues] = useState([]);
-  const [followedLeagues, setFollowedLeagues] = useState([]);
-  const [loading, setLoading] = useState(true);
+const League_Map = () => {
+  const [leaguesData, setLeaguesData] = useState(null); // State for league data
+  const [loading, setLoading] = useState(true); // Loading state
+  const [followedLeagues, setFollowedLeagues] = useState([]); // Followed leagues state
+  const [users, setUser] = useState(null); // User data state
+  const [allLeagues, setAllLeagues] = useState([]); // All leagues state
+  const Line = 'https://remember-1.onrender.com'; // Backend URL
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [tack, setTack] = React.useState()
-  const [adData, setAdData] = useState(null);
-  const placementId = '3118'; // Your Mobfox placement ID
-
-  const [opend, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClosed = () => setOpen(false);
-  const [alpha, setAlpha] = useState()
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-
-useEffect(()=>{
-
-
-
-
-		async function reload(){
-			try{
-				const fetcher = await sessionStorage.getItem("league_data")
-					const parser = await JSON.parse(fetcher)
-					
-
-
-			
-
-
-					const searcher_raw = await axios.get(Line+"/search", {
-						params : {
-							term : alpha
-						}
-					})
-					const searcher = searcher_raw.data
-					console.log(searcher, "search_return")
-
-
-
-					setTack(
-									searcher[0].suggestions.map((item)=>{
-
-										var stat 
-
-                    if(item.type == "player"){
-                      var stat = <div onClick = {()=>{navigate("player/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/playerimages/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-                    else if(item.type == "team"){
-                      var stat = <div onClick = {()=>{navigate("team/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+item.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-                    else if(item.type == "league"){
-                      var stat = <div onClick = {()=>{navigate("leauges/"+item.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}} style = {{display : "flex", width : "100%", marginTop : "3%", height : "50px",  justifyContent : "space-between", alignItems : "center",}}>
-                                  <div style = {{width : "90%", height : "100%", alignItems : "center", display : "flex", justifyContent : "space-between"}}><h6 >{item.name}</h6> <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+item.id+".png"} style = {{width : "30px", height : "30px"}}></img> </div>
-                                </div>
-                    }
-
-
-													return(
-																<div>{stat}</div>			
-														)
-									}
-						)
-
-
-									)
-			}
-catch(e){
-	console.log(e)
-}
-					
-
-		}
-
-		reload()
-
-},[alpha])
-  const [users, setUser] = useState()
+  const [main, setMain] = useState();
 
   useEffect(() => {
     const fetchLeagues = async () => {
-      setLoading(true);
-      const raw_data = await sessionStorage.getItem("league_data");
-      const leagues = await JSON.parse(raw_data);
+      try {
+        setLoading(true);
 
-      if (leagues) {
+        // First, try to get leagues data from sessionStorage
+        const raw_data = await sessionStorage.getItem("league_data");
+        let leagues = JSON.parse(raw_data);
+
+        if (!leagues) {
+          // If no data is found in sessionStorage, fetch from API
+          const response = await fetch(`${Line}/all_leagues`);
+          if (response.ok) {
+            leagues = await response.json();
+            sessionStorage.setItem("league_data", JSON.stringify(leagues)); // Store data in sessionStorage
+          } else {
+            throw new Error('Failed to fetch leagues');
+          }
+        }
+
+        // Now fetch user data from localStorage and the users API
         const user_data = JSON.parse(localStorage.getItem("data"));
-        const response = await axios.get(`${Line}/users`);
-        const user = response.data.find(u => u.email === user_data.email);
+        const usersResponse = await axios.get(`${Line}/users`);
+        const user = usersResponse.data.find(u => u.email === user_data.email);
 
         if (user) {
           setFollowedLeagues(user.favorite_league.map(item => JSON.parse(item)));
-          setUser(user)
+          setUser(user); // Set the logged-in user data
         }
-        setAllLeagues(leagues);
-      } else {
 
+        setAllLeagues(leagues); // Set all leagues data
+        setLeaguesData(leagues); // Set the leagues data to state
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchLeagues();
   }, []);
 
-  const toggleFollowLeague = async(leagueId, leagueName) => {
-    const isFollowing = followedLeagues.some(league => league.id === leagueId);
+  // Fetch tournaments data
+  useEffect(() => {
+    const fetchTournaments = async () => {
+      try {
+        const response = await fetch('https://remember-1.onrender.com/all_leagues');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const datam = await response.json();
+        console.log('API Response:', datam);
+        setMain(
+          <div>
+            <section className="sectiond" id="popular-section">
+              <h2>Top Leagues</h2>
+              <div id="all-leagues">
+                {datam.popular.map((league) => (
+                  <div key={league.id} className="league">
+                    <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                        alt={league.name}
+                      />
+                      <span>{league.name}</span>
+                    </div>
+                    <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                      {followedLeagues.find((l) => l.id === league.id) ? 'Unfollow' : 'Follow'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* All Leagues Section */}
+            <section className="sectiond" id="all-leagues-section">
+              <h2>All Leagues</h2>
+              <div id="international-dropdown">
+                {datam?.international?.flatMap((group) => group.leagues).map((league) => (
+                  <div key={league.id} className="league">
+                    <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                        alt={league.name}
+                      />
+                      <span>{league.name}</span>
+                    </div>
+                    <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                      {followedLeagues.find((l) => l.id === league.id) ? 'Unfollow' : 'Follow'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        );
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTournaments();
+  }, []); // Empty dependency array to fetch only once when the component mounts
+
+  // Handle following/unfollowing leagues
+  const toggleFollowLeague = async (leagueId, leagueName) => {
+    if (!users) {
+      console.error('User data is not available.');
+      return; // Don't proceed if there is no user data
+    }
+
+    const isFollowing = followedLeagues.some((league) => league.id === leagueId);
     const updatedFollowedLeagues = isFollowing
-      ? followedLeagues.filter(league => league.id !== leagueId)
-      : [...followedLeagues, allLeagues.find(league => league.id === leagueId)];
+      ? followedLeagues.filter((league) => league.id !== leagueId)
+      : [...followedLeagues, allLeagues.find((league) => league.id === leagueId)];
 
     setFollowedLeagues(updatedFollowedLeagues);
 
+    const monk = {
+      id: leagueId,
+      name: leagueName,
+    };
 
-      if(isFollowing === false){
-
-                const monk = {
-        id : leagueId,
-        name : leagueName,
-              }
-
-      const league = JSON.stringify(monk)
-   
+    const league = JSON.stringify(monk);
     const place = {
-      id_: users._id,
+      id_: users._id, // This line will fail if `users` is null
       league_id: league,
     };
 
-              console.log(users)
+    const url = isFollowing
+      ? `${Line}/favorite_league_remove`
+      : `${Line}/favorite_league`;
 
-              await fetch(`${Line}/favorite_league`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(place),
-    });
-   
-  };
-      
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(place),
+      });
 
-if(isFollowing === true){
-
-         const monk = {
-        id : leagueId,
-        name : leagueName,
-              }
-
-      const league = JSON.stringify(monk)
-   
-    const place = {
-      id_: users._id,
-      league_id: league,
-    };
-
-              console.log(users)
-
-              await fetch(`${Line}/favorite_league_remove`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(place),
-    });
-    
+      if (!response.ok) {
+        throw new Error('Failed to update favorite league');
+      }
+    } catch (error) {
+      console.error('Error handling favorite league:', error);
+    }
   };
 
-      
- 
-  };
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <div style={{ background: "#EEEEEE", height: "100vh" }}>
-      <nav className="fixed-top">
-        <div style = {{background : "white", height : "60px"}}>
-          <div>
-      
+    <main>
+      <header className="headerd">
+        <h1>SportsUp Leagues</h1>
+        <p>Discover the latest Leagues, Tournaments, and Competitions from around the globe.</p>
+      </header>
 
-             <h1>  Leagues</h1>
-          </div>
+      {/* Following Leagues Section */}
+      <section className="sectiond" id="following-section">
+        <h2>Your Following Leagues</h2>
+        <div id="following-leagues">
+          {followedLeagues.length > 0 ? (
+            followedLeagues.map((league) => (
+              <div key={league.id} className="league">
+                <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                  <img
+                    src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                    alt={league.name}
+                  />
+                  <span>{league.name}</span>
+                </div>
+                <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                  {followedLeagues.find((l) => l.id === league.id) ? 'Unfollow' : 'Follow'}
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>You are not following any leagues yet.</p>
+          )}
         </div>
-      </nav>
+      </section>
 
-      <br></br>
-      <br></br>
+      {main}
 
-    <br></br>
-      <div className="container">
-        <div onClick={handleOpen} style = {{background : "white", display : "flex", justifyContent : "space-around", alignItems : "center", borderRadius : "10px"}}>
-          <h6>SEARCH LEAGUES</h6>
-      <button className="btn btn-warning"  ><Search/></button>
-      </div>
-      <Modal
-        open={opend}
-        onClose={handleClosed}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
+      <div id="error-message" className="error-message"></div>
 
-        <ArrowBackIcon onClick={()=> navigate(window.location.reload())}/>
-
-           <TextField
-          id="filled-search"
-          label="Search field"
-          type="search"
-          variant="filled"
-          sx = {{width : "90%"}}
-          onChange = {(val)=>{
-          				setAlpha(val.target.value)
-          }}
-        />
-        <div style = {{height : window.innerHeight-200, overflowX : "hidden", overflowY : "auto"}}>{tack}</div>
-      
-
-        </Box>
-      </Modal>
-        {loading ? (
-          <p style = {{marginTop : "10%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
-          <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
-        </Box></p>
-        ) : (
-          <>
-            <div style={{ width: "100%",   marginTop : "10%", borderRadius: "10px", background: "white" }}>
-              <strong style={{ textDecoration: "bold" }}>Following</strong>
-              {followedLeagues.map(league => (
-                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
-                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
-                    <h6>{league.name}</h6>
-                  </div>
-                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
-                    <strong>Unfollow</strong>
-                  </button>
-                </div>
-              ))}
-            </div>
-            <AdSenseFluidAd/>
-         
-            <div style={{ width: "100%",  borderRadius: "10px", background: "white" }}>
-              <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
-              {allLeagues.map(league => (
-                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
-                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
-                    <h6>{league.name}</h6>
-                  </div>
-                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
-                    <strong>{followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}</strong>
-                  </button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-
-     <LabelBottomNavigation/>
-
-    </div>
+      <LabelBottomNavigation />
+    </main>
   );
-}
+};
+
+export default League_Map;

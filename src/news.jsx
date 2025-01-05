@@ -252,6 +252,8 @@ const News = () => {
         fetchArticles();
     }, []);
 
+    console.log(articles)
+
     return (
         <div>
             {/* Loader */}
@@ -262,7 +264,7 @@ const News = () => {
             )}
 
             {/* Header */}
-            <header>
+            <header className = "headerd">
                 <h1>SportsUp News</h1>
                 <p>Discover the latest football news around the globe.</p>
             </header>
