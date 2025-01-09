@@ -14,7 +14,12 @@ body::-webkit-scrollbar {
   display: none; /* Hide scroll bars in WebKit browsers */
 }
 
-
+header {
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .search-bar {
   display: flex;
@@ -40,6 +45,9 @@ main::-webkit-scrollbar {
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   border: 1px solid #ccc;
+}
+#shadowd{
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {

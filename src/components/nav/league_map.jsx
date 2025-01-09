@@ -155,7 +155,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation sx={{  position: 'fixed', bottom: 0, left: 0, right: 0 }} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "2%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"
@@ -272,13 +272,14 @@ catch(e){
 
 },[alpha])
   const [users, setUser] = useState()
-
+  const [read_leagues, setReadLeagues] = useState()
   useEffect(() => {
     const fetchLeagues = async () => {
       setLoading(true);
       const raw_data = await sessionStorage.getItem("league_data");
       const leagues = await JSON.parse(raw_data);
-
+      const raw_data1 = await sessionStorage.getItem("league_data1")
+      const leagues1 = await JSON.parse(raw_data1)
       if (leagues) {
         const user_data = JSON.parse(localStorage.getItem("data"));
         const response = await axios.get(`${Line}/users`);
@@ -289,6 +290,7 @@ catch(e){
           setUser(user)
         }
         setAllLeagues(leagues);
+        setReadLeagues(leagues1)
       } else {
 
       }
@@ -362,51 +364,18 @@ if(isFollowing === true){
   };
 
   return (
-    <div style={{ background: "#EEEEEE", height: "100vh" }}>
-      <nav className="fixed-top">
-        <div style = {{background : "white", height : "60px"}}>
-          <div>
+    <div style={{ backgroundColor : `rgba(225, 225, 225, 0.1)`, height: "100vh" }}>
+         <header className="headerd">
+        <h1>SportsUp Leagues</h1>
+        <p>Discover the latest Leagues, Tournaments, and Competitions from around the globe.</p>
+      </header>
+
       
-
-             <h1>  Leagues</h1>
-          </div>
-        </div>
-      </nav>
-
-      <br></br>
-      <br></br>
 
     <br></br>
       <div className="container">
-        <div onClick={handleOpen} style = {{background : "white", display : "flex", justifyContent : "space-around", alignItems : "center", borderRadius : "10px"}}>
-          <h6>SEARCH LEAGUES</h6>
-      <button className="btn btn-warning"  ><Search/></button>
-      </div>
-      <Modal
-        open={opend}
-        onClose={handleClosed}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-
-        <ArrowBackIcon onClick={()=> navigate(window.location.reload())}/>
-
-           <TextField
-          id="filled-search"
-          label="Search field"
-          type="search"
-          variant="filled"
-          sx = {{width : "90%"}}
-          onChange = {(val)=>{
-          				setAlpha(val.target.value)
-          }}
-        />
-        <div style = {{height : window.innerHeight-200, overflowX : "hidden", overflowY : "auto"}}>{tack}</div>
-      
-
-        </Box>
-      </Modal>
+       
+       
         {loading ? (
           <p style = {{marginTop : "10%"}}><Box style={{ display: 'flex', width: "100%", justifyContent: "center" }}>
           <CircularProgress sx={{ backgroundColor: "white", borderRadius: "50%" }} />
@@ -447,7 +416,10 @@ if(isFollowing === true){
         )}
       </div>
 
+      <div className="container" >
+
      <LabelBottomNavigation/>
+     </div>
 
     </div>
   );

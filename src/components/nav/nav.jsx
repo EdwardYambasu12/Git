@@ -302,7 +302,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-     <BottomNavigation sx={{  position: 'fixed', bottom: 0, left: 0, right: 0 }} value={value} onChange={handleChange}>
+<BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "2%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"
@@ -859,9 +859,10 @@ if(token_read === null){
 			})
 				
 			
-
+        const parser1 = JSON.stringify(data.data)
 				const parser = JSON.stringify(monk)
 				sessionStorage.setItem("league_data", parser)
+        sessionStorage.setItem("league_data1", parser1)
 
 				setLeagues(
 				monk.map((item)=>{
