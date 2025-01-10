@@ -17,6 +17,8 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import PWAWelcomingPopup from "../new_comers/first.js"
 import { Search } from "@mui/icons-material";
+import '../../App.css'; // Assuming you use the same CSS file
+import '../../news.css'; 
 const style = {
   position: 'absolute',
   top: '50%',
@@ -155,7 +157,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "2%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"
@@ -181,6 +183,7 @@ function LabelBottomNavigation() {
 
 export default function League_Map() {
   const [allLeagues, setAllLeagues] = useState([]);
+  const [allLeagues1, setAllLeagues1] = useState([])
   const [followedLeagues, setFollowedLeagues] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -290,7 +293,8 @@ catch(e){
           setUser(user)
         }
         setAllLeagues(leagues);
-        setReadLeagues(leagues1)
+        console.log(leagues1, "this is the league info in full")
+        setAllLeagues1(leagues1)
       } else {
 
       }
@@ -372,7 +376,6 @@ if(isFollowing === true){
 
       
 
-    <br></br>
       <div className="container">
        
        
@@ -382,36 +385,79 @@ if(isFollowing === true){
         </Box></p>
         ) : (
           <>
-            <div style={{ width: "100%",   marginTop : "10%", borderRadius: "10px", background: "white" }}>
-              <strong style={{ textDecoration: "bold" }}>Following</strong>
-              {followedLeagues.map(league => (
-                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
-                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
-                    <h6>{league.name}</h6>
-                  </div>
-                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
-                    <strong>Unfollow</strong>
-                  </button>
-                </div>
-              ))}
-            </div>
-            <AdSenseFluidAd/>
+    
+        
          
-            <div style={{ width: "100%",  borderRadius: "10px", background: "white" }}>
-              <strong style={{ textDecoration: "bold" }}>All Competitions</strong>
-              {allLeagues.map(league => (
-                <div key={league.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3%" }}>
-                  <div onClick={() => navigate("/leauges/"+league.id)} style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                    <img src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`} style={{ width: "25px", height: "20px", borderRadius: "50%" }} alt="League Logo" />
-                    <h6>{league.name}</h6>
-                  </div>
-                  <button className = "btn btn-light" onClick={() => toggleFollowLeague(league.id, league.name)} style={{ background: "#EEEEEE", height: "30px" }}>
-                    <strong>{followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}</strong>
-                  </button>
+            <section className="sectiond" id="following-section">
+        <h2>Your Following Leagues</h2>
+        <div id="following-leagues">
+          {followedLeagues.length > 0 ? (
+            followedLeagues.map((league) => (
+              <div key={league.id} className="league">
+                <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                  <img
+                    src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                    alt={league.name}
+                  />
+                  <span>{league.name}</span>
                 </div>
-              ))}
-            </div>
+                <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                 
+                  {followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>You are not following any leagues yet.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="sectiond" id="following-section">
+        <h2>Top Leagues</h2>
+        <div id="following-leagues">
+         {
+            allLeagues1.popular.map((league) => (
+              <div key={league.id} className="league">
+                <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                  <img
+                    src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                    alt={league.name}
+                  />
+                  <span>{league.name}</span>
+                </div>
+                <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                 
+                  {followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}
+                </button>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section className="sectiond" id="following-section">
+        <h2>Top Leagues</h2>
+        <div id="following-leagues">
+         {
+            allLeagues1.international[0].leagues.map((league) => (
+              <div key={league.id} className="league">
+                <div onClick={() => { navigate("/leauges/" + league.id) }}>
+                  <img
+                    src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${league.id}.png`}
+                    alt={league.name}
+                  />
+                  <span>{league.name}</span>
+                </div>
+                <button onClick={() => toggleFollowLeague(league.id, league.name)}>
+                 
+                  {followedLeagues.some(l => l.id === league.id) ? "Unfollow" : "Follow"}
+                </button>
+              </div>
+            ))
+          }
+        </div>
+      </section>
           </>
         )}
       </div>
