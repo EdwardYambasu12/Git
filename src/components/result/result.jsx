@@ -670,7 +670,7 @@ const Info = ({props, news})=>{
 if(res.data.urls.length > 0){
   setAudio(
 
-    <div style = {{borderRadius : 10, background : "white"}} >
+    <div style = {{borderRadius : 10, background : "white", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}} >
       
       <h6  className="text-center">Audio Commentary</h6>
       <div style  = {{width : "100%", height : "3px", background : "black"}}></div>
@@ -711,7 +711,7 @@ else{
         const main = data.content.h2h
         setHeadrecord(
 
-          <div style={{borderRadius : "10px", background : "white"}}>
+          <div style={{borderRadius : "10px", background : "white", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
             <h6 className="text-center">Head TO Head Record</h6>
 
             <div style = {{width : "100%", height : "100px", alignItems : "center", display : "flex", justifyContent : "space-around", background : "white", borderRadius : "10px"}}>
@@ -726,7 +726,7 @@ else{
 
       if(data.header.teams[0].fifaRank != null && data.header.teams[1].fifaRank != null){
         setFifaRanking(
-          <div style={{width : "100%", background : "white", borderRadius : "10px"}}>
+          <div style={{width : "100%", background : "white", borderRadius : "10px", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
             <h6 className="text-center">Fifa Ranking</h6> 
             <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
               
@@ -768,7 +768,7 @@ else{
           const item = data.content.matchFacts.topScorers
           setTopScorers(
 
-            <div style = {{background : "white", borderRadius : "10px"}} >
+            <div style = {{background : "white", borderRadius : "10px", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}} >
 
                   <h6 className = "text-center">{item.section}</h6>
 
@@ -1535,35 +1535,35 @@ const labels = moment.map(item => item.minute);
 
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
 
-             <div> {audio}</div>
+             <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}> {audio}</div>
              <br></br>
 
                         {pending_var}
 
                         
 
-                        <div style = {{marginTop:"5%"}}>
+                        <div style = {{marginTop:"5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                           {top_scorers}
                         </div>
                    
-                   <div style = {{marginTop : "5%"}}>
+                   <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                         {pump}
                         </div>
 
-
+      	                <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                         {highlight}
-
-                        <div>
+                          </div>
+                        <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                           {match_odds}
                         </div>
     
                    
-                  <div style = {{marginTop : "5%"}}>
+                  <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                {motm}
                </div>
               
-                <div style = {{marginTop : "5%"}}>
+                <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                 {topplayers}
 
@@ -1571,42 +1571,42 @@ const labels = moment.map(item => item.minute);
                 </div>
 
               
-                <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
+                <div style = {{background : "white", borderRadius : "10px", marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                
                 {momentum}
                 </div>
                 <br></br>
-
+                <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                 {stats}
-
-                               <div style = {{marginTop : "5%"}}>
+                </div>
+                               <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                {match_events}
                </div>
 
                
-              <div style = {{marginTop : "5%"}}>{fifa_ranking}</div>
-                <div style = {{marginTop : "5%"}}>{headrecord}</div>
+              <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>{fifa_ranking}</div>
+                <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>{headrecord}</div>
      
-                   <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
+                   <div style = {{background : "white", borderRadius : "10px", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, marginTop : "5%"}}>
                 <h6 className =   "text-center text-secondary">Team Form</h6>
                 {teamform}
                 </div>
 
 
 
-                <div style = {{marginTop : "5%"}}>
+                <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                 {insight}
                 </div>
 
-                <div style = {{marginTop : "5%"}}>
+                <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                 {info}
 
                 </div>
 
-                <div style = {{marginTop : "5%"}}>
+                <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
 
                 {match_news}
 

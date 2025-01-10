@@ -281,7 +281,7 @@ const News = () => {
                                 rel="noopener noreferrer"
                                 className="blog-card"
                             >
-                                <img src={article.imageUrl} alt={article.title} />
+                                <img style = {{borderRadius : "0"}} src={article.imageUrl} alt={article.title} />
                                 <div className="content">
                                     <h2>{article.title}</h2>
                                     <p>{article.lead || 'Click to read more.'}</p>

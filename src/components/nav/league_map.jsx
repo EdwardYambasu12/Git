@@ -437,7 +437,7 @@ if(isFollowing === true){
       </section>
 
       <section className="sectiond" id="following-section">
-        <h2>Top Leagues</h2>
+        <h2>International Leagues</h2>
         <div id="following-leagues">
          {
             allLeagues1.international[0].leagues.map((league) => (
