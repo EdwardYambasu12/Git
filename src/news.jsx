@@ -130,7 +130,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  background : `linear-gradient(to right,rgb(139, 136, 136),rgb(255, 255, 255));`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"

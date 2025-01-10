@@ -17,7 +17,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import PWAWelcomingPopup from "../new_comers/first.js"
 import { Search } from "@mui/icons-material";
-import '../../App.css'; // Assuming you use the same CSS file
+
 import '../../news.css'; 
 const style = {
   position: 'absolute',
@@ -157,7 +157,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, background : `linear-gradient(to right,rgb(139, 136, 136),rgb(255, 255, 255));`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"
@@ -368,7 +368,7 @@ if(isFollowing === true){
   };
 
   return (
-    <div style={{ backgroundColor : `rgba(225, 225, 225, 0.1)`, height: "100vh" }}>
+    <div style={{ backgroundColor : `rgba(225, 225, 225, 0.1)`, height : "fit-content" }}>
          <header className="headerd">
         <h1>SportsUp Leagues</h1>
         <p>Discover the latest Leagues, Tournaments, and Competitions from around the globe.</p>

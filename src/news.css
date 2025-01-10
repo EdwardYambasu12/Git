@@ -31,6 +31,19 @@
     }
 }
 
+
+.sectiond {
+    background-color: #ffffff;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid #ccc;
+  }
+  #shadowd{
+    box-shadow: 0 3px 4px rgba(224, 224, 224, 0.1);
+  }
+  
 .headerd {
     text-align: center;
     padding: 1px 1px;

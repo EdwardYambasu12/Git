@@ -600,6 +600,84 @@ body{
 	border-radius: 10px;
 	height: fit-content;
 }
+
+h2 {
+	margin-top: 0;
+	color: #333;
+  }
+  
+  .league {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 0;
+	font-size: 15px;
+	color: #333;
+  }
+  
+  .league img {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+  }
+  
+  .league span {
+	flex-grow: 1;
+	margin-left: 10px;
+  }
+  
+  .league button {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+  }
+  
+  .league button.unfollow {
+	background-color: #dc3545;
+  }
+  
+  .dropdown-button {
+	background-color: #f7f7f7;
+	color: #000;
+	border: none;
+	padding: 8px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	margin-top: 5px;
+	display: block;
+	width: 100%;
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+  
+  .dropdown-button:hover {
+	background-color: #ffffff;
+	color: #000000;
+  }
+  
+  .dropdown-content {
+	display: none;
+	margin-top: 5px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon {
+	margin-left: auto;
+	transition: transform 0.5s ease;
+  }
+  
+  .icon.rotate {
+	transform: rotate(180deg) !important;
+  }
 #league_list{
 	width: 13%;
 	background: inherit;
