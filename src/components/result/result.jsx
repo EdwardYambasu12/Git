@@ -609,9 +609,25 @@ const Info = ({props, news})=>{
     const navigate = useNavigate()
     useEffect(()=>{
 
-/*
+
       //////////////////////////////////////////////
       setMatch_odds(
+
+        <>
+      {odds.odds.oddsType === "PreMatch"? 
+
+      <div>
+        <div  style = {{display : "flex", width : "100%", justifyContent : "space-between", borderRadius : "10px  ", marginTop : "3%", height : "60px", alignItems : "center", background : "white"}}>
+          <img style = {{width : "70px", height : "30px", borderRadius : "10%"}} src = {odds.logoUrl}></img>
+          <div  style = {{display : "flex", width : "100%",  alignItems : "center", height : "60px", justifyContent : "space-around"}}>
+          <div ><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[0].name} <strong>{odds.odds.oddsTabMarkets[0].markets[0].selections[0].oddsDecimal}</strong></p></div>
+          <div><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[1].name}  <strong> {odds.odds.oddsTabMarkets[0].markets[0].selections[1].oddsDecimal}</strong></p></div>
+          <div><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[2].name}  <strong> {odds.odds.oddsTabMarkets[0].markets[0].selections[2].oddsDecimal}</strong></p></div>
+          </div>
+        </div>
+      </div>
+
+      :
 
         <div  style = {{display : "flex", width : "100%", justifyContent : "space-between", borderRadius : "10px  ", marginTop : "3%", height : "60px", alignItems : "center", background : "white"}}>
           <img style = {{width : "70px", height : "30px", borderRadius : "10%"}} src = {odds.logoUrl}></img>
@@ -621,9 +637,11 @@ const Info = ({props, news})=>{
           <div><p>{odds.odds.resolvedOddsMarket.selections[2].name}  <strong> {odds.odds.resolvedOddsMarket.selections[2].oddsDecimal}</strong></p></div>
           </div>
         </div>
+
+      }
+      </>
       )
 
-*/
       ////////////////// MATCH NEWS //////////
       setmatchNews(
         <div style = {{borderRadius : "10px", background : "white"}}>
