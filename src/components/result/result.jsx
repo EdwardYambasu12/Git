@@ -172,7 +172,10 @@ const Rest_assure = ({ props }) => {
 
     // Dynamic match status logic
     const getStatus = () => {
-        if (data.header.status.finished) return "Full Time";
+       if(data.header.status.reason){
+        if(data.header.status.reason.short === "Pen") return data.header.status.reason.long
+       }
+        if(data.header.status.finished) return "Full Time"
         if (data.header.status.started && !data.header.status.finished) {
             return data.header.status.liveTime.short === "HT" 
                 ? data.header.status.liveTime.long 
@@ -257,9 +260,13 @@ const time = <Timer/>
 
         if(item.header.status.finished === true){
 
-            statuss = "Full Time"
-
+          if(item.header.status.reason.short === "Pen"){
+            statuss = item.header.status.reason.long
+          }
+       
         }
+
+        
 
         if(data.header.status.started === true && data.header.status.finished === false){
 
@@ -607,7 +614,8 @@ const Info = ({props })=>{
 
         const news = news_data.data
         
-        console.log(news, "news")
+        console.log(news_data, data.general.matchId, "news")
+
         
       
         ////////////////// MATCH NEWS //////////

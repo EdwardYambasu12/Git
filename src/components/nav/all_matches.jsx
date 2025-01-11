@@ -155,7 +155,7 @@ const All_Matches = ({props}) => {
     console.log(involved)
         if(involved.length > 0){
     setFollowing(
-        <Accordion  defaultExpanded sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
+        <Accordion   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
         <AccordionSummary  sx={{background : "ivory", height : "20px", }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
