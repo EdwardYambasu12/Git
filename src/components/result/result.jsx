@@ -477,19 +477,8 @@ useEffect(()=>{
         var odds;
         var match_news
 
-        const news_data = await axios.get(`${Lined}/match_news`,
-          {
-            params : {id : id}
-          }
-        )
-
-        const match_odds = await axios.get(`${Lined}/match_odds`,
-          {
-            params : {id : id}
-          }
-        )
-        console.log(match_odds.data, "match odds value")
-        odds = match_odds.data
+    
+     
 
         const response = await axios.get(`${Lined}/league`, {
           params: {
@@ -500,14 +489,13 @@ useEffect(()=>{
       league_data = response.data
       console.log(league_data)
 
-        console.log(news_data.data, "This is the news data")
+ 
         // Fetch additional data if URL is present
         if (datam.content.table?.url) {
             const rd = await axios.get(datam.content.table.url);
             trick = rd.data;
         }
 
-        match_news = news_data.data
         const multi = [datam, comment_data, trick, league_data, match_news, odds];
 
         // Update state
@@ -569,11 +557,11 @@ export default Result
 
 
 
-const Info = ({props, news})=>{
+const Info = ({props })=>{
 
     const data = props[0]
     var ticker = props[2]
-    var odds = props[5]
+   
   
     const [audio, setAudio] = useState()
     const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
@@ -609,57 +597,45 @@ const Info = ({props, news})=>{
     const navigate = useNavigate()
     useEffect(()=>{
 
+          async function asap(){
+              
+        const news_data = await axios.get(`${Lined}/match_news`,
+          {
+            params : {id : data.general.matchId}
+          }
+        )
 
+        const news = news_data.data
+        
+        console.log(news, "news")
+        
+      
+        ////////////////// MATCH NEWS //////////
+        setmatchNews(
+          <div style = {{borderRadius : "10px", background : "white"}}>
+            {news.length > 0? <h6 className = "text-center">Match News</h6> : <></>}
+            
+            {news.map((item)=>{
+  
+              console.log(item)
+              return(
+                <Link to={item.page.url} ><div className="container">
+                    <img style = {{width : "100%", height : "200px", borderRadius : "0"}} src = {item.imageUrl}></img>
+                    <p><strong>{item.title}</strong></p>
+                    </div>
+                </Link>
+              )
+            })}
+          </div>
+        )
+
+
+
+          }
+
+          asap()
       //////////////////////////////////////////////
-      setMatch_odds(
-
-        <>
-      {odds.odds.oddsType === "PreMatch"? 
-
-      <div>
-        <div  style = {{display : "flex", width : "100%", justifyContent : "space-between", borderRadius : "10px  ", marginTop : "3%", height : "60px", alignItems : "center", background : "white"}}>
-          <img style = {{width : "70px", height : "30px", borderRadius : "10%"}} src = {odds.logoUrl}></img>
-          <div  style = {{display : "flex", width : "100%",  alignItems : "center", height : "60px", justifyContent : "space-around"}}>
-          <div ><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[0].name} <strong>{odds.odds.oddsTabMarkets[0].markets[0].selections[0].oddsDecimal}</strong></p></div>
-          <div><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[1].name}  <strong> {odds.odds.oddsTabMarkets[0].markets[0].selections[1].oddsDecimal}</strong></p></div>
-          <div><p>{odds.odds.oddsTabMarkets[0].markets[0].selections[2].name}  <strong> {odds.odds.oddsTabMarkets[0].markets[0].selections[2].oddsDecimal}</strong></p></div>
-          </div>
-        </div>
-      </div>
-
-      :
-
-        <div  style = {{display : "flex", width : "100%", justifyContent : "space-between", borderRadius : "10px  ", marginTop : "3%", height : "60px", alignItems : "center", background : "white"}}>
-          <img style = {{width : "70px", height : "30px", borderRadius : "10%"}} src = {odds.logoUrl}></img>
-          <div  style = {{display : "flex", width : "100%",  alignItems : "center", height : "60px", justifyContent : "space-around"}}>
-          <div ><p>{odds.odds.resolvedOddsMarket.selections[0].name} <strong>{odds.odds.resolvedOddsMarket.selections[0].oddsDecimal}</strong></p></div>
-          <div><p>{odds.odds.resolvedOddsMarket.selections[1].name}  <strong> {odds.odds.resolvedOddsMarket.selections[1].oddsDecimal} </strong></p></div>
-          <div><p>{odds.odds.resolvedOddsMarket.selections[2].name}  <strong> {odds.odds.resolvedOddsMarket.selections[2].oddsDecimal}</strong></p></div>
-          </div>
-        </div>
-
-      }
-      </>
-      )
-
-      ////////////////// MATCH NEWS //////////
-      setmatchNews(
-        <div style = {{borderRadius : "10px", background : "white"}}>
-          {news.length > 0? <h6 className = "text-center">Match News</h6> : <></>}
-          
-          {news.map((item)=>{
-
-            console.log(item)
-            return(
-              <Link to={item.page.url} ><div className="container">
-                  <img style = {{width : "100%", height : "200px", borderRadius : "0"}} src = {item.imageUrl}></img>
-                  <p><strong>{item.title}</strong></p>
-                  </div>
-              </Link>
-            )
-          })}
-        </div>
-      )
+      
       ///////////////////Audio Commentary
       console.log(data.general.matchId, "id for the match")
        axios.get(`${Lined}/audio_commentary`, {

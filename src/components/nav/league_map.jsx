@@ -31,6 +31,41 @@ borderRadius : "10px",
   p: 4,
 };
 
+
+function LabelBottomNavigation() {
+  const [value, setValue] = React.useState('Leagues');
+  const navigate = useNavigate()
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0.5%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+     <BottomNavigationAction
+        label="Matches"
+        value="matches"
+        onClick={()=>{navigate("/")}}
+        icon={<SportsIcon />}
+      />
+      <BottomNavigationAction
+        label="News"
+        value="News"
+         onClick={()=>{navigate("/news")}}
+        icon={<FeedIcon />}
+      />
+      <BottomNavigationAction
+        label="Leagues"
+        value="Leagues"
+         onClick={()=>{navigate("/leagues")}}
+        icon={<EmojiEventsIcon />}
+      />
+      <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
+    </BottomNavigation>
+  );
+}
+
+
 const AdComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tack, setTack] = React.useState()
@@ -148,38 +183,6 @@ catch(e){
     </div>
   );
 };
-function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('Leagues');
-  const navigate = useNavigate()
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, background : `linear-gradient(to right,rgb(139, 136, 136),rgb(255, 255, 255));`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
-     <BottomNavigationAction
-        label="Matches"
-        value="matches"
-        onClick={()=>{navigate("/")}}
-        icon={<SportsIcon />}
-      />
-      <BottomNavigationAction
-        label="News"
-        value="News"
-         onClick={()=>{navigate("/news")}}
-        icon={<FeedIcon />}
-      />
-      <BottomNavigationAction
-        label="Leagues"
-        value="Leagues"
-         onClick={()=>{navigate("/leagues")}}
-        icon={<EmojiEventsIcon />}
-      />
-      <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
-    </BottomNavigation>
-  );
-}
 
 export default function League_Map() {
   const [allLeagues, setAllLeagues] = useState([]);
@@ -376,7 +379,7 @@ if(isFollowing === true){
 
       
 
-      <div className="container">
+      <div >
        
        
         {loading ? (
@@ -464,7 +467,7 @@ if(isFollowing === true){
 
       <div className="container" >
 
-     <LabelBottomNavigation/>
+     <LabelBottomNavigation props = "Leagues"/>
      </div>
 
     </div>

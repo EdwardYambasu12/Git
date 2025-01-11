@@ -55,6 +55,41 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
 import AdSenseFluidAd from "./components/nav/adsense_fluid.jsx";
 
+function LabelBottomNavigation() {
+  const [value, setValue] = React.useState('News');
+  const navigate = useNavigate()
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0.5%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+     <BottomNavigationAction
+        label="Matches"
+        value="matches"
+        onClick={()=>{navigate("/")}}
+        icon={<SportsIcon />}
+      />
+      <BottomNavigationAction
+        label="News"
+        value="News"
+         onClick={()=>{navigate("/news")}}
+        icon={<FeedIcon />}
+      />
+      <BottomNavigationAction
+        label="Leagues"
+        value="Leagues"
+         onClick={()=>{navigate("/leagues")}}
+        icon={<EmojiEventsIcon />}
+      />
+      <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
+    </BottomNavigation>
+  );
+}
+
+
+
 const Theme = createTheme({
   palette: {
     primary: {
@@ -119,42 +154,6 @@ function PositionedMenu() {
     </div>
   );
 }
-
-
-function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('News');
-  const navigate = useNavigate()
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  background : `linear-gradient(to right,rgb(139, 136, 136),rgb(255, 255, 255));`,  position: 'fixed', bottom: "1%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
-     <BottomNavigationAction
-        label="Matches"
-        value="matches"
-        onClick={()=>{navigate("/")}}
-        icon={<SportsIcon />}
-      />
-      <BottomNavigationAction
-        label="News"
-        value="News"
-         onClick={()=>{navigate("/news")}}
-        icon={<FeedIcon />}
-      />
-      <BottomNavigationAction
-        label="Leagues"
-        value="Leagues"
-         onClick={()=>{navigate("/leagues")}}
-        icon={<EmojiEventsIcon />}
-      />
-      <BottomNavigationAction onClick={()=>{navigate("/faves")}} label="Favorites" value="Favorites" icon={<BookmarkAddIcon />} />
-    </BottomNavigation>
-  );
-}
-
-
 
 
 
