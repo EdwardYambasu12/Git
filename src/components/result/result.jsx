@@ -3176,7 +3176,7 @@ tab()
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
                 <td style = {{width : "15%"}}>+/-</td>
-                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
             </thead>
@@ -3203,7 +3203,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
                       <td style = {{width : "15%"}}>{item.scoresStr}</td>
-                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
                     </tr>
@@ -3227,7 +3227,7 @@ tab()
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
                 <td style = {{width : "15%"}}>+/-</td>
-                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
             </thead>
@@ -3253,7 +3253,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
                       <td style = {{width : "15%"}}>{item.scoresStr}</td>
-                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
                     </tr>
@@ -3302,7 +3302,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
                       <td style = {{width : "15%"}}>{item.scoresStr}</td>
-                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
                     </tr>
@@ -3353,7 +3353,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.losses}</td>
                       <td style = {{width : "15%"}}>{item.scoresStr}</td>
                       <td style = {{width : "5%"}}>{item.goalConDiff}</td>
-                      <td style = {{width : "7%"}}>{item.pts}</td>
+                      <td style = {{width : "8%"}}>{item.pts}</td>
 
                     </tr>
                   )
@@ -3376,7 +3376,7 @@ tab()
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
                 <td style = {{width : "15%"}}>+/-</td>
-                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
             </thead>
@@ -3402,7 +3402,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
                       <td style = {{width : "15%"}}>{item.scoresStr}</td>
-                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
                     </tr>
