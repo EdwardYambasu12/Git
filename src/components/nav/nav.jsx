@@ -1252,7 +1252,7 @@ const Making = ({props})=>{
 
   console.log(host, "every single data of the user")
   return(
-    <div style = {{width : "100%", marginTop: "3.5%", justifyContent : "space-between", display : "flex", background : "white"}}>
+    <div style = {{width : "100%", marginTop: "4%", height : "50px", alighnItems : "center",  justifyContent : "space-between", display : "flex", background : "white"}}>
     <div style = {{display : "flex", width : "80%", overflowX : "auto" }}>
         {host.map((item)=>{
 
@@ -1260,7 +1260,7 @@ const Making = ({props})=>{
           if(item.title == "player"){
             return(
               <div  onClick = {()=>{navigate("player/"+house.id)}} style = {{margin : "1%"}}>
-                <img src = {"https://images.fotmob.com/image_resources/playerimages/"+house.id+".png"} style = {{width : "30px", height : "30px"}}></img> 
+                <img src = {"https://images.fotmob.com/image_resources/playerimages/"+house.id+".png"} style = {{width : "45px", height : "45px"}}></img> 
             
                 
               </div>
@@ -1270,7 +1270,7 @@ const Making = ({props})=>{
          else if(item.title == "league"){
             return(
               <div style = {{margin : "1%"}}  onClick = {()=>{navigate("leauges/"+house.id)}}>
-              <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+house.id+".png"} style = {{width : "30px", height : "30px"}}></img>
+              <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+house.id+".png"} style = {{width : "45px", height : "45px"}}></img>
                 
               </div>
             )
@@ -1279,7 +1279,7 @@ const Making = ({props})=>{
           else if(item.title == "team"){
             return(
               <div style = {{margin : "1%"}} onClick = {()=>{navigate("team/"+house.id)}}>
-             <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+house.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img>
+             <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+house.id+"_xsmall.png"} style = {{width : "45px", height : "45px"}}></img>
               </div>
             )
           }
