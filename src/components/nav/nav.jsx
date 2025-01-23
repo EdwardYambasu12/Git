@@ -60,7 +60,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
 import Modal from '@mui/material/Modal';
-import { Search } from "@mui/icons-material"
+import { HailOutlined, Search } from "@mui/icons-material"
 
 
 import AdSenseFluidAd from "./adsense_fluid.jsx"
@@ -720,7 +720,7 @@ const [side_news, setSidenews] = useState()
 //////////////
 	///////////////
 		////////////////LEAGUE SETUP FOR LARGER DEVICES/////////////
-
+const [prime, setPrime] = useState()
 	useEffect(()=>{
 
 		async function job(){
@@ -735,6 +735,7 @@ const [side_news, setSidenews] = useState()
     const done = JSON.parse(raw);
     const { data: users } = await axios.get(`${Line}/users`);
     const user = users.find(user => user.email === done.email && user.password === done.password);
+    setPrime(<Making props = {user}/>)
     console.log("requesting")
         if(user){
 
@@ -1165,10 +1166,12 @@ async function fetcher(){
 					<br></br>
 				<br></br>
 				<br></br>
-				<br></br>
+       <div style = {{marginTop : "2%"}}>
+        {prime} 
+        </div>
 				<div className = "state" >
 				<Drawer/>
-        
+       
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
 				<PWAWelcomingPopup/>
@@ -1227,3 +1230,64 @@ async function fetcher(){
 			</body>
 		)
 }
+
+
+const Making = ({props})=>{
+
+  var host = []
+  const navigate = useNavigate()
+
+  props.favorite_team.map((item)=>{
+    host.push({data : item, title : "team"})
+  })
+
+
+  props.favorite_player.map((item)=>{
+    host.push({data : item, title : "player"})
+  })
+
+  props.favorite_league.map((item)=>{
+    host.push({data : item, title : "league"})
+  })
+
+  console.log(host, "every single data of the user")
+  return(
+    <div style = {{width : "100%", marginTop: "3.5%", justifyContent : "space-between", display : "flex", background : "white"}}>
+    <div style = {{display : "flex", width : "80%", overflowX : "auto" }}>
+        {host.map((item)=>{
+
+          var house = JSON.parse(item.data)
+          if(item.title == "player"){
+            return(
+              <div  onClick = {()=>{navigate("player/"+house.id)}} style = {{margin : "1%"}}>
+                <img src = {"https://images.fotmob.com/image_resources/playerimages/"+house.id+".png"} style = {{width : "30px", height : "30px"}}></img> 
+            
+                
+              </div>
+            )
+          }
+
+         else if(item.title == "league"){
+            return(
+              <div style = {{margin : "1%"}}  onClick = {()=>{navigate("leauges/"+house.id)}}>
+              <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+house.id+".png"} style = {{width : "30px", height : "30px"}}></img>
+                
+              </div>
+            )
+          }
+
+          else if(item.title == "team"){
+            return(
+              <div style = {{margin : "1%"}} onClick = {()=>{navigate("team/"+house.id)}}>
+             <img src = {"https://images.fotmob.com/image_resources/logo/teamlogo/"+house.id+"_xsmall.png"} style = {{width : "30px", height : "30px"}}></img>
+              </div>
+            )
+          }
+        })}
+    </div>
+
+    <button  onClick={()=>{navigate("/follow_up")}}className = "btn btn-outline-warning">Add</button>
+    </div>
+  )
+}
+
