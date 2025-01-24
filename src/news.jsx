@@ -272,12 +272,25 @@ const News = () => {
             <div className="container">
                 <div className="blogs">
                     {articles.length > 0 ? (
-                        articles.map((article, index) => (
-                            <a
+                        articles.map((article, index) => 
+                            {
+                              var url 
+                              if(article.sourceStr === "FotMob" || article.sourceStr === "90min"){
+
+                               const baseUrl = "https://www.fotmob.com";
+                                const itemPageUrl = article.page.url; // Assuming item.page.url is a variable with the dynamic path
+
+                                url = `${baseUrl}${itemPageUrl}`;
+                              }
+
+                              else{
+                                url = article.page.url
+                              }
+                          return(
+                            <div
                                 key={index}
-                                href={article.page.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                onClick={()=>{window.open(url, "_blank", "noopener,noreferrer")}} 
+                               
                                 className="blog-card"
                             >
                                 <img style = {{borderRadius : "0"}} src={article.imageUrl} alt={article.title} />
@@ -292,8 +305,8 @@ const News = () => {
                                         <p>{timeAgo(article.gmtTime)}</p>
                                     </div>
                                 </div>
-                            </a>
-                        ))
+                            </div>
+                        )})
                     ) : (
                         <p>No articles available.</p>
                     )}

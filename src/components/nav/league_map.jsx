@@ -373,7 +373,7 @@ if(isFollowing === true){
   return (
     <div style={{ backgroundColor : `rgba(225, 225, 225, 0.1)`, height : "fit-content" }}>
          <header className="headerd">
-        <h1>SportsUp Leagues</h1>
+        <h2>SportsUp Leagues</h2>
         <p>Discover the latest Leagues, Tournaments, and Competitions from around the globe.</p>
       </header>
 

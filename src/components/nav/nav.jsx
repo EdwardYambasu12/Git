@@ -621,6 +621,7 @@ useEffect(()=>{
 
 
 const [side_news, setSidenews] = useState()
+const [lot_news, setLot]= useState()
 	useEffect(()=>{
 
 
@@ -628,6 +629,23 @@ const [side_news, setSidenews] = useState()
 		axios.get(Line+"/sportsup_news")
 		.then((res)=>{
 
+      var url
+      var num = Math.round(Math.random()*5)
+      if(res.data[num].sourceStr === "FotMob" || res.data[num].sourceStrr === "90min"){
+                              const baseUrl = "https://www.fotmob.com";
+                                const itemPageUrl = res.data[num].page.url; // Assuming item.page.url is a variable with the dynamic path
+
+                                url = `${baseUrl}${itemPageUrl}`;
+      }
+      else{
+        url = res.data[num].page.url;
+      }
+      setLot(
+        <Link onClick={()=>{window.open(url, "_blank", "noopener,noreferrer")}}  style = {{width : "100%", textDecoration : "none", marginTop: "3%", display : "flex", height : "50px", background : "white"}}>
+          <img src = {res.data[num].imageUrl} style =  {{borderRadius : "0", width : "30%", height : "50px"}}></img>
+          <p style = {{width : "70%", fontSize : "0.7em"}}><strong>{res.data[num].title}</strong></p>
+        </Link>
+      )
 			setSidenews(
 					res.data.map((item)=>{
 						 var url 
@@ -1172,6 +1190,7 @@ async function fetcher(){
 				<div className = "state" >
 				<Drawer/>
        
+       {lot_news}
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
 				<PWAWelcomingPopup/>
@@ -1237,14 +1256,16 @@ const Making = ({props})=>{
   var host = []
   const navigate = useNavigate()
 
+  props.favorite_player.map((item)=>{
+    host.push({data : item, title : "player"})
+  })
+
   props.favorite_team.map((item)=>{
     host.push({data : item, title : "team"})
   })
 
 
-  props.favorite_player.map((item)=>{
-    host.push({data : item, title : "player"})
-  })
+
 
   props.favorite_league.map((item)=>{
     host.push({data : item, title : "league"})
@@ -1286,7 +1307,7 @@ const Making = ({props})=>{
         })}
     </div>
 
-    <button  onClick={()=>{navigate("/follow_up")}}className = "btn btn-outline-warning">Add</button>
+    <button style = {{borderRadius : "50%"}}  onClick={()=>{navigate("/follow_up")}}className = "btn btn-outline-warning">➕</button>
     </div>
   )
 }
