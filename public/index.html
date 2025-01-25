@@ -94,22 +94,6 @@
       console.log(window.innerHeight)
       root.style.height = window.innerHeight
 
-      window.addEventListener("load", ()=>{
-
-        if("serviceWorker" in navigator){
-          navigator.serviceWorker.register("./serviceworker.js")
-          .then((reg)=> console.log("success : ", reg.scope))
-        .catch((e)=>{
-          console.log(e)
-        })
-        }
-
-        else{
-          console.log("Service workers are not supported in this browser.")
-        }
-        
-       
-      })
     </script>
   </body>
 </html>
