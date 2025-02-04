@@ -54,10 +54,10 @@ console.log(automain, "this is the counterpart")
           {/* Content */}
           <div style={{ position: "relative", zIndex: 10 }}>
             <h3 style={{  marginBottom: "10px" }}>
-            Welcome to SportsUp: Your Ultimate Sports Companion
+            Welcome to Lonescore: Your Ultimate Sports Companion
             </h3>
             <p style={{ fontSize: "1rem", maxWidth: "600px", margin: "0 auto" }}>
-            SportsUp is a comprehensive platform designed for sports enthusiasts who want to stay informed, connected, and engaged with their favorite sports, teams, leagues, and players. Whether you're a casual fan or a dedicated follower, SportsUp provides all the tools and content you need to elevate your sports experience. Here’s a deep dive into what SportsUp offers and how it can transform the way you interact with the sports world.
+            LoneScore is a comprehensive platform designed for sports enthusiasts who want to stay informed, connected, and engaged with their favorite sports, teams, leagues, and players. Whether you're a casual fan or a dedicated follower, SportsUp provides all the tools and content you need to elevate your sports experience. Here’s a deep dive into what SportsUp offers and how it can transform the way you interact with the sports world.
             </p>
 
             {/* Featured Image */}
