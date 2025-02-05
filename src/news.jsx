@@ -264,7 +264,7 @@ const News = () => {
 
             {/* Header */}
             <header className = "headerd">
-                <h1>SportsUp News</h1>
+                <h1>LoneScore News</h1>
                 <p>Discover the latest football news around the globe.</p>
             </header>
 
