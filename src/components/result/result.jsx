@@ -198,7 +198,7 @@ const Rest_assure = ({ props }) => {
             "name": homeTeam.name,
             "sport": "Football/Soccer",
             "logo": `https://images.fotmob.com/image_resources/logo/teamlogo/${homeTeam.id}.png`,
-            "url": `https://www.sportsupd.com/team/${homeTeam.id}`
+            "url": `https://www.lonescore.com/team/${homeTeam.id}`
         },
         "awayTeam": {
             "@context": "https://schema.org",
@@ -206,7 +206,7 @@ const Rest_assure = ({ props }) => {
             "name": awayTeam.name,
             "sport": "Football/Soccer",
             "logo": `https://images.fotmob.com/image_resources/logo/teamlogo/${awayTeam.id}.png`,
-            "url": `https://www.sportsupd.com/team/${awayTeam.id}`
+            "url": `https://www.lonescore.com/team/${awayTeam.id}`
         },
         "name": data.seo.eventJSONLD.name,
         "description": data.seo.eventJSONLD.description,
@@ -215,12 +215,12 @@ const Rest_assure = ({ props }) => {
         "location": data.seo.eventJSONLD.location,
         "organizer": {
             "@type": "Organization",
-            "name": "Sportsup",
-            "url": "https://www.sportsupd.com"
+            "name": "LoneScore",
+            "url": "https://www.lonescore.com"
         },
         "offers": {
             "@type": "Offer",
-            "url": `http://www.sportsupd.com/result/${matchId}`,
+            "url": `http://www.lonescore.com/result/${matchId}`,
             "price": "0",
             "priceCurrency": "USD"
         },
@@ -228,12 +228,12 @@ const Rest_assure = ({ props }) => {
             {
                 "@type": "SportsTeam",
                 "name": homeTeam.name,
-                "url": `https://www.sportsupd.com/team/${homeTeam.id}`
+                "url": `https://www.lonescore.com/team/${homeTeam.id}`
             },
             {
                 "@type": "SportsTeam",
                 "name": awayTeam.name,
-                "url": `https://www.sportsupd.com/team/${awayTeam.id}`
+                "url": `https://www.lonescore.com/team/${awayTeam.id}`
             }
         ]
     };
@@ -770,7 +770,7 @@ else{
                   <div>
                     <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
                       <h6><strong>{item.homePlayer.stats.playerRating}</strong></h6>
-                     <h6 className="text-secondary">Sportsup Rating</h6> 
+                     <h6 className="text-secondary">LoneScore Rating</h6> 
                      <h6><strong>{item.awayPlayer.stats.playerRating}</strong></h6></div>
                  <br/>
                   <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
@@ -2054,7 +2054,7 @@ function BasicModal({ open, handleClose, props, player }) {
                         <div><img style = {{height : "80px", width : "80px"}} src = {"https://images.fotmob.com/image_resources/playerimages/"+player.id+".png"} ></img></div>
                         <div><div><h6>{item.name}</h6></div>
                         {item.stats[0].stats["FotMob rating"]?
-                            <div><button className = "btn btn-info">{item.stats[0].stats["FotMob rating"].stat ? item.stats[0].stats["FotMob rating"].stat.value : ""}</button> <p className = "text-secondary">Sportsup Match Ratings</p></div>
+                            <div><button className = "btn btn-info">{item.stats[0].stats["FotMob rating"].stat ? item.stats[0].stats["FotMob rating"].stat.value : ""}</button> <p className = "text-secondary">LoneScore Match Ratings</p></div>
                         :""}
                         </div>
                                                     </div>
@@ -2079,7 +2079,7 @@ function BasicModal({ open, handleClose, props, player }) {
                                                                                   Object.entries(item.stats).map(([name, { key, stat }]) => {
                                                                                     var named
                                                                                     if(name == "FotMob rating"){
-                                                                                        named = "Sportsup Rating"
+                                                                                        named = "LoneScore Rating"
                                                                                     }
                                                                                     else {
                                                                                         named = name
@@ -3175,7 +3175,7 @@ tab()
                 <td style = {{width : "5%"}}>W</td>
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
-                <td style = {{width : "15%"}}>+/-</td>
+               
                 <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
@@ -3202,7 +3202,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.wins}</td>
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
-                      <td style = {{width : "15%"}}>{item.scoresStr}</td>
+                    
                       <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
@@ -3226,7 +3226,7 @@ tab()
                 <td style = {{width : "5%"}}>W</td>
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
-                <td style = {{width : "15%"}}>+/-</td>
+               
                 <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
@@ -3252,7 +3252,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.wins}</td>
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
-                      <td style = {{width : "15%"}}>{item.scoresStr}</td>
+                    
                       <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
@@ -3275,7 +3275,7 @@ tab()
                 <td style = {{width : "5%"}}>W</td>
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
-                <td style = {{width : "15%"}}>+/-</td>
+               
                 <td style = {{width : "5%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
@@ -3301,7 +3301,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.wins}</td>
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
-                      <td style = {{width : "15%"}}>{item.scoresStr}</td>
+                    
                       <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
@@ -3325,7 +3325,7 @@ tab()
                 <td style = {{width : "5%"}}>W</td>
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
-                <td style = {{width : "15%"}}>+/-</td>
+               
                 <td style = {{width : "5%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
@@ -3351,7 +3351,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.wins}</td>
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
-                      <td style = {{width : "15%"}}>{item.scoresStr}</td>
+                    
                       <td style = {{width : "5%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "8%"}}>{item.pts}</td>
 
@@ -3375,7 +3375,7 @@ tab()
                 <td style = {{width : "5%"}}>W</td>
                 <td style = {{width : "5%"}}>D</td>
                 <td style = {{width : "5%"}}>L</td>
-                <td style = {{width : "15%"}}>+/-</td>
+               
                 <td style = {{width : "8%"}}>GD</td>
                 <td style = {{width : "7%"}}>Pts</td>
               </tr>
@@ -3401,7 +3401,7 @@ tab()
                       <td style = {{width : "5%"}}>{item.wins}</td>
                       <td style = {{width : "5%"}}>{item.draws}</td>
                       <td style = {{width : "5%"}}>{item.losses}</td>
-                      <td style = {{width : "15%"}}>{item.scoresStr}</td>
+                    
                       <td style = {{width : "8%"}}>{item.goalConDiff}</td>
                       <td style = {{width : "7%"}}>{item.pts}</td>
 
@@ -3699,7 +3699,7 @@ useEffect(()=>{
     }
 
     return(
-            <div className = "container" style = {{background : "white", width : "100%", borderRadius : "10px"}}>
+            <div className = "container" style = {{background : "white", width : "95%", marginLeft : "2.5%", marginRight : "2.5%", borderRadius : "10px"}}>
 <div style = {{width  :"100%", display : "flex", justifyContent : "space-around"}}>
               <select  onChange={(val)=>{selectOptions(val.target.value)}} style = {{height : "30px", width : "150px", margin : "4%", borderRadius : "10px"}}>
                   <option>All</option>

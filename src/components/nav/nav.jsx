@@ -555,15 +555,15 @@ useEffect(()=>{
   setChoice(<div>{showInstallButton && (
 
        <div style = {{width : "100%", position : "fixed", bottom : "0%", justifyContent : "center", alignItems : "center", backgroundColor : "midnightblue"}}> 
-       <h3 className = "text-light text-center">Sportsup App Available</h3>
+       <h3 className = "text-light text-center">LoneScore App Available</h3>
        <hr/>
      
        <div style = {{width : "100%", justifyContent : "center", display : "flex"}}>
 
        <div style = {{justifyContent : "center", alignItems : "center", textAlign : "center"}}>
-         <img style = {{width : "50px", height : "50px", textAlign : "center"}} src = "https://www.sportsupd.com/icon.jpg"/>
+         <img style = {{width : "50px", height : "50px", textAlign : "center"}} src = "https://www.lonescore.com/icon.jpg"/>
          <br/>
-       <button className = "btn btn-warning" onClick={handleInstall}>DOWNLOAD SPORTSUP APP</button>
+       <button className = "btn btn-warning" onClick={handleInstall}>DOWNLOAD LONESCORE APP</button>
        <br/><br/>
         <button className = "btn btn-outline-light" onClick = {()=>{trapper()}}>Continue with the website</button>
         </div>
@@ -1128,7 +1128,7 @@ async function fetcher(){
 				
 					<div className="top_nav">
 					<div className = "brand">
-          <h1 style = {{display : "none"}}> Sportsup</h1>
+          <h1 style = {{display : "none"}}> LoneScore</h1>
 						<img  className = "brand_image" src = {require("../images/sportsup.png")}></img>
 					
 					</div>
@@ -1291,8 +1291,8 @@ const Making = ({props})=>{
          else if(item.title == "league"){
             return(
               <div style = {{margin : "1%"}}  onClick = {()=>{navigate("leauges/"+house.id)}}>
-              <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+house.id+".png"} style = {{width : "45px", height : "45px"}}></img>
-                
+              
+                <img src = {"https://images.fotmob.com/image_resources/logo/leaguelogo/"+house.id+".png"} style = {{width : "45px", height : "45px"}}></img>
               </div>
             )
           }
