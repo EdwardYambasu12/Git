@@ -32,6 +32,7 @@ import { Line } from 'react-chartjs-2';
 import { Scatter } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import AdSenseFluidAd from "../nav/adsense_fluid.jsx";
+import { blue } from "@mui/material/colors";
 
 ChartJS.register(CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -1799,8 +1800,8 @@ const Stats = ({props})=>{
           <div className = "container" style = {{width : "100%", background : "white", borderRadius : "10px"}}>
             <h6 className = "text-center">Ball Possession</h6>
               <div style = {{width : "100%", height : "30px", display : "flex", borderRadius : "7px", background : "gray"}}>
-                <div  style = {{width : `${sm_stats[0].stats[0].stats[0]}%`, borderBottomLeftRadius : "7px", borderTopLeftRadius : "7px",  height : "30px", display : "flex", background : "red", color : "white"}}>{sm_stats[0].stats[0].stats[0]}%</div>
-              <div style = {{width : `${sm_stats[0].stats[0].stats[1]}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "30px", display : "flex", background : "blue", textAlign : "right", color : "white"}}> {sm_stats[0].stats[0].stats[1]}% </div>
+                <div  style = {{width : `${sm_stats[0].stats[0].stats[0]}%`, borderBottomLeftRadius : "7px", borderTopLeftRadius : "7px",  height : "30px", display : "flex", background : `${data.content.stats.Periods.All.teamColors.lightMode.home}`, color : "white"}}>{sm_stats[0].stats[0].stats[0]}%</div>
+              <div style = {{width : `${sm_stats[0].stats[0].stats[1]}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "30px", display : "flex", background : `${data.content.stats.Periods.All.teamColors.lightMode.away}`, textAlign : "right", color : "white"}}> {sm_stats[0].stats[0].stats[1]}% </div>
               </div>
           </div>
         )
@@ -1912,14 +1913,29 @@ const HeadtoHead = ({props})=>{
     useEffect(()=>{
 
         if(main != null){
-        setTop(
-                <div>
+      
+            const total = main.summary[0] + main.summary[1] + main.summary[2]
+            const redWidth = (main.summary[0]/total) *100
+            const grayWidth = (main.summary[1]/total)*100
+            const blueWidth = (main.summary[2]/total) *100
 
-                <div style = {{width : "100%", height : "100px", alignItems : "center", display : "flex", justifyContent : "space-around", background : "white", borderRadius : "10px"}}>
+            console.log(total, redWidth, "this is the info for h2h")
+        setTop(
+                <div className = "container" style = {{borderRadius : "10px", background : "white"}}>
+
+                <div style = {{width : "100%", height : "100px", alignItems : "center", display : "flex", justifyContent : "space-around", }}>
                   <div style = {{ width : "14%",}}>  <div style = {{background : data.general.teamColors.lightMode.home, height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-light text-center"><strong>{main.summary[0]}</strong></h6></div> <p className = "text-center"><strong>Wins</strong></p></div>
                   <div style = {{ width : "14%",}}>  <div style = {{background : "#EEEEEE", height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-dark text-center"><strong>{main.summary[1]}</strong></h6></div> <p className = "text-center"><strong>Draw</strong></p></div>
                    <div style = {{ width : "14%",}}>  <div style = {{background : data.general.teamColors.lightMode.away, height : "40px", borderRadius : "40%", alignItems : "center", display : "flex", justifyContent : "center", width : "100%"}}><h6 className = "text-light text-center"><strong>{main.summary[2]}</strong></h6></div> <p className = "text-center"><strong>Wins</strong></p></div>
+              </div>
+               <div style = {{width : "100%", background : "black", height : "10px", display : "flex", borderRadius : "5px", overflow : "hidden"}}>
+                    <div style = {{width : `${redWidth}%`, height : "10px", backgroundColor : data.general.teamColors.lightMode.home  }}></div>
+                     <div style = {{width : `${grayWidth}%`, height : "10px", backgroundColor : "gray" }}></div>
+                      <div style = {{width : `${blueWidth}%`, height : "10px", backgroundColor : data.general.teamColors.lightMode.away }}></div>
                 </div>
+              
+
+                
                     
                 </div>
             )
