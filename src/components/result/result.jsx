@@ -1799,8 +1799,8 @@ const Stats = ({props})=>{
           <div className = "container" style = {{width : "100%", background : "white", borderRadius : "10px"}}>
             <h6 className = "text-center">Ball Possession</h6>
               <div style = {{width : "100%", height : "30px", display : "flex", borderRadius : "7px", background : "gray"}}>
-                <div  style = {{width : `${sm_stats[0].stats[0].stats[0]}%`, borderBottomLeftRadius : "7px", borderTopLeftRadius : "7px",  height : "30px", display : "flex", background : "red", color : "white"}}>{sm_stats[0].stats[0].stats[0]}</div>
-              <div style = {{width : `${sm_stats[0].stats[0].stats[1]}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "30px", display : "flex", background : "blue", textAlign : "right", color : "white"}}> {sm_stats[0].stats[0].stats[1]} </div>
+                <div  style = {{width : `${sm_stats[0].stats[0].stats[0]}%`, borderBottomLeftRadius : "7px", borderTopLeftRadius : "7px",  height : "30px", display : "flex", background : "red", color : "white"}}>{sm_stats[0].stats[0].stats[0]}%</div>
+              <div style = {{width : `${sm_stats[0].stats[0].stats[1]}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "30px", display : "flex", background : "blue", textAlign : "right", color : "white"}}> {sm_stats[0].stats[0].stats[1]}% </div>
               </div>
           </div>
         )
