@@ -1786,6 +1786,7 @@ const Stats = ({props})=>{
     const data = props
 
     const [regular_stats, setRegular] = useState()
+    const [possess, setPossess] = useState()
 
     useEffect(()=>{
            const stat = data.content.stats.Periods.All
@@ -1794,15 +1795,26 @@ const Stats = ({props})=>{
         const sm_stats = data.content.stats.Periods.All.stats
       
 
+        setPossess(
+          <div className = "container" style = {{width : "100%", background : "white", borderRadius : "10px"}}>
+            <h6 className = "text-center">Ball Possession</h6>
+              <div style = {{width : "100%", height : "30px", display : "flex", borderRadius : "7px", background : "gray"}}>
+                <div  style = {{width : `${sm_stats[0].stats[0].stats[0]}%`, borderBottomLeftRadius : "7px", borderTopLeftRadius : "7px",  height : "30px", display : "flex", background : "red", color : "white"}}>{sm_stats[0].stats[0].stats[0]}</div>
+              <div style = {{width : `${sm_stats[0].stats[0].stats[1]}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "30px", display : "flex", background : "blue", textAlign : "right", color : "white"}}> {sm_stats[0].stats[0].stats[1]} </div>
+              </div>
+          </div>
+        )
+
         setRegular(
                 <div>
                      <div style = {{background : "white", width : "100%", display : "flex", justifyContent : "center", borderRadius : "10px", marginTop : "5%"}}>
                 <ShotMapped data = {data.content.shotmap.shots} />
+              
                 </div>
                     {sm_stats.map((item)=>{
                             return(
 
-                            <div style = {{background : "white", borderRadius : "10px", marginTop : "5%"}}>
+                            <div style = {{background : "white", borderRadius : "10px", marginTop : "7%"}}>
                                 <h5 style = {{fontFamily : "monospace"}} className = "text-center text-dark">{item.title}</h5>
 
                                 {item.stats.map((item)=>{
@@ -1820,11 +1832,33 @@ const Stats = ({props})=>{
                                     mernd = {color : "white", background : stat.teamColors.lightMode.home, borderRadius : "10px"}
 
                                 }
+                                var sum = item.stats[0]+item.stats[1]
+                               var home_percent = item.stats[0] * 100 / sum
+                               var away_percent = item.stats[1] * 100 / sum
                                 return(
-                                        <div style = {{display : "flex", height: "40px", width : "100%", justifyContent : "space-between",}}>
-                            <h6 style = {mernd}><strong>{item.stats[0]}</strong></h6>
-                            <h6><strong>{item.title}</strong></h6>
-                            <h6 style = {mern}><strong>{item.stats[1]}</strong></h6>
+                                        <div style = {{  width : "100%", marginTop : "5%" }}>
+                                          <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}}>
+                                          <p>{item.stats[0]}</p>
+                                          <h6><strong>{item.title}</strong></h6>
+                                          <p>{item.stats[1]}</p>
+                                    
+                                          </div>
+                                          <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}>
+                                          <div style = {{width : "45%"}}>
+                          
+                            <div style = {{width : "100%", height : "10px", borderRadius : "7px", background : "lightgray"}}>
+                                  <div style= {{width : `${home_percent}%`, borderTopLeftRadius: "7px", borderBottomLeftRadius : "7px", height : "10px", background : stat.teamColors.lightMode.home  }}></div>
+                            </div>
+                            </div>
+
+                            <div style = {{width : "45%"}}>
+                          
+                          <div style = {{width : "100%", height : "10px", borderRadius : "7px", justifyContent : "right", background :  "lightgray", display : "flex"}}>
+                                <div style= {{width : `${away_percent}%`, borderTopRightRadius : "7px", borderBottomRightRadius : "7px", height : "10px", background :  stat.teamColors.lightMode.away }}></div>
+                          </div>
+                          </div>
+                          
+                            </div>
                         </div>
                                     )
 
@@ -1847,6 +1881,7 @@ const Stats = ({props})=>{
 
 return(
         <div className = "container" >
+     <div>{possess}</div>
             {regular_stats}
 
         </div>

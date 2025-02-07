@@ -281,7 +281,7 @@ body{
 .brand_image{
 	width: 70%;
 	height: 50px;
-	border-radius: 50%;
+	border-radius: 10px;
 }
 .mid_tab{
 
@@ -337,7 +337,7 @@ body{
 #submit_linked {
   text-decoration: none;
   display: flex;
-  justify-content: ;
+  justify-content: center ;
   margin-top:2%;
 }
 #toggle_bar button{

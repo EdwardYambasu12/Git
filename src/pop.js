@@ -28,13 +28,13 @@ const CookieConsentPopup = () => {
    <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
       <DialogTitle>
         <Box display="flex" alignItems="center">
-          <img src= {require("/components/images/sportsup.png")}  alt="Logo" style={{ marginRight: 8, width: 50 }} />
+          <img src= "https://lonescore.com/sportsup.png" alt="Logo" style={{ marginRight: 8, width: 50 }} />
           <Typography variant="h6">LoneScore - We Care About Your Privacy</Typography>
         </Box>
       </DialogTitle>
       <DialogContent>
         <Typography variant="body2" gutterBottom>
-          At <strong>SportsUp</strong>, we and our partners store and/or access information on your device, such as unique IDs in cookies, to process personal data. You can accept or manage your preferences below, including the right to object where legitimate interest is used. These choices will be signaled to our partners and won’t impact your browsing experience.
+          At <strong>LoneScore</strong>, we and our partners store and/or access information on your device, such as unique IDs in cookies, to process personal data. You can accept or manage your preferences below, including the right to object where legitimate interest is used. These choices will be signaled to our partners and won’t impact your browsing experience.
         </Typography>
         <Typography variant="body2" gutterBottom>
           <strong>We and our partners process data to provide:</strong>
