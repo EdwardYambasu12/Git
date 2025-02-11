@@ -21,7 +21,7 @@ import Timer from "./timer.js"
 import PrivacyPolicy from './PrivacyPolicy';
 import ErrorBoundary from "./ed.jsx"
 import Inner_News from "./inner_news.js"
-
+import { Analytics } from "@vercel/analytics/react"
 import CookieConsentPopup from "./pop.js"
 import "./components/result/result.css"
 import FollowPage from "./components/new_comers/second.js";
@@ -44,6 +44,7 @@ function App(){
   return(
 
       <div className = "app">
+      <Analytics/>
    
     <Router>
       <Routes>
