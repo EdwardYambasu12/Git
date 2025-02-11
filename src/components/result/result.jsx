@@ -9,6 +9,8 @@ import api from "../nav/details.js"
 import AudioPlayer from "./audioplayer.jsx";
 import axios from "axios"
 import Timer from "./timer.js"
+
+import Bracket from "./addup.jsx"
 import Trial from "./trial.jsx"
 import Head_to_Head from "./h2h.js"
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
@@ -249,6 +251,7 @@ const Rest_assure = ({ props }) => {
         if (item === "injured") return <Injured props={data} />;
         if (item === "stats") return <Stats props={data} />;
         if (item === "table") return <Table props={data} league={league} />;
+        if(item === "knockout") return <KnockOut data = {data}/>
         if (item === "head to head") return <HeadtoHead props={data} />;
     };
 
@@ -3782,3 +3785,14 @@ useEffect(()=>{
 
 
 
+
+
+
+const KnockOut = ({data})=>{
+
+
+return(
+            <Bracket data = {data.content.playoff}/>
+    )
+
+}
