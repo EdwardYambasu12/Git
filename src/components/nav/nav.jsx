@@ -1184,13 +1184,11 @@ async function fetcher(){
 					<br></br>
 				<br></br>
 				<br></br>
-       <div style = {{marginTop : "2%"}}>
-        {prime} 
-        </div>
+       
 				<div className = "state" >
 				<Drawer/>
        
-       {lot_news}
+					
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
 				<PWAWelcomingPopup/>
