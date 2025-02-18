@@ -9,6 +9,7 @@ import api from "../nav/details.js"
 import AudioPlayer from "./audioplayer.jsx";
 import axios from "axios"
 import Timer from "./timer.js"
+import VideoPlayer from "./vid.js"
 
 import Bracket from "./addup.jsx"
 import Trial from "./trial.jsx"
@@ -637,8 +638,13 @@ const Info = ({props })=>{
 
     const data = props[0]
     var ticker = props[2]
-   
-  
+   const video_data = JSON.parse(sessionStorage.getItem("video"))
+   console.log(video_data, "Video Data")
+
+
+
+
+
     const [audio, setAudio] = useState()
     const replacement =" https://www.bing.com/images/search?view=detailV2&ccid=hzIbAsJ%2f&id=D6AF153162164F6E0A2C3133813AB7479BD696F8&thid=OIP.hzIbAsJ_xX9L4TfdzxWGtQAAAA&mediaurl=https%3a%2f%2fwww.pngkey.com%2fpng%2ffull%2f349-3499617_person-placeholder-person-placeholder.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.87321b02c27fc57f4be137ddcf1586b5%3frik%3d%252bJbWm0e3OoEzMQ%26pid%3dImgRaw%26r%3d0&exph=377&expw=377&q=human+placeholder&simid=608042511054100806&FORM=IRPRST&ck=12372B13B16E8130F69590AD2A2940FD&selectedIndex=2&itb=1"
     const [pump, setPump]  = useState()
@@ -670,9 +676,42 @@ const Info = ({props })=>{
     const [headrecord, setHeadrecord] = useState()
     const [match_news, setmatchNews] = useState()
     const [match_odds, setMatch_odds] = useState()
+    const [vid, setVid] = useState()
     const navigate = useNavigate()
     useEffect(()=>{
+            var nik = []
+               video_data.data.map((item)=>{
+    if(item.homeName === data.header.teams[0].name ){
+        nik.push(item)
+    }
 
+    else if(item.awayName === data.header.teams[1].name){
+        nik.push(item)
+    }
+   })
+
+            async function dik(){
+            
+                console.log(nik, "first")
+                if(nik.length > 0){
+                 await axios.get(`${Lined}/animation`,
+          {
+            params : {id : nik[0].matchId}
+          }
+        )
+                .then((res)=>{
+                    console.log(res.data, "main animation data")
+                    setVid(
+                                   <VideoPlayer props = {res.data.data.videoUrl}/>
+                        )
+                })  
+
+            }
+
+
+
+        }
+        dik()
           async function asap(){
               
         const news_data = await axios.get(`${Lined}/match_news`,
@@ -1592,6 +1631,8 @@ const labels = moment.map(item => item.minute);
              <br></br>
 
                         {pending_var}
+                        <br/>
+                        {vid}
 
                         
 

@@ -625,7 +625,11 @@ const [lot_news, setLot]= useState()
 	useEffect(()=>{
 
 
-
+    axios.get(Line+"/get_video_data")
+    .then((res)=>{
+      const stringer = JSON.stringify(res.data)
+      sessionStorage.setItem("video", stringer)
+    })
 		axios.get(Line+"/sportsup_news")
 		.then((res)=>{
 
