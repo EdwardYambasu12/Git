@@ -453,10 +453,17 @@ const Result = ()=>{
 
 const id = useParams()
 const [palma, setPalma] = useState()
-
+const {state} = useLocation()
+console.log(state, "Location data generated")
+const navigate = useNavigate()
 
 const [data, setData] = useState()
-const [dd, setD] = useState(<div>
+const [dd, setD] = useState()
+
+useEffect(()=>{
+        if(state === null){
+            setD(
+                    <div>
 
     <Skeleton variant="rectangular" width={"100%"} height={160} />
 
@@ -464,7 +471,62 @@ const [dd, setD] = useState(<div>
 
     <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
 
-    </div>)
+    </div>
+                )
+        }
+
+        else{
+            setD(
+
+                <div  className="header">
+            <div style={{ background: "white", borderBottom: "solid #EEEEEE", borderWidth: "3px" }}>
+                <div>
+                    <div id="background">
+                        {/* Background content if any */}
+                    </div>
+                    <div style={{ width: "100%", position: "absolute", top: "0%" }}>
+                        <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginTop: "1.5%" }}>
+                            <ArrowBackIcon onClick={() => navigate(-1)} style={{ color: "black", cursor: 'pointer' }} />
+                           
+                        </div>
+                        <br></br>
+                        <div className="main_row">
+                            <div style={{ width: "40%" }} onClick={() => { navigate("/team/" + state.home.id);  }}>
+                                 <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${state.home.id}_xsmall.png`} className = "team_logos" loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                                <br />
+                                <br />
+                                <h6 style = {{fontSize : "0.8em"}} className="text-dark" id="break-down">{state.home.name}</h6>
+                            </div>
+                            <div>
+                                <div style={{ display: "flex", transform: `translateX(25%)`, justifyContent: "space-between", width: "100%" }}>
+                                    <h1 className="text-dark">{state.home.score}</h1>
+                                    <h1 className="text-dark" style={{ marginLeft: "2%", marginRight: "2%" }}>:</h1>
+                                    <h1 className="text-dark text-center">{state.away.score}</h1>
+                                </div>
+                                <h6 style={{ transform: `translateX(25%)` }} className="text-center text-danger">LoneScore</h6>
+                            </div>
+                            <div id="awaya" style={{ width: "40%" }} onClick={() => { navigate("/team/" + state.away.id); }}>
+                                 <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${state.away.id}_xsmall.png`} className = "team_logos" loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                                <br />
+                                <br />
+                                <h6 className="text-dark" style = {{fontSize : "0.8em"}} id="break-down">{state.away.name}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                 
+                </div>
+            </div>
+            
+    <br></br>
+
+    <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />
+        </div>
+        
+
+                )
+        }
+}, [])
 
 const [isScrolled, setIsScrolled] = useState(false);
   const handleScrollRemoval = () => {

@@ -64,7 +64,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0.5%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd" sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0%", width : "100%", }} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"

@@ -187,10 +187,12 @@ const All_Matches = ({props}) => {
             }
 
             return (
+
+
               <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
@@ -368,7 +370,7 @@ useEffect(()=>{
               <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />

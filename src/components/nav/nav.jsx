@@ -68,7 +68,7 @@ import PWAWelcomingPopup from "../new_comers/first.js"
 
 
 function LabelBottomNavigation() {
-  const [value, setValue] = React.useState('Matches');
+  const [value, setValue] = React.useState('matches');
   const navigate = useNavigate()
 
   const handleChange = (event, newValue) => {
@@ -76,7 +76,7 @@ function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0.5%", width : "95%", left : "2.5%", right : "2.5%",  borderRadius : "7px"}} value={value} onChange={handleChange}>
+    <BottomNavigation id = "shadowd"  sx={{boxShadow : ` 0 10px 10px rgba(1, 23, 44, 0.1)`, position: 'fixed', bottom: "0%", width : "100%", }} value={value} onChange={handleChange}>
      <BottomNavigationAction
         label="Matches"
         value="matches"
@@ -1149,7 +1149,7 @@ async function fetcher(){
         value={value}
         onChange={handleChange}
         TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"
-      	sx = {{background : "white", }}
+      	sx = {{background : `radial-gradient(circle, #EEEEEE, #FFFFFF)`}}
 
       	className = "mid_tab"
       	id = "idl"
@@ -1186,7 +1186,7 @@ async function fetcher(){
 				<br></br>
        
 				<div className = "state" >
-				<Drawer/>
+		
        
 					
           
