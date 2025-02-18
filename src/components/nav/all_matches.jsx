@@ -378,7 +378,7 @@ useEffect(()=>{
                     </div>
                     <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
                     <div>
-                      {match.status.aggregatedStr ?  <small style = {{fontSize : "0.7em"}} className = "text-center text-secondary">{match.status.aggregatedStr}</small>: <></>}
+                      {match.status.aggregatedStr ?  <small style = {{fontSize : "0.7em"}} className = "text-center text-secondary">({match.status.aggregatedStr})</small>: <></>}
                       <br/>
                       <strong>{status}</strong>
                      
