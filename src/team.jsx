@@ -1321,7 +1321,9 @@ const Info = ({ data }) => {
 
         ////////////////////////////////////////STATS
         if (data.overview.topPlayers != null){
-                if(data.overview.topPlayers.byAssists.players){
+
+
+                if(data.overview.topPlayers.byAssists && data.overview.topPlayers.byGoals && data.overview.topPlayers.byRating){
 
 
                         setStats(
@@ -1423,7 +1425,8 @@ const Info = ({ data }) => {
                                                 </div>
                                     </div>
                         )
-                    }
+                    
+              }
         }
         ///////////////////////////////////////VENUE
 

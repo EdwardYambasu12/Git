@@ -371,6 +371,9 @@ if(data.header.events != null && data.header.events != null) {
                         </div>
                     </div>
 
+
+                 {data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>}
+
                     <div className="container" style={{ justifyContent: "space-between", marginTop: "4%", width: "100%", display: "flex" }}>
                         <div style={{  maxHeight: "100px", overflowY: "auto", }}>{hommie}</div>
                         <div style={{ maxHeight: "120px", overflowY: "auto" }}>{awayer}</div>
@@ -517,7 +520,7 @@ useEffect(()=>{
                  
                 </div>
             </div>
-            
+
     <br></br>
 
     <Skeleton className = "container" variant="rectangular" width={"100%"} height={window.innerHeight-160} />

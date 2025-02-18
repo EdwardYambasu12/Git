@@ -244,7 +244,7 @@ const All_Matches = ({props}) => {
 
     const intervalId = setInterval(() => {
       fetchData();
-    }, 10000); // Fetch every 5 seconds
+    }, 3000); // Fetch every 5 seconds
 
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, [props]);
@@ -349,7 +349,7 @@ useEffect(()=>{
 
 
             if (!match.status.started && !match.status.cancelled) {
-              status = timeString;
+              status = <small style = {{fontSize : "0.7em"}}>{timeString}</small>;
               live = <div onClick={() => togglePin(match)} style={{ cursor: 'pointer' }}>
                 {isPinned ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </div>;
@@ -377,14 +377,20 @@ useEffect(()=>{
                        {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                     </div>
                     <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
+                    <div>
+                      {match.status.aggregatedStr ?  <small style = {{fontSize : "0.7em"}} className = "text-center text-secondary">{match.status.aggregatedStr}</small>: <></>}
+                      <br/>
                       <strong>{status}</strong>
-                      {aud}
+                     
+                      </div>
+                    
+                       
                     </div>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                        {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
-                     
+                       {aud}
                     </div>
                   </Link>
                 </div>
