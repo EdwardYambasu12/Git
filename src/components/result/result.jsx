@@ -702,7 +702,12 @@ const Info = ({props })=>{
                 .then((res)=>{
                     console.log(res.data, "main animation data")
                     setVid(
-                                   <VideoPlayer props = {res.data.data.videoUrl}/>
+                      <div>
+                        {res.data.data != null ? 
+                      <VideoPlayer props = {res.data.data.videoUrl}/>
+                        : <div></div>
+                        }
+                          </div>
                         )
                 })  
 
