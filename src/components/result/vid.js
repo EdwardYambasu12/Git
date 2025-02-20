@@ -34,8 +34,8 @@ const VideoPlayer = ({props}) => {
   }, [videoSrc]); // Only run this effect if videoSrc changes
 
   return (
-    <div className="container">
-      <video ref={videoRef} style={{ height: '200px' }} controls>
+    <div className="container" style= {{width : "100%", background : " white"}}>
+      <video ref={videoRef} style={{ height: '200px', width : "100%",}} controls>
         Your browser does not support the video tag, or HLS is not supported.
       </video>
     </div>
