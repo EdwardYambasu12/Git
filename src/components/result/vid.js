@@ -6,6 +6,8 @@ const VideoPlayer = ({props}) => {
   const videoSrc = props;
 
   useEffect(() => {
+
+    if(videoSrc != null){
     // Check if Hls.js is supported by the browser
     if (Hls.isSupported()) {
       const hls = new Hls(); // Create a new HLS instance
@@ -31,6 +33,7 @@ const VideoPlayer = ({props}) => {
       console.log('HLS not supported in this browser');
       // Optionally, display a message or fallback content
     }
+  }
   }, [videoSrc]); // Only run this effect if videoSrc changes
 
   return (
