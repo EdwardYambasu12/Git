@@ -385,7 +385,7 @@ const Field = ({ players }) => {
     position: 'relative',
     width: '100%', // Full width
     height: '70%', // Taller height for portrait mode
-    backgroundColor: 'darkgray',
+    backgroundColor: '#4CAF50',
     borderTopRadius : "10px"
   };
 
@@ -1281,12 +1281,12 @@ const Info = ({ data }) => {
   return(
 
   <div >
-    <div style = {{background : "#EEEEEE", width : "100%", borderRadius : "10px"}}>
+    <div style = {{ width : "100%", borderRadius : "10px"}}>
 
     {tabled}
 
     </div>
-<AdSenseAd/>
+
     <div style = {{marginTop : "8%", height : "630px"}}>
         {towt}
     </div>
