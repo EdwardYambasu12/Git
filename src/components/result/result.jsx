@@ -678,17 +678,37 @@ const Info = ({props })=>{
     const [match_odds, setMatch_odds] = useState()
     const [vid, setVid] = useState()
     const navigate = useNavigate()
+    
     useEffect(()=>{
-            var nik = []
-               video_data.data.map((item)=>{
-    if(item.homeName === data.header.teams[0].name ){
-        nik.push(item)
+       let nik = [];
+    
+    // Check if video_data is available
+    if (video_data != null && video_data.data) {
+        video_data.data.forEach((item) => {
+            if (item.homeName === data.header.teams[0].name) {
+                nik.push(item);
+            } else if (item.awayName === data.header.teams[1].name) {
+                nik.push(item);
+            }
+        });
+    } 
+    // Fetch video data if it's null
+    else if (video_data === null) {
+        axios.get(Line + "/get_video_data")
+            .then((res) => {
+                const { data } = res; // Destructure here to get 'data'
+                data.forEach((item) => {
+                    if (item.homeName === data.header.teams[0].name) {
+                        nik.push(item);
+                    } else if (item.awayName === data.header.teams[1].name) {
+                        nik.push(item);
+                    }
+                });
+            })
+            .catch((err) => {
+                console.error("Error fetching video data", err);
+            });
     }
-
-    else if(item.awayName === data.header.teams[1].name){
-        nik.push(item)
-    }
-   })
 
             async function dik(){
             
