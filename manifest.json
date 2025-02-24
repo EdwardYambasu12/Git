@@ -1,6 +1,6 @@
 {
-  "short_name": "SportsUp",
-  "name": "SportsUp Live Scores",
+  "short_name": "LoneScore",
+  "name": "LoneScore Live Scores",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -16,5 +16,5 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#2196f3",
-  "background_color": "#ffffff"
+  "background_color": "#000000"
 }

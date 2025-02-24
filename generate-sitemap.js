@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Define your website URL
-const BASE_URL = 'https://sportsupd.com';
+const BASE_URL = 'https://lonescore.com';
 
 // Define the paths of your website
 const pages = [
