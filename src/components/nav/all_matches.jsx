@@ -48,6 +48,9 @@ const All_Matches = ({props}) => {
   const [audio, setAudio]= useState([])
   const [much, setMuch] = useState()
   var renderMatches
+  let video_data = JSON.parse(sessionStorage.getItem("video"))
+
+
 
   useEffect(()=>{
       setFollowing(<div></div>)
@@ -344,8 +347,9 @@ useEffect(()=>{
               }
           })
 
+          let boolcheck 
 
-         
+     
 
 
             if (!match.status.started && !match.status.cancelled) {
