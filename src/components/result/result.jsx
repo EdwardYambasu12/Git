@@ -687,7 +687,7 @@ const Info = ({props })=>{
         video_data.data.forEach((item) => {
             if (item.homeName === data.header.teams[0].name) {
                 nik.push(item);
-            } else if (item.awayName === data.header.teams[1].name) {
+            } else if (item.guestName === data.header.teams[1].name) {
                 nik.push(item);
             }
         });
@@ -700,7 +700,7 @@ const Info = ({props })=>{
                 data.forEach((item) => {
                     if (item.homeName === data.header.teams[0].name) {
                         nik.push(item);
-                    } else if (item.awayName === data.header.teams[1].name) {
+                    } else if (item.guestName === data.header.teams[1].name) {
                         nik.push(item);
                     }
                 });
