@@ -15,7 +15,22 @@ import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
 
+const AdBanner = () => {
+  useEffect(() => {
+    // Check if 'aclib' is loaded and then run the ad
+    if (window.aclib) {
+      window.aclib.runBanner({
+        zoneId: '9603006',
+      });
+    }
+  }, []);
 
+  return (
+    <div>
+      {/* Ad Banner Container */}
+    </div>
+  );
+};
 const AdComponent = ({ adClient, adSlot }) => {
   useEffect(() => {
     if (window.adsbygoogle && typeof window.adsbygoogle.push === "function") {
@@ -424,7 +439,7 @@ useEffect(()=>{
       <div>
       {following}
      
-       
+       <AdBanner/>
        { renderMatches}
 
         </div>
