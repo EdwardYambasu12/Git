@@ -25,7 +25,7 @@ import { Analytics } from "@vercel/analytics/react"
 import CookieConsentPopup from "./pop.js"
 import "./components/result/result.css"
 import FollowPage from "./components/new_comers/second.js";
-
+import Fotter from "./footer.jsx"
 function App(){
 
 

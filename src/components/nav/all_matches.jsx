@@ -404,9 +404,11 @@ useEffect(()=>{
 
       <div>
       {following}
-     
+
        
        { renderMatches}
+
+        
 
         </div>
       )}

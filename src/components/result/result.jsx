@@ -678,12 +678,12 @@ const Info = ({props })=>{
     const [match_odds, setMatch_odds] = useState()
     const [vid, setVid] = useState()
     const navigate = useNavigate()
+           let nik = [];
     
     useEffect(()=>{
-       let nik = [];
-    
+
     // Check if video_data is available
-    if (video_data != null && video_data.data) {
+    if (video_data != null) {
         video_data.data.forEach((item) => {
             if (item.homeName === data.header.teams[0].name) {
                 nik.push(item);
@@ -694,16 +694,18 @@ const Info = ({props })=>{
     } 
     // Fetch video data if it's null
     else if (video_data === null) {
-        axios.get(Line + "/get_video_data")
+       
+        axios.get(Lined + "/get_video_data")
             .then((res) => {
-                const { data } = res; // Destructure here to get 'data'
-                data.forEach((item) => {
-                    if (item.homeName === data.header.teams[0].name) {
-                        nik.push(item);
-                    } else if (item.guestName === data.header.teams[1].name) {
-                        nik.push(item);
-                    }
-                });
+                const datam = res.data; // Destructure here to get 'data'
+                console.log(datam, data, "DATA")
+                datam.data.forEach((item) => {
+            if (item.homeName === data.header.teams[0].name) {
+                nik.push(item);
+            } else if (item.guestName === data.header.teams[1].name) {
+                nik.push(item);
+            }
+        });
             })
             .catch((err) => {
                 console.error("Error fetching video data", err);
@@ -1644,7 +1646,7 @@ const labels = moment.map(item => item.minute);
 
             
                 }
-    }, [data])
+    }, [data, nik])
    
  
 

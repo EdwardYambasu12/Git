@@ -1195,7 +1195,7 @@ async function fetcher(){
 					
           
 			<div style={{marginTop : "3%"}}>{statement}</div>
-				<PWAWelcomingPopup/>
+			
 </div>
 <br></br>
 <br></br>
@@ -1223,7 +1223,7 @@ async function fetcher(){
 
 			</div>
 
-			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}><AdSenseFluidAd/>{statement}
+			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}>{statement}
 
       </div>
 			
@@ -1243,11 +1243,30 @@ async function fetcher(){
 	</div>		
 </div>
 
-{toggle}
- 
+        {toggle}
+
            {cookie_jar}
 
             <div> {choice}</div>
+            <footer className="footer">
+      <div className="circle left"></div> {/* Left Circle */}
+      <div className="footer-content">
+        <p>© Copyright 2025 LoneScore</p>
+        <div className="links">
+       
+          <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+        <p>The use of automatic services (robots, crawlers, etc.) is not permitted.</p>
+        <div className="social-icons">
+          <a href="#"><i className="fab fa-tiktok"></i></a>
+          <a href="#"><i className="fab fa-instagram"></i></a>
+          <a href="#"><i className="fab fa-facebook"></i></a>
+          <a href="#"><i className="fab fa-linkedin"></i></a>
+          <a href="#"><i className="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+      <div className="circle right"></div> {/* Right Circle */}
+    </footer>
 			</body>
 		)
 }
