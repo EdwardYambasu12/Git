@@ -16,37 +16,34 @@ import { Headphones } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
 
 const AdComponent = () => {
+  const adContainerRef = useRef(null);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
+    script.async = true;
     script.src = "//www.highperformanceformat.com/1e765ce94f7aef922abaaeb2edd9ae1b/invoke.js";
-    document.body.appendChild(script);
+
+    // Define ad options before loading the script
+    window.atOptions = {
+      key: "1e765ce94f7aef922abaaeb2edd9ae1b",
+      format: "iframe",
+      height: 60,
+      width: 468,
+      params: {},
+    };
+
+    adContainerRef.current.appendChild(script);
 
     return () => {
-      document.body.removeChild(script); // Clean up the script on component unmount
+      // Clean up script when component unmounts
+      adContainerRef.current.innerHTML = "";
     };
   }, []);
 
-  return (
-    <div>
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{
-          __html: `
-            atOptions = {
-              'key' : '1e765ce94f7aef922abaaeb2edd9ae1b',
-              'format' : 'iframe',
-              'height' : 60,
-              'width' : 468,
-              'params' : {}
-            };
-          `,
-        }}
-      />
-      <div id="ad-container"></div>
-    </div>
-  );
+  return <div ref={adContainerRef}></div>;
 };
+
 
 const All_Matches = ({props}) => {
 
