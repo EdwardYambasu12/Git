@@ -14,37 +14,50 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
-/*
+
 const AdComponent = () => {
-  const adContainerRef = useRef(null);
+   useEffect(() => {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "//www.highperformanceformat.com/1e765ce94f7aef922abaaeb2edd9ae1b/invoke.js";
+        script.async = true;
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.async = true;
-    script.src = "//www.highperformanceformat.com/1e765ce94f7aef922abaaeb2edd9ae1b/invoke.js";
+        const atOptions = {
+            key: "1e765ce94f7aef922abaaeb2edd9ae1b",
+            format: "iframe",
+            height: 60,
+            width: window.innerWidth, // Make it full width
+            params: {},
+        };
 
-    // Define ad options before loading the script
-    window.atOptions = {
-      key: "1e765ce94f7aef922abaaeb2edd9ae1b",
-      format: "iframe",
-      height: 60,
-      width: 468,
-      params: {},
-    };
+        window.atOptions = atOptions;
 
-    adContainerRef.current.appendChild(script);
+        const adContainer = document.getElementById("ad-container");
+        if (adContainer) {
+            adContainer.innerHTML = "";
+            adContainer.appendChild(script);
+        }
 
-    return () => {
-      // Clean up script when component unmounts
-      adContainerRef.current.innerHTML = "";
-    };
-  }, []);
+        const handleResize = () => {
+            if (adContainer) {
+                adContainer.style.width = `${window.innerWidth}px`;
+            }
+        };
 
-  return <div ref={adContainerRef}></div>;
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    return (
+        <div id="ad-container" style={{ width: "100vw", height: "60px", overflow: "hidden" }}>
+        </div>
+    );
 };
 
-*/
+
 const All_Matches = ({props}) => {
 
   console.log(props, "props")
@@ -434,7 +447,7 @@ useEffect(()=>{
       <div>
       {following}
 
-       
+       <AdComponent/>
        { renderMatches}
 
         
