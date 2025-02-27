@@ -55,6 +55,50 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
 import AdSenseFluidAd from "./components/nav/adsense_fluid.jsx";
 
+
+const AdComponent = () => {
+   useEffect(() => {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "//www.highperformanceformat.com/1e765ce94f7aef922abaaeb2edd9ae1b/invoke.js";
+        script.async = true;
+
+        const atOptions = {
+            key: "1e765ce94f7aef922abaaeb2edd9ae1b",
+            format: "iframe",
+            height: 60,
+            width: window.innerWidth, // Make it full width
+            params: {},
+        };
+
+        window.atOptions = atOptions;
+
+        const adContainer = document.getElementById("ad-container");
+        if (adContainer) {
+            adContainer.innerHTML = "";
+            adContainer.appendChild(script);
+        }
+
+        const handleResize = () => {
+            if (adContainer) {
+                adContainer.style.width = `${window.innerWidth}px`;
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    return (
+        <div id="ad-container" style={{ width: "100vw", height: "60px", overflow: "hidden" }}>
+        </div>
+    );
+};
+
+
 function LabelBottomNavigation() {
   const [value, setValue] = React.useState('News');
   const navigate = useNavigate()
@@ -267,7 +311,7 @@ const News = () => {
                 <h1>LoneScore News</h1>
                 <p>Discover the latest football news around the globe.</p>
             </header>
-
+<AdComponent/ >
             {/* Main Content */}
             <div className="container">
                 <div className="blogs">
