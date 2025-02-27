@@ -14,7 +14,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
-
+/*
 const AdComponent = () => {
   const adContainerRef = useRef(null);
 
@@ -44,7 +44,7 @@ const AdComponent = () => {
   return <div ref={adContainerRef}></div>;
 };
 
-
+*/
 const All_Matches = ({props}) => {
 
   console.log(props, "props")
@@ -434,7 +434,7 @@ useEffect(()=>{
       <div>
       {following}
 
-       <AdComponent/>
+       
        { renderMatches}
 
         
