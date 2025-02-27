@@ -15,6 +15,38 @@ import Stack from '@mui/material/Stack';
 import { Headphones } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
 
+const AdComponent = () => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "//www.highperformanceformat.com/1e765ce94f7aef922abaaeb2edd9ae1b/invoke.js";
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script); // Clean up the script on component unmount
+    };
+  }, []);
+
+  return (
+    <div>
+      <script
+        type="text/javascript"
+        dangerouslySetInnerHTML={{
+          __html: `
+            atOptions = {
+              'key' : '1e765ce94f7aef922abaaeb2edd9ae1b',
+              'format' : 'iframe',
+              'height' : 60,
+              'width' : 468,
+              'params' : {}
+            };
+          `,
+        }}
+      />
+      <div id="ad-container"></div>
+    </div>
+  );
+};
 
 const All_Matches = ({props}) => {
 
@@ -405,7 +437,7 @@ useEffect(()=>{
       <div>
       {following}
 
-       
+       <AdComponent/>
        { renderMatches}
 
         
