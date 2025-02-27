@@ -55,7 +55,6 @@ import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import { Tabs, Tab,  CircularProgress, Skeleton  } from '@mui/material';
 import AdSenseFluidAd from "./components/nav/adsense_fluid.jsx";
 
-
 const AdComponent = () => {
    useEffect(() => {
         const script = document.createElement("script");
@@ -81,7 +80,7 @@ const AdComponent = () => {
 
         const handleResize = () => {
             if (adContainer) {
-                adContainer.style.width = `${window.innerWidth}px`;
+                adContainer.style.width = `100%`;
             }
         };
 
@@ -93,7 +92,7 @@ const AdComponent = () => {
     }, []);
 
     return (
-        <div id="ad-container" style={{ width: "100vw", height: "60px", overflow: "hidden" }}>
+        <div id="ad-container" className = "container" style={{ width: "100%", height: "60px", overflow: "hidden" }}>
         </div>
     );
 };

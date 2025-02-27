@@ -678,11 +678,13 @@ const Info = ({props })=>{
     const [match_odds, setMatch_odds] = useState()
     const [vid, setVid] = useState()
     const navigate = useNavigate()
-           let nik = [];
-    
+      let nik = [];     
+
     useEffect(()=>{
 
-    // Check if video_data is available
+    
+        console.log(video_data, "New effect")
+        // Check if video_data is available
     if (video_data != null) {
         video_data.data.forEach((item) => {
             if (item.homeName === data.header.teams[0].name) {
@@ -739,6 +741,10 @@ const Info = ({props })=>{
 
         }
         dik()
+    }, [nik])
+    useEffect(()=>{
+
+    
           async function asap(){
               
         const news_data = await axios.get(`${Lined}/match_news`,
@@ -1646,7 +1652,7 @@ const labels = moment.map(item => item.minute);
 
             
                 }
-    }, [data, nik])
+    }, [data])
    
  
 
