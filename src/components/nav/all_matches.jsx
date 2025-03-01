@@ -270,7 +270,7 @@ const All_Matches = ({props}) => {
 
     const intervalId = setInterval(() => {
       fetchData();
-    }, 3000); // Fetch every 5 seconds
+    }, 5000); // Fetch every 5 seconds
 
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, [props]);
