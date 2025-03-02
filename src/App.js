@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import {BrowserRouter as Router, Routes, Route, useLocation} from "react-router-dom"
 import {React, useEffect} from "react"
 import Home from "./components/home"
 import {generateToken, messaging} from "./Notification/firebase.js"
@@ -26,6 +26,18 @@ import CookieConsentPopup from "./pop.js"
 import "./components/result/result.css"
 import FollowPage from "./components/new_comers/second.js";
 import Fotter from "./footer.jsx"
+
+const useEzoicAds = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.ezstandalone) {
+      window.ezstandalone.destroyPlaceholders();
+window.ezstandalone.showAds();
+  }, [location.pathname]);
+};
+
+
 function App(){
 
 
@@ -45,6 +57,7 @@ function App(){
 
       <div className = "app">
       <Analytics/>
+   <useEzoicAds/>
    
     <Router>
       <Routes>
