@@ -12,7 +12,7 @@ import Line from "../../line.js";
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { Headphones } from "@mui/icons-material";
+import { Headphones, OndemandVideo } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
 
 const AdComponent = () => {
@@ -60,7 +60,7 @@ const AdComponent = () => {
 
 const All_Matches = ({props}) => {
 
-  console.log(props, "props")
+
 
   const [leagues, setLeagues] = useState([]);
   const [matchPinnedStatus, setMatchPinnedStatus] = useState({});
@@ -90,7 +90,7 @@ const All_Matches = ({props}) => {
       const date = new Date();
        var mate = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
       props === "today" ? formatted_date = mate :formatted_date = notch_date 
-      console.log(formatted_date, "props date")
+    
       const raw_data = await axios.get(`${Line}/match`, {
         params: { timeZone: userTimeZone, code: userCode, date: formatted_date },
       });
@@ -116,7 +116,7 @@ const All_Matches = ({props}) => {
         pinner.push(id)
       })
     })
-  console.log(user, pinner, leagues)
+
 
   var involved =  []
 
@@ -178,10 +178,20 @@ const All_Matches = ({props}) => {
 
 
 
-    console.log(involved)
+   
         if(involved.length > 0){
+
+          var inv
+
+          if(involved.length > 4 ){
+            inv = "defaultExpanded"
+          }
+
+          else{
+            inv = ""
+          }
     setFollowing(
-        <Accordion   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
+        <Accordion inv   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
         <AccordionSummary  sx={{background : "ivory", height : "20px", }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
@@ -252,7 +262,7 @@ const All_Matches = ({props}) => {
 
     }
     }
-      console.log(raw_data.data);
+    
     } catch (e) {
       console.log(e)
       console.error(e);
@@ -370,9 +380,19 @@ useEffect(()=>{
               }
           })
 
-          let boolcheck 
+          let nik = [] 
 
-     
+          var stat = JSON.parse(sessionStorage.getItem("video"))
+
+     stat.data.forEach((item) => {
+            if (item.homeName === match.home.name) {
+                nik.push(item);
+            } else if (item.guestName === match.away.name) {
+                nik.push(item);
+            }
+        });
+
+     console.log(nik, "FinaL Determiner")
 
 
             if (!match.status.started && !match.status.cancelled) {
@@ -418,6 +438,8 @@ useEffect(()=>{
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
                        {aud}
+                      
+                      {  <OndemandVideo/>}
                     </div>
                   </Link>
                 </div>
