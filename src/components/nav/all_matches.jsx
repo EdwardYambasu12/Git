@@ -392,7 +392,7 @@ useEffect(()=>{
             }
         });
 
-     console.log(nik, "FinaL Determiner")
+  
 
 
             if (!match.status.started && !match.status.cancelled) {
@@ -439,7 +439,7 @@ useEffect(()=>{
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
                        {aud}
                       
-                      {  <OndemandVideo/>}
+                      {nik.length > 0 ?   <OndemandVideo style = {{fontSize :  "0.6em"}}/> : <></>}
                     </div>
                   </Link>
                 </div>
