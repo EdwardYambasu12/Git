@@ -10,9 +10,21 @@
     <meta charset="utf-8"/>
     <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
 <script>
+
+  
   window.ezstandalone = window.ezstandalone || {};
   ezstandalone.cmd = ezstandalone.cmd || [];
 </script>
+<script>
+    var ezstandalone = window.ezstandalone || {};
+    ezstandalone.cmd = ezstandalone.cmd || [];
+    ezstandalone.cmd.push(function() {
+        ezstandalone.enableConsent();
+        ezstandalone.showAds(101, 102);
+    });
+</script>
+    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+<script src="https://the.gatekeeperconsent.com/ccpa/v2/standalone.js" async></script>
     <link rel="icon" href="../src/images/icon.jpg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#000000"/>
