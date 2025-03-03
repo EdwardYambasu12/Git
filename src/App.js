@@ -53,7 +53,7 @@ function App() {
           <Route path="/player/:id" element={<Player />} />
           <Route path="/leagues/mall" element={<Leagues />} />
           <Route path="/follow_up" element={<FollowPage />} />
-          <Route path="/leagues/:id" element={<Leagues />} />
+          <Route path="/leauges/:id" element={<Leagues />} />
           <Route path="/leagues" element={<League_Map />} />
           <Route path="/news" element={<News />} />
           <Route path="/faves" element={<Favorites />} />
