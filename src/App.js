@@ -19,16 +19,6 @@ import { Analytics } from "@vercel/analytics/react";
 import FollowPage from "./components/new_comers/second.js";
 import "./components/result/result.css";
 
-const useEzoicAds = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (window.ezstandalone) {
-      window.ezstandalone.destroyPlaceholders();
-      window.ezstandalone.showAds();
-    }
-  }, [location.pathname]);
-};
 
 function App() {
   useEffect(() => {
