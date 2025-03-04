@@ -36,7 +36,7 @@ import { Scatter } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import AdSenseFluidAd from "../nav/adsense_fluid.jsx";
 import { blue } from "@mui/material/colors";
-import AdsTargetsAd from "../../adstarget";
+
 ChartJS.register(CategoryScale, LinearScale,   ScatterController, PointElement, LineElement, Title, Tooltip, Legend);
 
 
@@ -1659,7 +1659,7 @@ const labels = moment.map(item => item.minute);
     return(
 
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
-<AdsTargetsAd/>
+
              <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}> {audio}</div>
              <br></br>
 
