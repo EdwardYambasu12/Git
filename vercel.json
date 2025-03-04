@@ -1,4 +1,10 @@
 {
-
-
+  "redirects": [
+    {
+      "source": "/ads.txt",
+      "destination": "https://srv.adstxtmanager.com/19390/lonescore.com",
+      "permanent": true
+    }
+  ]
 }
+
