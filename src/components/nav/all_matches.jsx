@@ -140,19 +140,10 @@ const All_Matches = ({props}) => {
 
    
         if(involved.length > 0){
-
-          var inv
-
-          if(involved.length > 4 ){
-            inv = "defaultExpanded"
-          }
-
-          else{
-            inv = ""
-          }
+  let inv = involved.length > 4 ? true : false;
     setFollowing(
-        <Accordion inv   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
-        <AccordionSummary  sx={{background : "ivory", height : "20px", }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <Accordion defaultExpanded={inv}   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
+        <AccordionSummary  sx={{background : "ivory", height : "20px",   borderTopLeftRadius: '15px',    borderTopRightRadius: '15px',  }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
             <h6 id="break-down1">Following</h6>
@@ -308,7 +299,7 @@ useEffect(()=>{
     return leagues.map((item, index) => (
       <>
       <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
-        <AccordionSummary sx={{background : "#F3FFFF", height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary sx={{background : "#F3FFFF",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
 />
