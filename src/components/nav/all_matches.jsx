@@ -18,7 +18,7 @@ import AdSenseFluidAd from "./adsense_fluid.jsx";
 
 
 
-const All_Matches = ({props}) => {
+const All_Matches = ({props, stat}) => {
 
 
 
@@ -29,9 +29,10 @@ const All_Matches = ({props}) => {
   const [following, setFollowing] = useState()
   const navigate = useNavigate();
   const [audio, setAudio]= useState([])
+  const [videoa, setVid] = useState([])
   const [much, setMuch] = useState()
   var renderMatches
-  let video_data = JSON.parse(sessionStorage.getItem("video"))
+
 
 
 
@@ -59,6 +60,10 @@ const All_Matches = ({props}) => {
 
     const audio_data = await axios.get(`${Line}/audio_matches`)
     setAudio(audio_data.data)
+
+
+    const vd =    await axios.get(Line+"/get_video_data")
+    setVid(vd.data)
 
       const league = raw_data.data.leagues
       const raw = localStorage.getItem("data");
@@ -143,7 +148,7 @@ const All_Matches = ({props}) => {
   let inv = involved.length > 4 ? true : false;
     setFollowing(
         <Accordion defaultExpanded={inv}   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
-        <AccordionSummary  sx={{background : "ivory", height : "20px",   borderTopLeftRadius: '15px',    borderTopRightRadius: '15px',  }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary  sx={{background : "ivory", height : "20px",   borderTopLeftRadius: '15px',    borderTopRightRadius: '15px',   }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("/leagues")}} style={{ display: 'flex', alignItems: 'center' }}>
             <BookmarkIcon/>
             <h6 id="break-down1">Following</h6>
@@ -333,9 +338,11 @@ useEffect(()=>{
 
           let nik = [] 
 
-          var stat = JSON.parse(sessionStorage.getItem("video"))
+console.log(videoa, "defined video")
+if(videoa.data){
 
-     stat.data.forEach((item) => {
+
+     videoa.data.map((item) => {
             if (item.homeName === match.home.name) {
                 nik.push(item);
             } else if (item.guestName === match.away.name) {
@@ -344,7 +351,7 @@ useEffect(()=>{
         });
 
   
-
+}
 
             if (!match.status.started && !match.status.cancelled) {
               status = <small style = {{fontSize : "0.7em"}}>{timeString}</small>;

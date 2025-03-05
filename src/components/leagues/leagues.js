@@ -95,6 +95,7 @@ const TimeDifference = ({ pastTimeString }) => {
 };
 
 
+
 const Ayyah = ()=>{
 
   
@@ -773,169 +774,527 @@ const Stats = ({data})=>{
 
 const Table = ({data})=>{
 
+  
 
-    const [composite_true, setCompositeTrue] = useState()
+const league = data
+ const [composite_true, setCompositeTrue] = useState()
     const [composite_false, setCompositeFalse] = useState()
     const navigate = useNavigate()
+    const [slated, setSlated] = useState()
+    const [text, setText] = useState("see more")
 
-
-    useEffect(()=>{
-
-        if(data.overview.table.length>0){
-
-
-                    ////////////////COMPOSITE TRUE
+ 
 
 
 
-                   if(data.overview.table[0].data.composite === true){
+  function selectOptions(value){
 
-                 setCompositeTrue(   data.overview.table[0].data.tables.map((item)=>{
 
-                var tabber = item.table.all 
 
-                var main_tabber = tabber
+    
+    if(league.overview.table[0].data.composite === false){
+    console.log("the user selected", value, league)
 
+    if(text == "see more"){
+
+      if(value === "All"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "45%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+                <td style = {{width : "5%"}}>W</td>
+                <td style = {{width : "5%"}}>D</td>
+                <td style = {{width : "5%"}}>L</td>
+               
+                <td style = {{width : "8%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.all.map((item, index)=>{
+
+                            var styling = "inherit"
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "45%"}}><strong>{item.shortName}</strong></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                      <td style = {{width : "5%"}}>{item.wins}</td>
+                      <td style = {{width : "5%"}}>{item.draws}</td>
+                      <td style = {{width : "5%"}}>{item.losses}</td>
                     
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
 
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
 
-
-                return(
-                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
-          <h2>{item.leagueName}</h2>
+      if(value === "Home"){
+        setSlated(
           <table>
             <thead>
-              <tr style={{ width: "100%" }}>
-                <td style={{ width: "10%" }}>#</td>
-                <td style={{ width: "55%" }}>Team</td>
-                <td style={{ width: "10%" }}>Pld</td>
-                <td style={{ width: "10%" }}>GD</td>
-                <td style={{ width: "10%" }}>PTS</td>
+
+              <tr style = {{width : "100%", fontSize : "0.6em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "45%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+                <td style = {{width : "5%"}}>W</td>
+                <td style = {{width : "5%"}}>D</td>
+                <td style = {{width : "5%"}}>L</td>
+               
+                <td style = {{width : "8%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
               </tr>
             </thead>
 
+
             <tbody>
-                        {main_tabber.map((team, index)=>{
+                {league.table[0].data.table.home.map((item, index)=>{
+                          var styling = "inherit"
 
-                            return(
-                                                   <tr
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "45%"}}><strong>{item.shortName}</strong></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                      <td style = {{width : "5%"}}>{item.wins}</td>
+                      <td style = {{width : "5%"}}>{item.draws}</td>
+                      <td style = {{width : "5%"}}>{item.losses}</td>
+                    
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
 
-                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(item); sessionStorage.setItem("selected_league", stringer)}}
-                  key={team.id}
-                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
-                >
-                  <td style={{ width: "10%" }}>{index + 1}</td>
-                  <td style={{ width: "55%" }}>
-                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                      <img
-                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
-                        alt={team.name}
-                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                      />
-                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
-                    </div>
-                  </td>
-                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
-                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
-                  <td style={{ width: "10%" }}>{team.pts}</td>
-                </tr>
-                            )
-
-                        })}
+                    </tr>
+                  )
+                })}
             </tbody>
-
-                
-
-            </table>
-
-            </div>
-                    )
-                    })
-
-)
-}
-
-                    ///////////////COMPOSITE FALSE
-
-
-                    if(data.overview.table[0].data.composite === false){
-
-
-                        setCompositeFalse(
-                                <div>
-
-                                   { data.overview.table.map((item)=>{
-                                         var tabber = item.data.table.all 
-
-                var main_tabber = tabber
-
-                return(
-                                <div key={item.leagueName} style={{ marginBottom: "20px" }}>
-          <h2>{item.leagueName}</h2>
+          </table>
+        )
+      }
+      if(value === "xg"){
+        setSlated(
           <table>
             <thead>
-              <tr style={{ width: "100%" }}>
-                <td style={{ width: "10%" }}>#</td>
-                <td style={{ width: "55%" }}>Team</td>
-                <td style={{ width: "10%" }}>Pld</td>
-                <td style={{ width: "10%" }}>GD</td>
-                <td style={{ width: "10%" }}>PTS</td>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "45%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+                <td style = {{width : "5%"}}>W</td>
+                <td style = {{width : "5%"}}>D</td>
+                <td style = {{width : "5%"}}>L</td>
+               
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
               </tr>
             </thead>
 
+
             <tbody>
-                        {main_tabber.map((team, index)=>{
+                {league.table[0].data.table.xg.map((item, index)=>{
+                          var styling = "inherit"
 
-                            return(
-                                                   <tr
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "45%"}}><strong>{item.shortName}</strong></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                      <td style = {{width : "5%"}}>{item.wins}</td>
+                      <td style = {{width : "5%"}}>{item.draws}</td>
+                      <td style = {{width : "5%"}}>{item.losses}</td>
+                    
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
 
-                                                   onClick = {()=>{navigate("/team/"+team.id);const stringer = JSON.stringify(team); sessionStorage.setItem("selected_league", stringer)}}
-                  key={team.id}
-                  style={{ width: "100%", backgroung : "inherit", height: "50px", fontSize: '0.7em', fontWeight: "bold", alignItems: "center" }}
-                >
-                  <td style={{ width: "10%" }}>{index + 1}</td>
-                  <td style={{ width: "55%" }}>
-                    <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
-                      <img
-                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}_xsmall.png`}
-                        alt={team.name}
-                        style={{ width: "30px", height: "30px", borderRadius: "50%" }}
-                      />
-                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{team.name}</div>
-                    </div>
-                  </td>
-                   <td style = {{width : "10%", background : "inherit"}}>{Number(team.wins)+Number(team.draws)+Number(team.losses)}</td>
-                  <td style={{ width: "10%" }}>{team.goalConDiff}</td>
-                  <td style={{ width: "10%" }}>{team.pts}</td>
-                </tr>
-                            )
-
-                        })}
+                    </tr>
+                  )
+                })}
             </tbody>
+          </table>
+        )
+      }
 
+      if(value === "Form"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "45%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+                <td style = {{width : "5%"}}>W</td>
+                <td style = {{width : "5%"}}>D</td>
+                <td style = {{width : "5%"}}>L</td>
+               
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.form.map((item, index)=>{
+                          var styling = "inherit"
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "45%"}}><strong>{item.shortName}</strong></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                      <td style = {{width : "5%"}}>{item.wins}</td>
+                      <td style = {{width : "5%"}}>{item.draws}</td>
+                      <td style = {{width : "5%"}}>{item.losses}</td>
+                    
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "8%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
+
+      if(value === "Away"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "45%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+                <td style = {{width : "5%"}}>W</td>
+                <td style = {{width : "5%"}}>D</td>
+                <td style = {{width : "5%"}}>L</td>
+               
+                <td style = {{width : "8%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.away.map((item, index)=>{
+                          var styling = "inherit"
+
+                  
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "45%"}}><strong>{item.shortName}</strong></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                      <td style = {{width : "5%"}}>{item.wins}</td>
+                      <td style = {{width : "5%"}}>{item.draws}</td>
+                      <td style = {{width : "5%"}}>{item.losses}</td>
+                    
+                      <td style = {{width : "8%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
+
+    }
+
+    else if(text == "see less"){
+
+      if(value === "xg"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "65%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+            
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.xg.map((item, index)=>{
+                          var styling = "inherit"
+
+                   
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "65%"}}><div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.id}_xsmall.png`}
+                        alt={item.name}
+                        style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{item.shortName}</div>
+                    </div></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
                 
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
 
-            </table>
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
 
-            </div>
-                    )
-                                    })
-}
-                                </div>
-                            )
-                    }
+      if(value === "Form"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "65%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+            
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
 
 
-}
-    }, [])
+            <tbody>
+                {league.table[0].data.table.form.map((item, index)=>{
+                          var styling = "inherit"
+
+                   
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "65%"}}><div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.id}_xsmall.png`}
+                        alt={item.name}
+                        style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{item.shortName}</div>
+                    </div></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
+
+      if(value === "Away"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "65%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+            
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.away.map((item, index)=>{
+                          var styling = "inherit"
+
+                        
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "65%"}}><div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.id}_xsmall.png`}
+                        alt={item.name}
+                        style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{item.shortName}</div>
+                    </div></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
+
+
+      if(value === "Home"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "65%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+            
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.home.map((item, index)=>{
+                          var styling = "inherit"
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "65%"}}><div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.id}_xsmall.png`}
+                        alt={item.name}
+                        style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{item.shortName}</div>
+                    </div></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+      }
+
+      if(value === "All"){
+        setSlated(
+          <table>
+            <thead>
+
+              <tr style = {{width : "100%", fontSize : "0.7em"}}   >
+                <td style = {{width : "5%"}}>#</td>
+                <td style = {{width : "65%"}}>Team</td>
+                <td style = {{width : "5%"}}>Pl</td>
+            
+                <td style = {{width : "5%"}}>GD</td>
+                <td style = {{width : "7%"}}>Pts</td>
+              </tr>
+            </thead>
+
+
+            <tbody>
+                {league.table[0].data.table.all.map((item, index)=>{
+                          var styling = "inherit"
+
+
+                  return(
+                    <tr style = {{width : "100%", fontSize : "0.7em", background : styling}}  onClick = {()=>{navigate("/team/"+item.id)}}>
+                      <td style = {{width : "5%", background : item.qualColor}}>{index+1}</td>
+                      <td  style = {{width : "65%"}}><div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center" }}>
+                      <img
+                        src={`https://images.fotmob.com/image_resources/logo/teamlogo/${item.id}_xsmall.png`}
+                        alt={item.name}
+                        style={{ width: "20px", height: "20px", borderRadius: "50%" }}
+                      />
+                      <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{item.shortName}</div>
+                    </div></td>
+                      <td style = {{width : "5%"}}>{item.played}</td>
+                
+                      <td style = {{width : "5%"}}>{item.goalConDiff}</td>
+                      <td style = {{width : "7%"}}>{item.pts}</td>
+
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+        )
+
+      }
+      }
+
+
+    }
+  }
+
+useEffect(()=>{
+
+  selectOptions("All")
+  
+}, [league, text])
+
+
+    function handleSee(){
+
+      if(text === "see more"){
+        setText("see less")
+
+      }
+
+      else{
+        setText("see more")
+      }
+    }
 
     return(
-            <div>
+            <div className = "container" style = {{background : "white", width : "95%", marginLeft : "2.5%", marginRight : "2.5%", borderRadius : "10px"}}>
+<div style = {{width  :"100%", display : "flex", justifyContent : "space-around"}}>
+              <select  onChange={(val)=>{selectOptions(val.target.value)}} style = {{height : "30px", width : "150px", margin : "4%", borderRadius : "10px"}}>
+                  <option>All</option>
+                  <option>Home</option>
+                  <option>Away</option>
+                  <option>Form</option>
+                  <option>xg</option>
+              </select>
+
+
+              <button onClick = {()=>{handleSee()}} style = {{height : "35px", marginTop : "4%"}} className="btn btn-sm btn-outline-success">
+                {text}
+              </button>
+
+              </div>
+   
+                    {slated}
                     {composite_true}
-                    {composite_false}
             </div>
     )
-}
+
+};
 
 
 

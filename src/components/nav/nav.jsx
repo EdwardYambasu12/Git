@@ -622,13 +622,15 @@ useEffect(()=>{
 
 const [side_news, setSidenews] = useState()
 const [lot_news, setLot]= useState()
+const [vid, setVid] = useState()
 	useEffect(()=>{
 
 
-    axios.get(Line+"/get_video_data")
+axios.get(Line+"/get_video_data")
     .then((res)=>{
       const stringer = JSON.stringify(res.data)
       sessionStorage.setItem("video", stringer)
+      
     })
 		axios.get(Line+"/sportsup_news")
 		.then((res)=>{
@@ -708,7 +710,7 @@ const [lot_news, setLot]= useState()
 	    
 	   
           const formattedDate = format(date, "yyyy-MM-dd");
-		setStatement(<All_Matches props = {formattedDate}/>
+		setStatement(<All_Matches stat = {vid} props = {formattedDate}/>
 			
 			)
 		sessionStorage.setItem("date",date)
@@ -718,7 +720,7 @@ const [lot_news, setLot]= useState()
 	
 	}
 			
-	}, [selectedDate])
+	}, [selectedDate, vid])
 
 	const [leagues, setLeagues] = useState()
 	const [tab_state, setTabstate] = useState(4)
