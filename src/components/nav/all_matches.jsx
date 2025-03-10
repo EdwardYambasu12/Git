@@ -145,7 +145,7 @@ const All_Matches = ({props, stat}) => {
 
    
         if(involved.length > 0){
-  let inv = involved.length > 4 ? true : false;
+  let inv = involved.length > 4 ? false : true;
     setFollowing(
         <Accordion defaultExpanded={inv}   sx={{ borderRadius: '15px',boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`, }}>
         <AccordionSummary  sx={{background : "ivory", height : "20px",   borderTopLeftRadius: '15px',    borderTopRightRadius: '15px',   }}  expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
