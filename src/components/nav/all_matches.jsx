@@ -304,7 +304,7 @@ useEffect(()=>{
     return leagues.map((item, index) => (
       <>
       <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
-        <AccordionSummary sx={{background : "#F3FFFF",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+        <AccordionSummary sx={{background : "white",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
 />
@@ -338,7 +338,6 @@ useEffect(()=>{
 
           let nik = [] 
 
-console.log(videoa, "defined video")
 if(videoa.data){
 
 

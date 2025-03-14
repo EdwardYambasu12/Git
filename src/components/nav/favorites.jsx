@@ -237,7 +237,7 @@ useEffect(()=>{
 
                           <img style = {{height : "40px", width : "40px", borderRadius : "50%"}} src={`https://images.fotmob.com/image_resources/playerimages/${item.id}.png`} ></img>
                           <h4 style = {{whiteSpace: "nowrap", overflow : "hidden", textOverflow: "ellipsis"}} className = "text-dark">{item.name}</h4>
-                          <br></br>
+                      
                           <div style = {{display : "flex", width : "100%", justifyContent : "space-between"}}><p>⚽:{item.goals} </p> <p>🎯:{item.assist} </p> <p>🚩:{item.apps} </p></div>
 
                           <h6 className = "text-success">{item.player_type}</h6>
@@ -283,7 +283,7 @@ dom()
 				
 					<div className="top_nav">
 					<div className = "brand">
-           <h1 > Favorites</h1>
+           <h1 className = "text-center"> Following </h1>
 				
 					
 					</div>

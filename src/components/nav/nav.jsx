@@ -632,6 +632,11 @@ axios.get(Line+"/get_video_data")
       sessionStorage.setItem("video", stringer)
       
     })
+
+    axios.get("https://www.sofascore.com/api/v1/sport/0/event-count")
+    .then((res)=>{
+      console.log(res, "nav res sofa ,info")
+    })
 		axios.get(Line+"/sportsup_news")
 		.then((res)=>{
 
