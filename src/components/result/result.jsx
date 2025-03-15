@@ -727,11 +727,24 @@ const Info = ({props })=>{
                     console.log(res.data, "main animation data")
                     setVid(
                       <div>
+
+                      { data.ongoing === true?
+
+                      <div>
                         {res.data.data != null ? 
                       <VideoPlayer props = {res.data.data.videoUrl}/>
                         : <div></div>
                         }
-                          </div>
+
+
+
+                    </div>
+                    :
+                    <div>
+                        {data.header.status.finished === true ? <div></div> : <div>
+                        <h6 className = "text-center">Watch This Match Live when it begins</h6></div>}
+                    </div>
+                          }</div>
                         )
                 })  
 
@@ -2905,9 +2918,9 @@ const homeDataH = coach_h;
   const away_rating = data.content.lineup.awayTeam.rating
 
   return (
-    <div className="container" style={{ width: '100vw', height: '100vh' }}>
+    <div className="container" style={{ width: '100vw', background : "white", borderRadius : "10px", height: '100vh' }}>
 
-    <p>Lineup Type: {data.content.lineup.lineupType}</p>
+    <p className = "text-center">Lineup Type: {data.content.lineup.lineupType}</p>
       <Field players={homeTeamPlayers} />
       <div style={{ width: '100%', height: '5px' }}></div>
 
@@ -3256,7 +3269,7 @@ const Table = ({props, league})=>{
 
 
                     if(data.overview.table[0].data.composite === false){
-
+                        
 
                         setCompositeFalse(
                                 <div>
@@ -3914,6 +3927,25 @@ useEffect(()=>{
             </div>
                     {slated}
                     {composite_true}
+
+
+
+                    <hr/>
+                    <div>
+                        <h4 className = "text-center">League Guide</h4>
+
+
+                        {
+
+                            league.table[0].data.legend.map((item=>{
+                                return(
+                                        <div style = {{display : "flex"}}>
+                                            <label style = {{height : "10px", width : "10px", background : item.color, borderRadius : "50%"}}></label>   <p>{item.title}</p>
+                                        </div>
+                                    )
+                            }))
+                        }
+                    </div>
             </div>
     )
 
