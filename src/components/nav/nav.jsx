@@ -1078,20 +1078,19 @@ async function fetcher(){
         </div>
       </header>
 
-      <div className="nav-scroller py-1 mb-3 border-bottom">
-        <nav className="nav nav-underline justify-content-between">
-          <a className="nav-item nav-link link-body-emphasis active" href="#">
-            ⚽-SCORE <i className="fi fi-br-football"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="/news">
-            📰-NEWS <i className="fi fi-br-newspaper"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="/faves">
-            ❤️-FAVOURITE <i className="fi fi-br-features"></i>
-          </a>
-          
-        </nav>
-      </div>
+     <div className="nav-scroller py-2 mb-3 border-b bg-white shadow-sm">
+  <nav className="nav nav-underline justify-between px-4" role="navigation">
+    <a className="nav-item nav-link text-gray-900 font-medium active" href="#" aria-current="page">
+      ⚽ SCORE <i className="fi fi-br-football"></i>
+    </a>
+    <a className="nav-item nav-link text-gray-900 font-medium" href="/news">
+      📰 NEWS <i className="fi fi-br-newspaper"></i>
+    </a>
+    <a className="nav-item nav-link text-gray-900 font-medium" href="/faves">
+      ❤️ FAVOURITES <i className="fi fi-br-features"></i>
+    </a>
+  </nav>
+</div>
 
       <div className="nav-scroller py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">

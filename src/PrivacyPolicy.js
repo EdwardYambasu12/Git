@@ -3,9 +3,10 @@ import React from 'react';
 const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy">
+    <a href = "/">back</a>
       <h1>Privacy Policy</h1>
       <p>
-        This privacy policy explains how we collect, use, and protect your personal data when you use our website, sportsupd.com.
+        This privacy policy explains how we collect, use, and protect your personal data when you use our website, lonescore.com.
       </p>
       <h2>Information We Collect</h2>
       <p>
@@ -21,11 +22,11 @@ const PrivacyPolicy = () => {
       </p>
       <h2>Your Rights</h2>
       <p>
-        You have the right to request access to or deletion of your personal data. To exercise these rights, please contact us at contact@sportsupd.com.
+        You have the right to request access to or deletion of your personal data. To exercise these rights, please contact us at contact@lonescore.com.
       </p>
       <h2>Contact Us</h2>
       <p>
-        If you have any questions about this Privacy Policy, please contact us at contact@sportsupd.com.
+        If you have any questions about this Privacy Policy, please contact us at contact@lonescore.com.
       </p>
     </div>
     
