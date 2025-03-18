@@ -138,6 +138,76 @@ function PositionedMenu() {
 
 
 
+const Following = ()=>{
+
+  const [sender, setSender] = useState()
+
+
+  const data = JSON.parse(localStorage.getItem("follow_match"))
+
+  useEffect(()=>{
+              if(data != null){
+                  setSender(
+                      <div>
+                             {data.map((match, matchIndex) => {
+            const dateTimeString = match.status.utcTime;
+            const dateObject = new Date(dateTimeString);
+            const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const isPinned = ""
+
+            let status;
+            let live;
+
+            if (!match.status.started) {
+              status = timeString;
+            
+            } else if (match.status.started && !match.status.finished) {
+              status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6></div>;
+              live = <h6 style={{ width: "20px", fontSize: "0.7em", display: "flex", justifyContent: "center", height: "20px", alignItems: "center", color: "white", borderRadius: "50%", background: "red" }}>{match.status.liveTime.short}</h6>;
+            } else {
+              status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6></div>;
+              live = <h6 style={{ width: "20px", height: "20px", textAlign: "center", alignItems: "center", color: "black", borderRadius: "50%", background: "#EEEEEE" }}>FT</h6>;
+            }
+
+            return (
+
+
+              <div key={matchIndex} style={{ display: "flex", marginTop: "1.5%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
+                  <div style={{ width: "5%" }}>{live}</div>
+                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                    <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
+                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                     {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
+                    </div>
+                    <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
+                      <strong>{status}</strong>
+                    </div>
+                    <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                       {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
+                     
+                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+                      </div>
+                    )
+              }
+  }, [])
+
+
+  return(
+
+        <>
+              {sender}
+        </>
+    )
+}
 
 
 
@@ -148,7 +218,7 @@ export default function Favorites(){
 
 const [status, setStatus] = useState()
 
-const [value, setValue] = React.useState(6);
+
 const navigate = useNavigate()
 const [statement, setStatement] = useState()
 
@@ -156,7 +226,11 @@ const [players, setPlayers] = useState(<Skeleton variant="rectangular" style = {
 const [team, setTeam] = useState(<Skeleton variant="rectangular" style = {{width : "100%", height : "150px", borderRadius : "15%"}}/>)
       const [follow, setFollow] = useState();
 
+const [value, setValue] = React.useState('one');
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
 
 const [user_data, setuserData] = useState()
@@ -278,39 +352,39 @@ dom()
 
 	return(
 			<body style = {{background : "#EEEEEE", height : window.innerHeight}}>
-	
-				<nav className = " fixed-top" style = {{marginBottom : "0.5%"}}>
-				
-					<div className="top_nav">
-					<div className = "brand">
-           <h1 className = "text-center"> Following </h1>
-				
-					
-					</div>
+      <nav style = {{background : "white"}}>
+      <h3>Following</h3>
+ <Box sx={{ width: '100%' }}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        textColor="secondary"
+        indicatorColor="secondary"
+        aria-label="secondary tabs example"
+      >
+        <Tab value="one" label="Item One" >
 
-			<div className = "icons">
-					
-					
-				
-			</div>
-
-			    </div>
-  
-
-
-
-				</nav>
+        </Tab>
+        <Tab value="two" label="Item Two" />
+        <Tab value="three" label="Item Three" />
+      </Tabs>
+    </Box>
+    </nav>
 				<br></br>
 					<br></br>
 				
 				<br></br>
-
+      <Box sx={{ padding: 1 }}>
+        {value === "one" && <Typography><Following/></Typography>}
+        {value === "two" && <Typography>{team}</Typography>}
+        {value === "three" && <Typography>{players}</Typography>}
+      </Box>
         <div>{statement}</div>
 				<div className = "state" style = {{width : "100%", justifyContent : "space-between", display : "flex"}}>
 				
-          <div style = {{width : "45%"}}>{team}</div>
+          <div style = {{width : "45%"}}></div>
 
-          <div style = {{width : "45%"}}>{players}</div>
+          <div style = {{width : "45%"}}></div>
 					
 </div>
 

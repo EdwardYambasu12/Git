@@ -1078,19 +1078,20 @@ async function fetcher(){
         </div>
       </header>
 
-     <div className="nav-scroller py-2 mb-3 border-b bg-white shadow-sm">
-  <nav className="nav nav-underline justify-between px-4" role="navigation">
-    <a className="nav-item nav-link text-gray-900 font-medium active" href="#" aria-current="page">
-      ⚽ SCORE <i className="fi fi-br-football"></i>
-    </a>
-    <a className="nav-item nav-link text-gray-900 font-medium" href="/news">
-      📰 NEWS <i className="fi fi-br-newspaper"></i>
-    </a>
-    <a className="nav-item nav-link text-gray-900 font-medium" href="/faves">
-      ❤️ FAVOURITES <i className="fi fi-br-features"></i>
-    </a>
-  </nav>
-</div>
+      <div className="nav-scroller py-1 mb-3 border-bottom">
+        <nav className="nav nav-underline justify-content-between">
+          <a className="nav-item nav-link link-body-emphasis active" href="#">
+            ⚽-SCORE <i className="fi fi-br-football"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="/news">
+            📰-NEWS <i className="fi fi-br-newspaper"></i>
+          </a>
+          <a className="nav-item nav-link link-body-emphasis" href="/faves">
+            ❤️-FAVOURITE <i className="fi fi-br-features"></i>
+          </a>
+          
+        </nav>
+      </div>
 
       <div className="nav-scroller py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">
@@ -1247,25 +1248,7 @@ async function fetcher(){
 
 			</div>
 
-			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}>{statement}      <footer className="footer">
-      <div className="circle left"></div> {/* Left Circle */}
-      <div className="footer-content">
-        <p>© Copyright 2025 LoneScore</p>
-        <div className="links">
-       
-          <a href="/privacy-policy">Privacy Policy</a>
-        </div>
-        <p>The use of automatic services (robots, crawlers, etc.) is not permitted.</p>
-        <div className="social-icons">
-          <a href="#"><i className="fab fa-tiktok"></i></a>
-          <a href="#"><i className="fab fa-instagram"></i></a>
-          <a href="#"><i className="fab fa-facebook"></i></a>
-          <a href="#"><i className="fab fa-linkedin"></i></a>
-          <a href="#"><i className="fab fa-x-twitter"></i></a>
-        </div>
-      </div>
-      <div className="circle right"></div> {/* Right Circle */}
-    </footer>
+			<div className = "live_score" style = {{height : window.innerHeight-100, overflowY : "auto", overflowX : "hidden"}}>{statement}
 
       </div>
 			
