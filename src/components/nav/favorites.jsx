@@ -362,11 +362,11 @@ dom()
         indicatorColor="secondary"
         aria-label="secondary tabs example"
       >
-        <Tab value="one" label="Item One" >
+        <Tab value="one" label="Matches" >
 
         </Tab>
-        <Tab value="two" label="Item Two" />
-        <Tab value="three" label="Item Three" />
+        <Tab value="two" label="Teams" />
+        <Tab value="three" label="players" />
       </Tabs>
     </Box>
     </nav>
