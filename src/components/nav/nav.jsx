@@ -1050,8 +1050,8 @@ async function fetcher(){
 
 
     			<header id = "larger_screens">
-			<div className="container">
-  <header className="header">
+			<div >
+  <header id="header">
       {/* Left - Logo */}
       <div className="logo">LoneScore</div>
 
