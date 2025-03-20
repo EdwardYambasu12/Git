@@ -1071,7 +1071,7 @@ async function fetcher(){
 <br></br>
 <br></br>
 <br></br>
-      <div className="nav-scroller py-1 mb-3 border-bottom border-top">
+      <div className="nav-scroller container py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">
         <Tabs
         value={value}
