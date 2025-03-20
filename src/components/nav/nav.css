@@ -211,7 +211,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .top_nav{
 	display: flex;
-
+	background: white;
 	justify-content: space-between	;
 	height: 60px;
 	align-items: center;
