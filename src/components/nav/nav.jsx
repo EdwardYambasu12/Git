@@ -1064,7 +1064,7 @@ async function fetcher(){
       {/* Right - Links */}
       <nav>
         <a href="/news">News</a>
-        <a href="/faves">About us</a>
+        <a href="/faves">Favorites</a>
       </nav>
     </header>
    
