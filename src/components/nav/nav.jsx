@@ -1051,48 +1051,26 @@ async function fetcher(){
 
     			<header id = "larger_screens">
 			<div className="container">
-      <header className="lh-1 py-3">
-        <div className="row flex-nowrap justify-content-between align-items-center">
-          <div className="col-1 pt-1">
-           
-            <ul className="dropdown-menu text-small">
-              <li><a className="dropdown-item" href="/faves">FAVOURITE</a></li>
-              <li><a className="dropdown-item" href="#">PROFILE</a></li>
-              <li><hr className="dropdown-divider" /></li>
-              <li><a className="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div>
+  <header className="header">
+      {/* Left - Logo */}
+      <div className="logo">LoneScore</div>
 
-          <div className="col-4 text-center">
-            <a className="blog-header-logo text-body-emphasis text-decoration-none" href="#">
-              <img src={require("../images/sportsup.png")} alt="LOGO" width="200" height="50" />
-            </a>
-          </div>
-
-          <div className="col-4 pt-1">
- 
-             
-              <button className="btn btn-warning" onClick={handleOpen} >Search</button>
-         
-          </div>
-        </div>
-      </header>
-
-      <div className="nav-scroller py-1 mb-3 border-bottom">
-        <nav className="nav nav-underline justify-content-between">
-          <a className="nav-item nav-link link-body-emphasis active" href="#">
-            ⚽-SCORE <i className="fi fi-br-football"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="/news">
-            📰-NEWS <i className="fi fi-br-newspaper"></i>
-          </a>
-          <a className="nav-item nav-link link-body-emphasis" href="/faves">
-            ❤️-FAVOURITE <i className="fi fi-br-features"></i>
-          </a>
-          
-        </nav>
+      {/* Center - Search Bar */}
+      <div className="search-bar">
+  
+        <input type="text" onClick={handleOpen} placeholder="Search" />
       </div>
 
+      {/* Right - Links */}
+      <nav>
+        <a href="/news">News</a>
+        <a href="/faves">About us</a>
+      </nav>
+    </header>
+   
+<br></br>
+<br></br>
+<br></br>
       <div className="nav-scroller py-1 mb-3 border-bottom border-top">
         <nav className="nav nav-underline justify-content-between">
         <Tabs

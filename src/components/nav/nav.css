@@ -714,3 +714,44 @@ h2 {
 	border-radius: 10px;
 	height: fit-content;
 }
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.header .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Search Bar */
+.header .search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.header .search-bar input {
+  border: none;
+  outline: none;
+  margin-left: 5px;
+}
+
+/* Navigation Links */
+.header nav a {
+  text-decoration: none;
+  color: gray;
+  margin-left: 20px;
+}
+
+.header nav a:hover {
+  color: black;
+}

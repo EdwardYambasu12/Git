@@ -142,14 +142,19 @@ const Following = ()=>{
 
   const [sender, setSender] = useState()
 
-
+  const navigate = useNavigate()
   const data = JSON.parse(localStorage.getItem("follow_match"))
 
   useEffect(()=>{
               if(data != null){
-                  setSender(
+
+                if(data.length < 1){
+                  setSender(<h6 className = "text-center">Non of your favorites is playing today</h6>)
+                }
+               else{   setSender(
                       <div>
                              {data.map((match, matchIndex) => {
+                
             const dateTimeString = match.status.utcTime;
             const dateObject = new Date(dateTimeString);
             const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -175,7 +180,7 @@ const Following = ()=>{
               <div key={matchIndex} style={{ display: "flex", marginTop: "1.5%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link  to={`/result/${match.id}`}  state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
@@ -197,6 +202,7 @@ const Following = ()=>{
           })}
                       </div>
                     )
+                }
               }
   }, [])
 
