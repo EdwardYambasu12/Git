@@ -31,8 +31,10 @@ const All_Matches = ({props, stat}) => {
   const [audio, setAudio]= useState([])
   const [videoa, setVid] = useState([])
   const [much, setMuch] = useState()
-  var renderMatches
+   var rec_data = []
 
+  var renderMatches
+var recommendation
 
 
 
@@ -55,7 +57,7 @@ const All_Matches = ({props, stat}) => {
       const raw_data = await axios.get(`${Line}/match`, {
         params: { timeZone: userTimeZone, code: userCode, date: formatted_date },
       });
-
+      
       setLeagues(raw_data.data.leagues);
 
     const audio_data = await axios.get(`${Line}/audio_matches`)
@@ -239,6 +241,137 @@ useEffect(()=>{
 
     setMatchPinnedStatus(prev => ({ ...prev, [match.id]: !isPinned }));
   };
+
+ 
+  leagues.map((item)=>{
+    console.log(item.primaryId)
+    if(item.primaryId === 10196 || item.primaryId === 10195 ){
+
+      rec_data.push(item)
+    }
+  })
+
+
+/////////////////RECOMMENDATION/////////////////////
+
+  recommendation =  useMemo(() => {
+    return rec_data.map((item, index) => (
+
+
+      <>
+  
+      <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
+        <AccordionSummary sx={{background : "white",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+          <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
+            <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
+    
+/>
+            <h6 id="break-down1">{item.name || 'League Name'}</h6>
+          </div>
+
+        </AccordionSummary>
+  <div style= {{width : "100%", background : "lightgrey", height : "1px"}}></div>
+        <AccordionDetails>
+          {item.matches.map((match, matchIndex) => {
+            const dateTimeString = match.status.utcTime;
+            const dateObject = new Date(dateTimeString);
+            const timeString = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const isPinned = matchPinnedStatus[match.id] || false;
+
+
+            let status;
+            let live;
+
+            var aud
+           const aud_ids = []
+            
+          audio.map((item)=>{
+              aud_ids.push(item.id)
+
+              if(item.id == match.id ){
+       
+                 aud = <Headphones style = {{fontSize :  "0.6em"}}/>
+              }
+          })
+
+          let nik = [] 
+
+if(videoa.data){
+
+
+     videoa.data.map((item) => {
+            if (item.homeName === match.home.name) {
+                nik.push(item);
+            } else if (item.guestName === match.away.name) {
+                nik.push(item);
+            }
+        });
+
+  
+}
+
+            if (!match.status.started && !match.status.cancelled) {
+              status = <small style = {{fontSize : "0.7em"}}>{timeString}</small>;
+              live = <div onClick={() => togglePin(match)} style={{ cursor: 'pointer' }}>
+                {isPinned ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+              </div>;
+            } else if (match.status.started && !match.status.finished) {
+              status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6></div>;
+              live = <h6 style={{ width: "20px", fontSize: "0.7em", display: "flex", justifyContent: "center", height: "20px", alignItems: "center", color: "white", borderRadius: "50%", background: "red" }}>{match.status.liveTime.short}</h6>;
+            }
+            else if(match.status.cancelled == true){
+              live = <h6 style={{ width: "20px", fontSize: "0.7em", display: "flex", justifyContent: "center", height: "20px", alignItems: "center", color: "white", borderRadius: "50%", background: "black" }}>pp</h6>
+              status = <div style = {{textDecoration : "line-through"}}>{timeString}</div>;
+            }
+            else {
+              status = <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}><h6>{match.home.score}</h6><h6>-</h6><h6>{match.away.score}</h6> </div>;
+              live = <h6 style={{ width: "20px", height: "20px", textAlign: "center", alignItems: "center", color: "black", borderRadius: "50%", background: "#EEEEEE" }}>FT</h6>;
+            }
+
+            return (
+              <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
+                  <div style={{ width: "5%" }}>{live}</div>
+                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                    <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
+                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
+                       {match.status.numberOfHomeRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
+                    </div>
+                    <div className="text-dark" style={{ width: "20%", justifyContent: "center", textAlign: "center", display: "flex", color: "black" }}>
+                    <div>
+                      {match.status.aggregatedStr ?  <small style = {{fontSize : "0.7em"}} className = "text-center text-secondary">({match.status.aggregatedStr})</small>: <></>}
+                      <br/>
+                      <strong>{status}</strong>
+                     
+                      </div>
+                    
+                       
+                    </div>
+                    <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
+                       {match.status.numberOfAwayRedCards > 0 ? <div style = {{fontSize : "0.5em", transform : `translateY(-100%)`}}>🟥</div> : ""}
+                      <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.away.id}_xsmall.png`} loading="lazy" alt="Away Team Logo" style={{ width: "20px", height: "20px" }} />
+                      <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.away.name}</h6>
+                       {aud}
+                      
+                      {nik.length > 0 ?   <OndemandVideo style = {{fontSize :  "0.6em"}}/> : <></>}
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+
+
+      </>
+    )
+
+); 
+ }, [leagues, rec_data,  matchPinnedStatus, audio]);
+
+
  
    renderMatches = useMemo(() => {
     return leagues.map((item, index) => (
@@ -369,8 +502,8 @@ if(videoa.data){
 
       <div>
 
-
-       
+       {rec_data.length > 0 ? <small className = "text-center text-secondary">Recommended for You</small>: <></>}
+       {recommendation}
        { renderMatches}
 
         

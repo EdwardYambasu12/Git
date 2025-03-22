@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import Pagination from '@mui/material/Pagination';
+import Bracket from "../result/addup.jsx"
 import {
   Button, 
   CircularProgress, 
@@ -282,6 +283,11 @@ console.log(data)
                     {item === "stats" && <Stats data={data} />}
                     {/* Add other cases for "table", "matches", "stats" here */}
                   </Typography>
+
+                    <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
+                    {item === "playoff" && <KnockOut data={data} />}
+                    {/* Add other cases for "table", "matches", "stats" here */}
+                  </Typography>
                   <Typography component="div" role="tabpanel" hidden={value !== index} key={item}>
                     {item === "matches" && <Matches data={data} />}
                     {/* Add other cases for "table", "matches", "stats" here */}
@@ -456,9 +462,17 @@ const Transfers = ({data})=>{
             )
 
 }
+//////////////////////////////
+
+const KnockOut = ({data})=>{
 
 
+return(
+            <Bracket data = {data.playoff}/>
+    )
 
+}
+//////////////////////////////
 ///////////////////////////////////M A T C H E S
 
 
@@ -1717,3 +1731,4 @@ const Leagues = () => {
 };
 
 export default Leagues;
+
