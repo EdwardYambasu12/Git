@@ -310,7 +310,7 @@ const News = () => {
                 <h1>LoneScore News</h1>
                 <p>Discover the latest football news around the globe.</p>
             </header>
-<AdComponent/ >
+
             {/* Main Content */}
             <div className="container">
                 <div className="blogs">
