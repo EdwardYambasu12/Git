@@ -282,7 +282,7 @@ const News = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await fetch('https://remember-1.onrender.com/sportsup_news');
+                const response = await fetch('https://remember-1u57.onrender.com/sportsup_news');
                 const data = await response.json();
                 setArticles(data);
                 setLoading(false);
