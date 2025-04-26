@@ -92,6 +92,8 @@ text-decoration: none;
 	border-width: 2px;
 }
 
+
+
 .league_description{
 	align-items: center;
 	height: 10px;
@@ -162,4 +164,28 @@ Link{
 		text-decoration: none;
 	}
 
+}
+.opacity {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.opacity:active {
+background: lightgray;
+					opacity: 0.3;
+					opacity: 1;
+					transition: 0.2s ease;
+}
+league_description:active{
+						background: lightgray;
+				opacity: 1;
+					transition: 0.2s ease;
+
+}
+
+league_description1:active{
+					background: lightgray;
+					opacity: 1;
+					transition: 0.2s ease;
 }

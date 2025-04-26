@@ -242,10 +242,11 @@ useEffect(()=>{
     setMatchPinnedStatus(prev => ({ ...prev, [match.id]: !isPinned }));
   };
 
- 
+
+ console.log(leagues)
   leagues.map((item)=>{
-    console.log(item.primaryId)
-    if(item.primaryId === 10196 || item.primaryId === 10195 ){
+   
+    if(item.primaryId === 10196 || item.primaryId === 10195 || item.primaryId === 138 ){
 
       rec_data.push(item)
     }
@@ -260,9 +261,9 @@ useEffect(()=>{
 
       <>
   
-      <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
-        <AccordionSummary sx={{background : "white",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
-          <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
+      <Accordion key={index} className= "opacity" defaultExpanded sx={{ borderRadius: '15px', cursor : "pointer", transition : `opacity 0.2s ease`, boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
+        <AccordionSummary className= "opacity" sx={{background : "white",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+          <div  className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
     
 />
@@ -332,7 +333,7 @@ if(videoa.data){
               <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link to={`result/${match.id}`} className= "opacity" state = {match} style={{ display: "flex",  cursor : "pointer", transition : `opacity 0.2s ease`, textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
@@ -379,9 +380,9 @@ if(videoa.data){
 
       <>
   
-      <Accordion key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
-        <AccordionSummary sx={{background : "white",    borderTopLeftRadius: '15px',    borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
-          <div className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
+      <Accordion className= "opacity" key={index} defaultExpanded sx={{ borderRadius: '15px', boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
+        <AccordionSummary className= "opacity" sx={{background : "white",    borderTopLeftRadius: '15px',   cursor : "pointer", transition : `opacity 0.2s ease`,  borderTopRightRadius: '15px', height : "20px", }} expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
+          <div  className="league_description" onClick={() => { navigate("leauges/" + item.primaryId); sessionStorage.setItem("selected_league", JSON.stringify(item)); }} style={{ display: 'flex', alignItems: 'center' }}>
             <img style={{ width: "20px", height: "20px" }} src={`https://images.fotmob.com/image_resources/logo/leaguelogo/${item.primaryId}.png`} alt="Sportsup"  
     
 />
@@ -451,7 +452,7 @@ if(videoa.data){
               <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} state = {match} style={{ display: "flex", textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link to={`result/${match.id}`} className= "opacity" state = {match} style={{ display: "flex",  cursor : "pointer", transition : `opacity 0.2s ease`, textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
