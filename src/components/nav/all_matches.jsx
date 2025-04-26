@@ -243,7 +243,6 @@ useEffect(()=>{
   };
 
 
- console.log(leagues)
   leagues.map((item)=>{
    
     if(item.primaryId === 10196 || item.primaryId === 10195 || item.primaryId === 138 ){
