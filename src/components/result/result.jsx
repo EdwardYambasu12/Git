@@ -27,7 +27,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 
-
+import CountdownTimer from "./countdown.js"
 import { styled } from '@mui/material/styles';
 import {Fade} from "@mui/material"
 
@@ -373,7 +373,7 @@ if(data.header.events != null && data.header.events != null) {
                     </div>
 
 
-                 {data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>}
+                <small className = "text-secondary">agg</small> {data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>}
 
                     <div className="container" style={{ justifyContent: "space-between", marginTop: "4%", width: "100%", display: "flex" }}>
                         <div style={{  maxHeight: "100px", overflowY: "auto", }}>{hommie}</div>
@@ -1698,8 +1698,9 @@ useEffect(()=>{
     return(
 
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
+{!data.ongoing && !data.general.finished && <CountdownTimer props={data} />}
 
-
+            
 
              <ButtonGroup sx = {{width : "100%", display : "flex", justifyContent : "space-between"}} variant="contained" aria-label="Basic button group">
       <Button onClick ={()=>{setIdea("animation")}} sx={{background : "black"}}>Animation</Button>
