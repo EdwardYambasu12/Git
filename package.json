@@ -40,6 +40,7 @@
     "sitemap": "^8.0.0",
     "socket.io-client": "^4.8.1",
     "source-map-loader": "^5.0.0",
+    "styled-components": "^6.1.17",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

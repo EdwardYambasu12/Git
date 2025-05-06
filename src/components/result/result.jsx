@@ -26,7 +26,7 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
-
+import FollowFacebookPage from "./facebook.js"
 import CountdownTimer from "./countdown.js"
 import { styled } from '@mui/material/styles';
 import {Fade} from "@mui/material"
@@ -1824,6 +1824,16 @@ const Commentary = ({props})=>{
 
             const main = comment.events
             console.log(main, "main comments")
+
+
+                if(main.length < 1){
+                    setComments(
+                           <FollowFacebookPage/>
+                        )
+                }
+
+                else if(main.length > 0){
+
                 setComments(
                             <div >
 
@@ -1871,7 +1881,7 @@ const Commentary = ({props})=>{
                                 })}
                             </div>
                     )
-           
+           }
         }
 
             }
