@@ -419,9 +419,9 @@ if(videoa.data){
 
 
      videoa.data.map((item) => {
-            if (item.homeName === "Inter Milan" ) {
+            if (item.homeName.includes(match.home.name) ) {
                 nik.push(item);
-            } else if (item.guestName === match.away.name) {
+            } else if (item.guestName.includes(match.away.name)) {
                 nik.push(item);
             }
         });

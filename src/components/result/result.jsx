@@ -687,9 +687,9 @@ const Info = ({props })=>{
         // Check if video_data is available
     if (video_data != null) {
         video_data.data.forEach((item) => {
-            if (item.homeName === data.header.teams[0].name) {
+            if (item.homeName.includes(data.header.teams[0].name)) {
                 nik.push(item);
-            } else if (item.guestName === data.header.teams[1].name) {
+            } else if (item.guestName.includes(data.header.teams[1].name)) {
                 nik.push(item);
             }
         });
