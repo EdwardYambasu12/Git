@@ -257,7 +257,7 @@ useEffect(()=>{
   recommendation =  useMemo(() => {
     return rec_data.map((item, index) => (
 
-
+ 
       <>
   
       <Accordion key={index} className= "opacity" defaultExpanded sx={{ borderRadius: '15px', cursor : "pointer", transition : `opacity 0.2s ease`, boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,  }}>
@@ -419,7 +419,7 @@ if(videoa.data){
 
 
      videoa.data.map((item) => {
-            if (item.homeName === match.home.name) {
+            if (item.homeName === "Inter Milan" ) {
                 nik.push(item);
             } else if (item.guestName === match.away.name) {
                 nik.push(item);

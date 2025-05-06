@@ -160,7 +160,7 @@ Link{
 @keyframes live{
 
 	50%{
-		color : lightgray;
+		color : aliceblue;
 		text-decoration: none;
 	}
 
@@ -172,20 +172,20 @@ Link{
 }
 
 .opacity:active {
-background: lightgray;
+background: aliceblue;
 					opacity: 0.3;
 					opacity: 1;
 					transition: 0.2s ease;
 }
 league_description:active{
-						background: lightgray;
+						background: aliceblue;
 				opacity: 1;
 					transition: 0.2s ease;
 
 }
 
 league_description1:active{
-					background: lightgray;
+					background: aliceblue;
 					opacity: 1;
 					transition: 0.2s ease;
 }

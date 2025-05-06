@@ -10,7 +10,7 @@ import AudioPlayer from "./audioplayer.jsx";
 import axios from "axios"
 import Timer from "./timer.js"
 import VideoPlayer from "./vid.js"
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Bracket from "./addup.jsx"
 import Trial from "./trial.jsx"
 import Head_to_Head from "./h2h.js"
@@ -1667,29 +1667,61 @@ const labels = moment.map(item => item.minute);
                 }
     }, [data])
    
- 
+ const [idea, setIdea] = useState("animation")
+ const [shower, setShower] = useState()
 
+useEffect(()=>{
+
+
+
+    if(idea === "animation"){
+        setShower(
+                <div>{pump}</div>
+            )
+    }
+
+    else if(idea === "audio"){
+        setShower(
+                       <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}> {audio}</div>
+            )
+    }
+
+    else if(idea === "video"){
+        setShower(
+                       <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}> {vid}</div>
+            )
+    }
+
+
+
+}, [idea])
     return(
 
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
 
-             <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}> {audio}</div>
+
+
+             <ButtonGroup sx = {{width : "100%", display : "flex", justifyContent : "space-between"}} variant="contained" aria-label="Basic button group">
+      <Button onClick ={()=>{setIdea("animation")}} sx={{background : "black"}}>Animation</Button>
+      <Button onClick ={()=>{setIdea("audio")}}  sx={{background : "blue"}}>Audio</Button>
+      <Button onClick ={()=>{setIdea("video")}}  sx={{background : "red"}}>Live Match</Button>
+    </ButtonGroup>
+
+    {shower}
+
+          
              <br></br>
 
                         {pending_var}
                         <br/>
-                        {vid}
-
+                       
                         
 
                         <div style = {{marginTop:"5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                           {top_scorers}
                         </div>
                    
-                   <div style = {{marginTop : "5%", boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
-
-                        {pump}
-                        </div>
+                
 
       	                <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                         {highlight}
