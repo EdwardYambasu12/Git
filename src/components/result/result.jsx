@@ -373,7 +373,7 @@ if(data.header.events != null && data.header.events != null) {
                     </div>
 
 
-                <small className = "text-secondary">agg</small> {data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>}
+              ({data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>})
 
                     <div className="container" style={{ justifyContent: "space-between", marginTop: "4%", width: "100%", display: "flex" }}>
                         <div style={{  maxHeight: "100px", overflowY: "auto", }}>{hommie}</div>
@@ -1702,11 +1702,16 @@ useEffect(()=>{
 
             
 
-             <ButtonGroup sx = {{width : "100%", display : "flex", justifyContent : "space-between"}} variant="contained" aria-label="Basic button group">
+            
+
+
+
+            {data.general.finished === true ? <></> :<ButtonGroup sx = {{width : "100%", display : "flex", justifyContent : "space-between"}} variant="contained" aria-label="Basic button group">
       <Button onClick ={()=>{setIdea("animation")}} sx={{background : "black"}}>Animation</Button>
       <Button onClick ={()=>{setIdea("audio")}}  sx={{background : "blue"}}>Audio</Button>
       <Button onClick ={()=>{setIdea("video")}}  sx={{background : "red"}}>Live Match</Button>
     </ButtonGroup>
+}
 
     {shower}
 
