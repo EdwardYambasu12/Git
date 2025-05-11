@@ -1668,7 +1668,7 @@ const labels = moment.map(item => item.minute);
     }, [data])
    
  const [idea, setIdea] = useState("animation")
- const [shower, setShower] = useState()
+ const [shower, setShower] = useState("nothing")
 
 useEffect(()=>{
 
@@ -1694,7 +1694,7 @@ useEffect(()=>{
 
 
 
-}, [idea])
+}, [idea, shower])
     return(
 
             <div className = "container" style = {{background : "#EEEEEE", fontSize : "0.8em"}} >
@@ -1714,6 +1714,7 @@ useEffect(()=>{
 }
 
     {shower}
+    {shower === "nothing" ? <div>pump</div> : <></>}
 
           
              <br></br>
@@ -1864,8 +1865,8 @@ const Commentary = ({props})=>{
 
                                     return(<div style = {{width : "100%", background : "white", borderRadius : "10px"}}>
                                     <div style = {{marginTop : "2%", marginBottom : "2%"}}>{item.title ? <h6 className="text-center text-success"><strong>{item.title.value}</strong> </h6> : ""}</div>
-                                            <div style = {{width : "100%", display : "flex", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
-                                            <div style = {{fontFamily : "monospace"}}><h6 style = {{fontSize : "0.8em"}}><strong>{item.text}</strong></h6></div>
+                                            <div style = {{width : "100%", display : "flex", paddingTop: "5px", paddingLeft : "5px", justifyContent : "space-between"}} ><h6 className = "text-success" >{timer}</h6><div>{picker}</div></div>
+                                            <div style = {{fontFamily : "monospace", padding : "5px"}}><h6 style = {{fontSize : "0.8em"}}><strong>{item.text}</strong></h6></div>
                                           {item.isSubstitution == true ?
                                             <div className="container">
                                               <h6 className="text-center">Player OUT</h6>
@@ -2122,7 +2123,7 @@ const HeadtoHead = ({props})=>{
             const grayWidth = (main.summary[1]/total)*100
             const blueWidth = (main.summary[2]/total) *100
 
-            console.log(total, redWidth, "this is the info for h2h")
+    
         setTop(
                 <div className = "container" style = {{borderRadius : "10px", background : "white"}}>
 
