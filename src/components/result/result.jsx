@@ -373,7 +373,7 @@ if(data.header.events != null && data.header.events != null) {
                     </div>
 
 
-              ({data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>})
+            {data.header.status.aggregatedStr ?  <small className = "text-center text-secondary">{data.header.status.aggregatedStr}</small>: <></>}
 
                     <div className="container" style={{ justifyContent: "space-between", marginTop: "4%", width: "100%", display: "flex" }}>
                         <div style={{  maxHeight: "100px", overflowY: "auto", }}>{hommie}</div>

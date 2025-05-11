@@ -14,11 +14,13 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { Headphones, OndemandVideo } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
-
+import { io } from "socket.io-client";
 
 
 
 const All_Matches = ({props, stat}) => {
+
+
 
 
 
@@ -42,7 +44,9 @@ var recommendation
       setFollowing(<div></div>)
   }, [props])
 
-  const fetchData = async () => {
+  const fetchData = async (mulit) => {
+
+    
    
     try {
        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -57,8 +61,9 @@ var recommendation
       const raw_data = await axios.get(`${Line}/match`, {
         params: { timeZone: userTimeZone, code: userCode, date: formatted_date },
       });
-      
+
       setLeagues(raw_data.data.leagues);
+
 
     const audio_data = await axios.get(`${Line}/audio_matches`)
     setAudio(audio_data.data)
@@ -176,12 +181,19 @@ var recommendation
   </Box>)
     fetchData(); // Initial fetch
 
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 5000); // Fetch every 5 seconds
+ 
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
   }, [props]);
+
+
+const socket = io("https://remember-1u57.onrender.com");
+
+socket.on("Main_data", (data)=>{
+
+    setLeagues(data.leagues);
+})
+
+
 
   // Fetch user favorites as before
   const [userFavorites, setUserFavorites] = useState(null);
@@ -449,9 +461,9 @@ if(videoa.data){
 
             return (
               <div key={matchIndex} style={{ display: "flex", marginTop: "0%", width: "100%", justifyContent: "space-between", background: "white", borderRadius: "10px", textDecoration: "none" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
+                <div className= "opacity"  style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "50px", alignItems: "center" }}>
                   <div style={{ width: "5%" }}>{live}</div>
-                  <Link to={`result/${match.id}`} className= "opacity" state = {match} style={{ display: "flex",  cursor : "pointer", transition : `opacity 0.2s ease`, textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
+                  <Link to={`result/${match.id}`}  state = {match} style={{ display: "flex",  cursor : "pointer", transition : `opacity 0.2s ease`, textDecoration: "none", justifyContent: "space-between", width: "90%" }}>
                     <div style={{ display: "flex", width: "33%", justifyContent: "space-between", alignItems: "center" }}>
                       <h6 className="text-dark" style={{ fontSize: "0.7em" }}>{match.home.name}</h6>
                       <img src={`https://images.fotmob.com/image_resources/logo/teamlogo/${match.home.id}_xsmall.png`} loading="lazy" alt="Home Team Logo" style={{ width: "20px", height: "20px" }} />
