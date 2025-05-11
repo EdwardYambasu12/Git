@@ -15,7 +15,7 @@ import Stack from '@mui/material/Stack';
 import { Headphones, OndemandVideo } from "@mui/icons-material";
 import AdSenseFluidAd from "./adsense_fluid.jsx";
 import { io } from "socket.io-client";
-
+import socket from "../../socketon.js"
 
 
 const All_Matches = ({props, stat}) => {
@@ -186,7 +186,6 @@ var recommendation
   }, [props]);
 
 
-const socket = io("https://remember-1u57.onrender.com");
 
 socket.on("Main_data", (data)=>{
 
