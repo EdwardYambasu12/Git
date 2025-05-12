@@ -715,7 +715,7 @@ axios.get(Line+"/get_video_data")
 	    
 	   
           const formattedDate = format(date, "yyyy-MM-dd");
-		setStatement(<All_Matches stat = {vid} props = {formattedDate}/>
+		setStatement(<Calendar stat = {vid} props = {formattedDate}/>
 			
 			)
 		sessionStorage.setItem("date",date)
@@ -993,17 +993,23 @@ async function fetcher(){
 	}
 
 
-	function tab_change(id, date){
-		setTabstate(id)
-    const formattedDate = format(date, "yyyy-MM-dd");
+
+function tab_change(id, date) {
+  setTabstate(id);
+  const formattedDate = format(date, "yyyy-MM-dd");
+  const today_date = new Date();
+  const formattedToday = format(today_date, "yyyy-MM-dd");
 
 
-			setStatement(<All_Matches props = {formattedDate}/>)
+  if (formattedDate === formattedToday) {
+  setStatement(<All_Matches props={formattedDate} />);
+  }
+  else {
+      setStatement(<Calendar props={formattedDate} />);
+  }
 
 
-
-	
-	}
+}
 
 	return(
 			<body style = {{background : "#EEEEEE"}}>
@@ -1105,6 +1111,7 @@ async function fetcher(){
      
 
       </Tabs>
+    
 
         </nav>
       </div>
@@ -1125,27 +1132,40 @@ async function fetcher(){
 			<div className = "icons">
 					
 						
-						<button className = "btn btn-danger text-light" onClick = {()=>{setStatement(<Live/>)}}>Live</button>
-						
+				
 					<Datepicker selected={selectedDate} onChange = {date=> setDate(date)} customInput = {<Custom_input/>}/>
           <button className="btn btn-light" onClick={handleOpen} ><Search/> </button>
 						<PositionedMenu/>
 			</div>
 
 			    </div>
-  
-<Tabs
-        value={value}
-        onChange={handleChange}
-        TabIndicatorProps={{ style: { backgroundColor: 'midnightblue'} }}  variant="scrollable" scrollButtons="auto" aria-label="gold tabs example"
-      	sx = {{background : `radial-gradient(circle, #EEEEEE, #FFFFFF)`}}
 
-      	className = "mid_tab"
-      	id = "idl"
-      >
-      
-       
-            {dates.map((date, index) => {
+
+          <div style = {{width : "100%", justifyContent : "space-around", background : "white", display : "flex"}}>
+  
+<div class="select">
+  <div
+    class="selected"
+    data-default="Today"
+    data-one="option-1"
+    data-two="option-2"
+    data-three="option-3"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="1em"
+      viewBox="0 0 512 512"
+      class="arrow"
+    >
+      <path
+        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+      ></path>
+    </svg>
+  </div>
+  <div class="options">
+
+   
+     {dates.map((date, index) => {
           const formattedDate = format(date, "yyyy-MM-dd");
           const isToday = formattedDate === format(today, "yyyy-MM-dd");
           const isActive = formattedDate === activeDate;
@@ -1158,14 +1178,26 @@ async function fetcher(){
 
           return (
      
-              <LinkTab style ={{fontSize : "0.6em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
-              
+              <LinkTab style ={{fontSize : "0.7em"}} label = {info}  onClick = {()=>{tab_change(index, date)}}>
+                <div title="option-3">
+      <input id="option-3" name="option" type="radio" />
+      <label class="option" for="option-3" data-txt={info}></label>
+    </div>
             </LinkTab>
+
           );
         })}
-     
+  </div>
+</div>
 
-      </Tabs>
+
+<div style = {{marginBottom : "2%"}}>
+    <button onClick = {()=>{setStatement(<Live/>)}} class="btnn"><i class="animation"></i>Live<i class="animation"></i>
+    </button>
+</div>
+
+
+</div>
 
 
 				</nav>
@@ -1173,6 +1205,8 @@ async function fetcher(){
 					<br></br>
 				<br></br>
 				<br></br>
+
+
        
 				<div className = "state" >
 		

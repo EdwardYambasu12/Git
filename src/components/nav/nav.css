@@ -12,7 +12,121 @@
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display"
 }
+/* From Uiverse.io by 3bdel3ziz-T */ 
+.select {
+  position: relative;
+  width: fit-content;
+  cursor: pointer;
+  transition: 300ms;
+  color: white;
+    width : 40%;
+  overflow: visible; /* Make sure dropdown isn't clipped */
+}
+.selected {
+  background-color: #2a2f3b;
+  padding: 5px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 100000;
 
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* This shows the placeholder or selected value */
+.selected::before {
+  content: attr(data-default); /* overridden by :has(...) logic */
+  color: white;
+  padding-right: 10px;
+}
+
+.arrow {
+  position: relative;
+  right: 0px;
+  height: 10px;
+  transform: rotate(-90deg);
+  width: 25px;
+  fill: white;
+  z-index: 100000;
+  transition: 300ms;
+}
+
+.options {
+  position: absolute;
+  top: 100%;          /* Position it just below the selected */
+  left: 0;
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 300ms;
+  background-color: #2a2f3b;
+  border-radius: 5px;
+  padding: 5px;
+  width : 100%;
+  display: flex;
+  flex-direction: column;
+    /* 🔽 Make it scrollable */
+  max-height: 200px; /* or whatever fits your design */
+  overflow-y: auto;
+}
+
+/* ✅ Show dropdown on hover */
+.select:hover .options {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ✅ Rotate arrow when active */
+.select:hover .selected .arrow {
+  transform: rotate(0deg);
+}
+.option {
+  border-radius: 5px;
+  padding: 5px;
+  transition: 300ms;
+  background-color: #2a2f3b;
+  width: 150px;
+  font-size: 15px;
+  color: white;
+}
+.option:hover {
+  background-color: #323741;
+}
+
+.options input[type="radio"] {
+  display: none;
+}
+
+.options label {
+  display: inline-block;
+}
+.options label::before {
+  content: attr(data-txt);
+}
+
+.options input[type="radio"]:checked + label {
+  display: none;
+}
+
+.options input[type="radio"]#all:checked + label {
+  display: none;
+}
+
+.select:has(.options input[type="radio"]#all:checked) .selected::before {
+  content: attr(data-default);
+}
+.select:has(.options input[type="radio"]#option-1:checked) .selected::before {
+  content: attr(data-one);
+}
+.select:has(.options input[type="radio"]#option-2:checked) .selected::before {
+  content: attr(data-two);
+}
+.select:has(.options input[type="radio"]#option-3:checked) .selected::before {
+  content: attr(data-three);
+}
 .flex-auto {
   flex: 0 0 auto;
 }
@@ -754,4 +868,44 @@ h2 {
 
 #header nav a:hover {
   color: black;
+}
+/* From Uiverse.io by mi-series */ 
+.btnn {
+  outline: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background: indianred;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+  box-sizing: border-box;
+  padding: 16px 20px;
+  height : 30px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.btnn:hover {
+  opacity: .95;
+}
+
+.btnn .animation {
+  border-radius: 100%;
+  animation: ripple 0.6s linear infinite;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1), 0 0 0 20px rgba(255, 255, 255, 0.1), 0 0 0 40px rgba(255, 255, 255, 0.1), 0 0 0 60px rgba(255, 255, 255, 0.1);
+  }
+
+  100% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.1), 0 0 0 40px rgba(255, 255, 255, 0.1), 0 0 0 60px rgba(255, 255, 255, 0.1), 0 0 0 80px rgba(255, 255, 255, 0);
+  }
 }
