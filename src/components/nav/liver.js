@@ -14,43 +14,49 @@ const LiveHori = () => {
   const [leagues, setLeagues] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchLiveData = async () => {
-      try {
-        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const userCode = "INT";
+useEffect(() => {
+  const fetchLiveData = async () => {
+    try {
+      const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const userCode = "INT";
 
-        const date = new Date();
-        const formatted_date = date.toISOString().split("T")[0].replace(/-/g, '');
+      const date = new Date();
+      const formatted_date = date.toISOString().split("T")[0].replace(/-/g, '');
 
-        const raw_data = await axios.get(`${Line}/match`, {
-          params: {
-            timeZone: userTimeZone,
-            code: userCode,
-            date: formatted_date,
-          },
-        });
+      const raw_data = await axios.get(`${Line}/match`, {
+        params: {
+          timeZone: userTimeZone,
+          code: userCode,
+          date: formatted_date,
+        },
+      });
 
-        const data = raw_data.data;
+      const data = raw_data.data;
 
-        const liveMatches = data.leagues
-          .map(league => {
-            const live = league.matches.filter(match => match.status.liveTime);
-            return live.length > 0 ? { ...league, live } : null;
-          })
-          .filter(Boolean); // Remove nulls
+      const liveMatches = data.leagues
+        .map(league => {
+          const live = league.matches.filter(match => match.status.liveTime);
+          return live.length > 0 ? { ...league, live } : null;
+        })
+        .filter(Boolean); // Remove nulls
 
-        setLeagues(liveMatches);
-        console.log(liveMatches, "live_matches");
+      setLeagues(liveMatches);
+      console.log(liveMatches, "live_matches");
 
-      } catch (error) {
-        console.error("Error fetching live matches:", error);
-        setLeagues([]);
-      }
-    };
+    } catch (error) {
+      console.error("Error fetching live matches:", error);
+      setLeagues([]);
+    }
+  };
 
-    fetchLiveData();
-  }, []);
+  fetchLiveData(); // Fetch immediately on mount
+
+  const intervalId = setInterval(fetchLiveData, 15000); // Fetch every 15 seconds
+
+  // Cleanup the interval on unmount
+  return () => clearInterval(intervalId);
+
+}, []);
 
   if (leagues === null) {
     return (
@@ -88,18 +94,20 @@ return (
       }}
     >
       {needed.map((item) => (
-        <div
+        <Link
           key={item.id}
           style={{
             minWidth: "320px",
             backgroundColor: "midnightblue",
             color: "white",
             display: "flex",
+            textDecoration : "none",
             justifyContent: "space-between",
             alignItems: "center",
             padding: "0.5rem",
             borderRadius: "8px",
           }}
+           to={`result/${item.id}`}
         >
           {/* Home Team */}
           <div style={{ textAlign: "center", width: "90px" }}>
@@ -146,7 +154,7 @@ return (
               <strong>{item.away.name}</strong>
             </p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   </Box>

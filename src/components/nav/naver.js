@@ -189,8 +189,13 @@ const TabBar = ({onOk}) => {
 
 
 const drawerWidth = 240;
-const navItems = ['Home', 'News', 'Leagues', "Favorites", "Privacy and Policy"];
-
+const navItems = [
+  { label: 'Home', path: '/' },
+  { label: 'News', path: '/news' },
+  { label: 'Leagues', path: '/leagues' },
+  { label: 'Favorites', path: '/faves' },
+  { label: 'Privacy and Policy', path: '/privacy-policy' },
+];
 
 
 
@@ -229,15 +234,21 @@ console.log(selectedDate, "This is the selected date")
       <span style={{ color: 'gold' }}>Score</span>
     </Typography>
       <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+<List>
+  {navItems.map((item) => (
+    <ListItem key={item.label} disablePadding>
+      <ListItemButton
+        component={Link}
+        to={item.path}
+        sx={{ textAlign: 'center' }}
+      >
+        <ListItemText primary={item.label} />
+      </ListItemButton>
+    </ListItem>
+  ))}
+</List>
+
+
     </Box>
   );
 
@@ -259,13 +270,19 @@ console.log(selectedDate, "This is the selected date")
     >
       <MenuIcon />
     </IconButton>
-    <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
-      {navItems.map((item) => (
-        <Button key={item} sx={{ color: 'black' }}>
-          {item}
-        </Button>
-      ))}
-    </Box>
+ <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
+  {navItems.map((item) => (
+    <Button
+      key={item.label}
+      component={Link}
+      to={item.path}
+      sx={{ color: 'black' }}
+    >
+      {item.label}  
+    </Button>
+  ))}
+</Box>
+
   </Box>
 
   {/* Center: LoneScore */}
