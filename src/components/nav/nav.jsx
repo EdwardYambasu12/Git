@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-
+import DrawerAppBar from "./naver.js"
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
@@ -65,7 +65,7 @@ import { HailOutlined, Search } from "@mui/icons-material"
 
 import AdSenseFluidAd from "./adsense_fluid.jsx"
 import PWAWelcomingPopup from "../new_comers/first.js"
-
+import LiveHori from "./liver.js"
 
 function LabelBottomNavigation() {
   const [value, setValue] = React.useState('matches');
@@ -623,6 +623,16 @@ useEffect(()=>{
 const [side_news, setSidenews] = useState()
 const [lot_news, setLot]= useState()
 const [vid, setVid] = useState()
+
+
+
+const handleChildAction = (data)=>{
+  console.log(data, "needed")
+                setDate(data)
+                }
+
+
+
 	useEffect(()=>{
 
 
@@ -993,6 +1003,12 @@ async function fetcher(){
 	}
 
 
+
+  function Livesetter(){
+    setStatement(<Live/>)
+  }
+
+
 	function tab_change(id, date){
 		setTabstate(id)
     const formattedDate = format(date, "yyyy-MM-dd");
@@ -1113,6 +1129,8 @@ async function fetcher(){
 
 						{/* Header for device less than 750px in width */}
 			<header id = "smaller_screen">
+
+      {/*
 				<nav className = " fixed-top" style = {{marginBottom : "0.5%,", }}>
 				
 					<div className="top_nav">
@@ -1169,17 +1187,29 @@ async function fetcher(){
 
 
 				</nav>
-				<br></br>
-					<br></br>
-				<br></br>
-				<br></br>
+        */}
+          <DrawerAppBar onAction={handleChildAction} live = {Livesetter}/>
+          <br/>
+        
+          
+                <br></br>
+          <br></br>
+        <br></br>
+        <br></br>
+          <LiveHori/>
+      <div>
+        
+
+
+      </div>
+	
        
 				<div className = "state" >
 		
        
 					
           
-			<div style={{marginTop : "3%"}}>{statement}       <footer className="footer">
+			<div style={{marginTop : "-7%"}}>{statement}       <footer className="footer">
       <div className="circle left"></div> {/* Left Circle */}
       <div className="footer-content">
         <p>© Copyright 2025 LoneScore</p>
