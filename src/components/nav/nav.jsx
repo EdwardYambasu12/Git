@@ -1209,7 +1209,7 @@ async function fetcher(){
        
 					
           
-			<div style={{marginTop : "-7%"}}>{statement}       <footer className="footer">
+			<div style={{marginTop : "-2%"}}>{statement}       <footer className="footer">
       <div className="circle left"></div> {/* Left Circle */}
       <div className="footer-content">
         <p>© Copyright 2025 LoneScore</p>

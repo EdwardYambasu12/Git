@@ -26,7 +26,7 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
-import FollowFacebookPage from "./facebook.js"
+
 import CountdownTimer from "./countdown.js"
 import { styled } from '@mui/material/styles';
 import {Fade} from "@mui/material"
@@ -687,9 +687,9 @@ const Info = ({props })=>{
         // Check if video_data is available
     if (video_data != null) {
         video_data.data.forEach((item) => {
-            if (item.homeName.includes(data.header.teams[0].name)) {
+            if (item.homeName === data.header.teams[0].name) {
                 nik.push(item);
-            } else if (item.guestName.includes(data.header.teams[1].name)) {
+            } else if (item.guestName === data.header.teams[1].name) {
                 nik.push(item);
             }
         });
@@ -702,9 +702,9 @@ const Info = ({props })=>{
                 const datam = res.data; // Destructure here to get 'data'
                 console.log(datam, data, "DATA")
                 datam.data.forEach((item) => {
-            if (item.homeName === data.header.teams[0].name) {
+            if (item.homeName.includes(data.header.teams[0].name) ) {
                 nik.push(item);
-            } else if (item.guestName === data.header.teams[1].name) {
+            } else if (item.guestName.includes(data.header.teams[1].name)) {
                 nik.push(item);
             }
         });
@@ -1724,7 +1724,7 @@ useEffect(()=>{
                    
                 
 
-      	                <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
+                        <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
                         {highlight}
                           </div>
                         <div style = {{boxShadow : ` 0 10px 10px rgba(0, 0, 0, 0.1)`,}}>
@@ -1824,16 +1824,6 @@ const Commentary = ({props})=>{
 
             const main = comment.events
             console.log(main, "main comments")
-
-
-                if(main.length < 1){
-                    setComments(
-                           <FollowFacebookPage/>
-                        )
-                }
-
-                else if(main.length > 0){
-
                 setComments(
                             <div >
 
@@ -1881,7 +1871,7 @@ const Commentary = ({props})=>{
                                 })}
                             </div>
                     )
-           }
+           
         }
 
             }
